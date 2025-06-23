@@ -1,0 +1,1323 @@
+openapi: 3.0.1
+info:
+  version: '1.0'
+  title: Payments
+paths:
+  /simulates:
+    post:
+      tags:
+        - simulates
+      summary: ''
+      description: ''
+      operationId: post-simulates
+      requestBody:
+        $ref: '#/components/requestBodies/attempt'
+      responses:
+        '200':
+          $ref: '#/components/responses/payment'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+  /payment-origins:
+    get:
+      tags:
+        - payment-methods
+      summary: ''
+      description: ''
+      operationId: get-payment-origins
+      parameters:
+        - $ref: '#/components/parameters/currency'
+        - $ref: '#/components/parameters/country'
+      responses:
+        '200':
+          description: 'Retrieves the source of funds (payment origin) for a transaction. The response provides details about the origin, which can be one of the following types: `WIRE`, `CARD`, `CRYPTO`, `PAYMENT_INITIATION` or `CASH`. Depending on the origin type, the response will contain specific details related to that payment method.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/getPayment'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+  /payment-destinations:
+    get:
+      tags:
+        - payment-methods
+      summary: ''
+      description: ''
+      operationId: get-payment-destinations
+      parameters:
+        - $ref: '#/components/parameters/currency'
+        - $ref: '#/components/parameters/country'
+      responses:
+        '200':
+          description: 'Retrieves the destination of funds (payment destination) for a transaction. The response provides details about the destination, which can be one of the following types: `WIRE`, `CARD`, `CRYPTO`, or `CASH`. Depending on the destination type, the response will contain specific details related to that payment method.'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/getPayment'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+  /payment-attempts:
+    post:
+      tags:
+        - payment-attempts
+      summary: ''
+      description: ''
+      operationId: post-payment-attempt
+      requestBody:
+        $ref: '#/components/requestBodies/attempt'
+      responses:
+        '201':
+          $ref: '#/components/responses/payment'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+  '/payment-attempts/{transactionId}/origins':
+    post:
+      tags:
+        - payment-attempts
+      summary: ''
+      description: ''
+      operationId: post-payment-attempts-transactionId-origins
+      parameters:
+        - $ref: '#/components/parameters/transactionId'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/getPayment'
+      responses:
+        '200':
+          $ref: '#/components/responses/payment'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+  '/payment-attempts/{transactionId}/origins/{name}':
+    delete:
+      tags:
+        - payment-attempts
+      summary: ''
+      description: ''
+      operationId: delete-payment-attempts-transactionId-origins-name
+      parameters:
+        - $ref: '#/components/parameters/transactionId'
+        - name: name
+          in: path
+          description: Name of the method selected for the source of funds.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/payment'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+  '/payment-attempts/{transactionId}/destinations':
+    post:
+      tags:
+        - payment-attempts
+      summary: ''
+      description: ''
+      operationId: post-payment-attempts-transactionId-destinations
+      parameters:
+        - $ref: '#/components/parameters/transactionId'
+      requestBody:
+        description: 'Add the destination of funds to an existing payment transaction. This specifies where the funds should be sent for the transaction identified by {transactionId}.'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/getPayment'
+      responses:
+        '200':
+          $ref: '#/components/responses/payment'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+  '/payment-attempts/{transactionId}/destinations/{name}':
+    delete:
+      tags:
+        - payment-attempts
+      summary: ''
+      description: ''
+      operationId: delete-payment-attempts-transactionId-destinations-name
+      parameters:
+        - $ref: '#/components/parameters/transactionId'
+        - name: name
+          in: path
+          description: Name of the method selected for the destination of funds.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/payment'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+  '/payment-attempts/{transactionId}':
+    patch:
+      tags:
+        - payment-attempts
+      summary: ''
+      description: ''
+      operationId: patch-payment-attempts-transactionId
+      parameters:
+        - $ref: '#/components/parameters/transactionId'
+      requestBody:
+        $ref: '#/components/requestBodies/attempt'
+      responses:
+        '200':
+          $ref: '#/components/responses/payment'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+    put:
+      tags:
+        - payment-attempts
+      summary: ''
+      description: ''
+      operationId: put-payment-attempts-transactionId
+      parameters:
+        - $ref: '#/components/parameters/transactionId'
+      requestBody:
+        $ref: '#/components/requestBodies/attempt'
+      responses:
+        '200':
+          $ref: '#/components/responses/payment'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+    delete:
+      tags:
+        - payment-attempts
+      summary: ''
+      description: ''
+      operationId: delete-payment-attempts-transactionId
+      parameters:
+        - $ref: '#/components/parameters/transactionId'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+    get:
+      tags:
+        - payment-attempts
+      summary: ''
+      description: ''
+      operationId: get-payment-attempts-transactionId
+      parameters:
+        - $ref: '#/components/parameters/transactionId'
+      responses:
+        '200':
+          $ref: '#/components/responses/payment'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+  /payments:
+    post:
+      tags:
+        - payments
+      summary: ''
+      description: ''
+      operationId: post-payments
+      requestBody:
+        $ref: '#/components/requestBodies/payment'
+      responses:
+        '200':
+          $ref: '#/components/responses/payment'
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+  '/payments/{transactionId}/confirm':
+    post:
+      tags:
+        - payments
+      summary: ''
+      description: ''
+      operationId: post-payments-transactionId-confirm
+      parameters:
+        - $ref: '#/components/parameters/transactionId'
+      responses:
+        '200':
+          $ref: '#/components/responses/payment'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+  '/payments/{transactionId}':
+    get:
+      tags:
+        - payments
+      summary: ''
+      description: ''
+      operationId: get-payments-transactionId
+      parameters:
+        - $ref: '#/components/parameters/transactionId'
+      responses:
+        '200':
+          $ref: '#/components/responses/payment'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+    patch:
+      tags:
+        - payments
+      summary: ''
+      description: ''
+      operationId: patch-payments-transactionId
+      parameters:
+        - $ref: '#/components/parameters/transactionId'
+      requestBody:
+        $ref: '#/components/requestBodies/updatePayment'
+      responses:
+        '200':
+          $ref: '#/components/responses/payment'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+    delete:
+      tags:
+        - payments
+      summary: ''
+      description: ''
+      operationId: delete-payments-transactionId
+      parameters:
+        - $ref: '#/components/parameters/transactionId'
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+  /currencies:
+    get:
+      tags:
+        - currencies
+      summary: ''
+      description: ''
+      operationId: get-currencies
+      responses:
+        '200':
+          $ref: '#/components/responses/currencies'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+  '/currencies/{currency}':
+    get:
+      summary: ''
+      description: ''
+      operationId: get-currencies-currency
+      parameters:
+        - $ref: '#/components/parameters/country'
+        - name: currency
+          in: path
+          description: 'Currency code supported by the payment method. For cryptocurrencies, include both the token and network (e.g., USDC_SOLANA). For fiat currencies, use the standard ISO 4217 currency codes.'
+          schema:
+            type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/currency'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+        - Bearer: []
+  /financial-institutions:
+    get:
+      summary: ''
+      operationId: get-financial-institutions
+      parameters:
+        - $ref: '#/components/parameters/currency'
+        - $ref: '#/components/parameters/country'
+      responses:
+        '200':
+          description: 'The response returns an array of `financialInstitution` objects, each containing the details of a financial institution available within the specified filters. This array helps identify institutions compatible with the desired country or currency for integration purposes.'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/financialInstitution'
+        '400':
+          description: Bad Request
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      security:
+        - x-api-key: []
+components:
+  parameters:
+    currency:
+      name: currency
+      in: query
+      description: 'Currency code supported by the payment method. For cryptocurrencies, include both the token and network (e.g., `USDC_SOLANA`). For fiat currencies, use the standard ISO 4217 currency codes.'
+      required: false
+      schema:
+        type: string
+    country:
+      name: country
+      in: query
+      description: The 3-character ISO 3166 country code.
+      required: false
+      schema:
+        type: string
+    identityId:
+      name: identityId
+      in: query
+      description: 'A unique identifier of the identity, represented as a UUID (Universally Unique Identifier).'
+      required: false
+      schema:
+        type: string
+    externalIdentityId:
+      name: externalIdentityId
+      in: query
+      description: 'External user reference ID, linking the transaction to the external system''s user.'
+      required: false
+      schema:
+        type: string
+    transactionId:
+      name: transactionId
+      in: path
+      description: 'Unique identifier assigned to each payment transaction within the system. It is used to reference and track transactions across all API operations, such as creating, confirming, and querying payments.'
+      required: true
+      schema:
+        type: string
+    currencyPath:
+      name: currencyPath
+      in: path
+      description: 'Currency code supported by the payment method. For cryptocurrencies, include both the token and network (e.g., `USDC_SOLANA`). For fiat currencies, use the standard ISO 4217 currency codes.'
+      required: true
+      schema:
+        type: string
+  requestBodies:
+    attempt:
+      description: Represents the comprehensive transaction entity encompassing the entire payment process. It includes details from the initial payment attempt through to the final payment confirmation. It is the primary reference for tracking and managing the lifecycle of a payment within the system.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/attemptRequest'
+    payment:
+      description: Represents the comprehensive transaction entity encompassing the entire payment process. It includes details from the initial payment attempt through to the final payment confirmation. It is the primary reference for tracking and managing the lifecycle of a payment within the system.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/attemptRequest'
+    updatePayment:
+      description: Represents the comprehensive transaction entity encompassing the entire payment process. It includes details from the initial payment attempt through to the final payment confirmation. It is the primary reference for tracking and managing the lifecycle of a payment within the system.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/attemptRequest'
+  securitySchemes:
+    x-api-key:
+      type: apiKey
+      name: x-api-key
+      in: header
+    Bearer:
+      type: http
+      scheme: bearer
+  responses:
+    payment:
+      description: Represents the comprehensive transaction entity encompassing the entire payment process. It includes details from the initial payment attempt through to the final payment confirmation. It is the primary reference for tracking and managing the lifecycle of a payment within the system.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/attemptRequest'
+    currencies:
+      description: 'The response body returns an array of currency entities, each containing the details of the individual currencies, including their name, symbol, ISO code, decimal places, country of origin, supported countries, supported currencies for exchange, and any associated fees. This response is useful when retrieving a complete list of currencies for operations like currency selection or displaying exchange option'
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/currency'
+    currency:
+      description: 'The response body returns the details of a single currency entity. This includes the currency''s name, symbol, ISO code, number of decimal places, the country of origin, supported countries, supported currencies for exchange, and any associated fees. The response provides complete information about the currency, useful for displaying currency details or using them in transactional contexts.'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/currency'
+  schemas:
+    getPayment:
+      type: object
+      title: payment
+      description: payment schema
+      properties:
+        name:
+          type: string
+          description: Unique identifier of the payment method.
+        type:
+          type: string
+          description: |
+
+            The `origin` and `destination` fields define the source and destination of funds in a transaction. Each supports specific payment types:
+
+            `origin` the source of funds, which can be one of the following:
+              - `PAYMENT_INITIATION`: A third-party service for initiating payments directly from a bank account.
+              - `WIRE`: A traditional wire transfer from a bank account.
+              - `CARD`: Payments made via credit or debit cards.
+              - `CRYPTO`: Payments made using cryptocurrency, with funds originating from a digital wallet.
+              - `CASH`: Payments made via cash.
+                
+            `destination` the destination of funds, which supports the following:
+              - `WIRE`: A traditional wire transfer to a bank account.
+              - `CRYPTO`: Payments sent to a cryptocurrency wallet on a blockchain network.
+              - `CASH`: Payments withdrawn via cash.
+                
+        currency:
+          $ref: '#/components/schemas/currencySymbol'
+        referenceId:
+          type: string
+          description: External reference ID.
+        processing:
+          type: string
+          enum:
+            - INSTANT_PAYMENT
+            - DELAY_1_DAY
+            - DELAY_2_DAYS
+            - DELAY_3_DAYS
+          description: Processing time of the payment method. `INSTANT_PAYMENT` applies to methods processed immediately. Other methods have delays of 1 to 3 business days.
+        fee:
+          $ref: '#/components/schemas/Fees'
+          description: Fees represent additional charges applied to a transaction. These can either be a percentage of the transaction amount or a fixed sum.
+        limits:
+          type: object
+          description: Transaction limits
+          properties:
+            minAmount:
+              type: string
+              description: Minimum transaction amount allowed for this payment method.
+            maxAmount:
+              type: string
+              description: Maximum transaction amount allowed for this payment method.
+        metaData:
+          type: object
+          description: Human readable information
+          properties:
+            image:
+              type: string
+              description: URL of the image representing the payment method.
+            title:
+              type: string
+              description: Display name of the payment method.
+            description:
+              type: string
+              description: Detailed description of the payment method.
+        paymentInitiation:
+          $ref: '#/components/schemas/Payment_Initiation'
+          description: '`paymentInitiation` field is included when the payment method type is `PAYMENT_INITIATION`.'
+        account:
+          $ref: '#/components/schemas/bankAccount_2'
+          description: '`account` field is only included when the payment method type is `WIRE`.'
+        crypto:
+          $ref: '#/components/schemas/walletInformation'
+          description: '`crypto` field is only included when the payment method type is `CRYPTO`.'
+    currencySymbol:
+      type: string
+      enum:
+        - ARS
+        - BRL
+        - CLP
+        - COP
+        - CRC
+        - CUP
+        - DOP
+        - EUR
+        - GBP
+        - GTQ
+        - JMD
+        - MXN
+        - PAB
+        - PEN
+        - PYG
+        - USD
+        - UYU
+        - USDC_SOLANA
+        - USDC_ER20
+        - USDC_MATIC
+      title: currencySymbol
+      description: 'Currency code supported by the payment method. For cryptocurrencies, include both the token and network (e.g., `USDC_SOLANA`). For fiat currencies, use the standard ISO 4217 currency codes.'
+    Fees:
+      type: object
+      title: feeInfo
+      description: 'Fees represent additional charges applied to a transaction. These can be applied over the transaction, origins, destinations, or FX (foreign exchange), and are either calculated as a percentage of the amount or as a fixed amount.'
+      properties:
+        name:
+          type: string
+          description: 'The name or identifier of the fee. This typically indicates the type of fee, such as a transaction fee or service fee.'
+        type:
+          type: string
+          enum:
+            - TRANSACTION
+            - ORIGIN
+            - DESTINATION
+            - FX
+          description: 'Specifies where the fee is applied: over the entire transaction, the origin of funds, the destination of funds, or for foreign exchange (FX).'
+        method:
+          type: string
+          enum:
+            - PERCENTAGE
+            - FIXED
+          description: 'Specifies how the fee is calculated. This field has two possible values: `PERCENTAGE` if the fee is a percentage of the amount, or `FIXED` if it''s a fixed fee.'
+        currency:
+          $ref: '#/components/schemas/currencySymbol'
+        value:
+          type: string
+          description: 'The fee’s numeric value. If the calculation method is `PERCENTAGE`, this represents the percentage rate (e.g., 2.5). If `FIXED`, this represents the fixed fee amount (e.g., 50).'
+    financialInstitution:
+      type: object
+      title: financialInstitution
+      description: 'The financialInstitution object provides key details about each financial institution, including a human-readable name, a technical identifier, the country it operates in, supported networks, and available currencies.'
+      properties:
+        name:
+          type: string
+          description: 'The technical identifier for the institution, used in all requests (e.g., "BANCO_CHILE").'
+        financialInstitutionName:
+          type: string
+          description: 'A human-readable name of the financial institution (e.g., "Banco de Chile").'
+        country:
+          type: string
+          description: The ISO 3166-1 alpha-3 country code where the financial institution operates.
+        networks:
+          type: array
+          description: 'A list of supported networks for transactions (e.g., ["SPEI", "ACH_US", "SOLANA"]).'
+          items:
+            type: string
+        currencies:
+          type: array
+          description: 'A list of supported currencies for this institution, formatted as per ISO 4217 for fiat and token_network for crypto (e.g., ["CLP", "USD", "USDC_SOLANA"]).'
+          items:
+            type: string
+    attemptRequest:
+      type: object
+      title: paymentResponse
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+          description: 'Unique identifier assigned to each payment transaction within the system. It is used to reference and track transactions across all API operations, such as creating, confirming, and querying payments.'
+        externalId:
+          type: string
+          description: 'An external reference ID for the transaction, used for integrations with external systems.'
+        externalIdentityId:
+          type: string
+          description: 'External user reference ID, linking the transaction to the external system''s user.'
+        identityId:
+          type: string
+          description: Internal identity identifier within the ConomyHQ system. It uniquely identifies the user associated with the transaction.
+        origins:
+          type: array
+          items:
+            $ref: '#/components/schemas/getPayment'
+        originAmount:
+          type: object
+          description: The amount and currency of the transaction before applying any fees or exchanges.
+          properties:
+            amount:
+              type: string
+              description: The amount of the transaction before applying any fees or exchanges.
+            currency:
+              $ref: '#/components/schemas/currencySymbol'
+        destinations:
+          type: array
+          items:
+            $ref: '#/components/schemas/getPayment'
+        destinationAmount:
+          type: object
+          description: The amount and currency after applying fees and exchanges. This represents the total amount paid or withdrawn.
+          properties:
+            amount:
+              type: string
+              description: The final amount after applying fees and exchanges. This represents the total amount paid or withdrawn.
+            currency:
+              $ref: '#/components/schemas/currencySymbol'
+        type:
+          $ref: '#/components/schemas/transactionType'
+        product:
+          $ref: '#/components/schemas/product'
+        status:
+          $ref: '#/components/schemas/transactionStatus'
+        enrich:
+          $ref: '#/components/schemas/enrich'
+        settlement:
+          type: string
+          enum:
+            - INSTANT
+            - DAILY
+            - WEEKLY
+            - MONTHLY
+          description: 'Specifies how often settlements occur for this transaction, such as ''INSTANT'', ''DAILY'', ''WEEKLY'', or ''MONTHLY''.'
+        fees:
+          type: array
+          description: An array of fees applied to the transaction. Each fee entry describes the type and amount of the fee.
+          items:
+            $ref: '#/components/schemas/Fees'
+        exchange:
+          $ref: '#/components/schemas/quote'
+          description: 'An array of exchanges applied to the transaction, including currency conversions or asset exchanges.'
+        metaData:
+          type: object
+          properties:
+            description:
+              type: string
+              description: 'A description of the transaction, typically providing details or notes on what the transaction is for.'
+            image:
+              type: string
+              description: 'URL of an image related to the transaction, such as a product or receipt image.'
+            category:
+              type: string
+              description: 'The category of the transaction, used to categorize transactions (e.g., ''Food'', ''Travel'', ''Shopping'').'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        expiredAt:
+          type: string
+          description: 'The expiration date of the transaction, in ISO 8601 date format.'
+    Payment_Initiation:
+      type: object
+      title: Payment Initiation
+      description: 'Represents a payment initiation, detailing the widget information, and origin of funds.'
+      properties:
+        publicKey:
+          type: string
+          description: A unique alphanumeric token required for authenticating API requests. This token must be included in the 'Authorization' HTTP header of all subsequent API calls to ensure secure communication.
+        widgetLink:
+          type: string
+          description: 'A fully qualified URL endpoint that initiates the payment widget interface. This URL is used to render the payment initiation widget within the client application, allowing users to proceed with the payment process.'
+        signatureToken:
+          type: string
+          description: A cryptographic signature token used to verify the integrity and authenticity of response payloads. This token ensures that the responses have not been tampered with and are from a trusted source.
+        origin:
+          $ref: '#/components/schemas/bankAccount'
+          description: The sender's bank account refers to the account from which funds are transferred to a recipient in a financial transaction.
+    bankAccount:
+      type: object
+      title: bankAccount
+      description: 'Details about a user''s bank account, including the account number, bank, holder information, and associated metadata.'
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+          description: A unique identifier. UUID
+        identity:
+          type: string
+          description: The unique identifier of the user who owns the bank account.
+        externalId:
+          type: string
+          description: 'An external identifier for the bank account, typically provided by an external service or platform for integration purposes.'
+        accountNumber:
+          type: string
+          description: 'The bank account number, typically used for transactions and identifying the account within the financial institution.'
+        nickName:
+          type: string
+          description: 'A user-defined nickname or alias for the bank account, allowing the user to easily identify it (e.g., ''Savings'' or ''Main Checking'').'
+        country:
+          $ref: '#/components/schemas/country'
+          description: 'The country where the bank account is held, referenced by a 3-character ISO 3166 country code.'
+        currency:
+          $ref: '#/components/schemas/currencySymbol'
+          description: 'The currency associated with the bank account, referenced by a 3-character ISO 4217 currency code.'
+        financialInstitution:
+          $ref: '#/components/schemas/financialInstitutionName'
+          description: 'The bank associated with this account, typically identified by the institution''s name or code.'
+        type:
+          $ref: '#/components/schemas/accountType'
+          description: 'The type of bank account, such as savings, checking, or other account types as defined in accountType.json.'
+        accountHolder:
+          type: string
+          description: The full legal name of the person or entity that holds the bank account.
+        accountHolderDni:
+          type: string
+          description: 'The national identification number (DNI) of the account holder, used for verification and compliance purposes.'
+        balances:
+          type: object
+          properties:
+            balance:
+              type: string
+            availableFunds:
+              type: string
+            accruedYield:
+              type: string
+            monthlyYield:
+              type: string
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+          description: The timestamp indicating when the bank account record was created.
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+          description: The timestamp indicating when the bank account record was last updated.
+        iban:
+          type: string
+          description: he IBAN is a unique identifier for a bank account that is used internationally to ensure that cross-border transactions are processed correctly.
+        sortCode:
+          type: string
+          description: is a 6-digit number used by UK banks to identify specific branches when processing domestic payments.
+    id:
+      type: string
+      title: id
+      description: 'A unique identifier, represented as a UUID (Universally Unique Identifier).'
+    country:
+      type: string
+      enum:
+        - ARG
+        - BOL
+        - BRA
+        - CHL
+        - COL
+        - CRI
+        - CUB
+        - DOM
+        - ECU
+        - SLV
+        - GTM
+        - GUY
+        - HND
+        - HTI
+        - JAM
+        - MEX
+        - NIC
+        - PAN
+        - PRY
+        - PER
+        - SUR
+        - TTO
+        - URY
+        - VEN
+        - GBR
+        - ALB
+        - AND
+        - AUT
+        - BEL
+        - BIH
+        - BGR
+        - HRV
+        - CYP
+        - CZE
+        - DNK
+        - EST
+        - FIN
+        - FRA
+        - DEU
+        - GRC
+        - HUN
+        - ISL
+        - IRL
+        - ITA
+        - LVA
+        - LIE
+        - LTU
+        - LUX
+        - MLT
+        - MDA
+        - MCO
+        - MNE
+        - NLD
+        - MKD
+        - NOR
+        - POL
+        - PRT
+        - ROU
+        - RUS
+        - SMR
+        - SRB
+        - SVK
+        - SVN
+        - ESP
+        - SWE
+        - CHE
+        - UKR
+      title: country
+      description: The 3-character ISO 3166 country code indicating the country of address.
+    financialInstitutionName:
+      type: string
+      title: financialInstitutionName
+      description: 'The financial institution that processes and captures the transaction. This refers to the bank or payment provider responsible for authorizing, handling, and recording the details of the transaction, ensuring the transfer of funds between accounts.'
+    accountType:
+      type: string
+      enum:
+        - CASH_ACCOUNT
+        - CURRENT_ACCOUNT
+        - SAVINGS_ACCOUNT
+        - CRYPTO
+      title: accountType
+      description: The classification of the account. This field is an enumeration of possible account types.
+    createdAt:
+      type: string
+      title: createdAt
+      description: 'Creation date, in ISO 8601 date format'
+    updatedAt:
+      type: string
+      title: updatedAt
+      description: 'Date of last update, in ISO 8601 date format'
+    bankAccount_2:
+      type: object
+      title: account
+      description: 'Details about a user''s bank account, including the account number, bank, holder information, and associated metadata.'
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+          description: A unique identifier. UUID
+        identity:
+          type: string
+          description: The unique identifier of the user who owns the bank account.
+        externalId:
+          type: string
+          description: 'An external identifier for the bank account, typically provided by an external service or platform for integration purposes.'
+        accountNumber:
+          type: string
+          description: 'The bank account number, typically used for transactions and identifying the account within the financial institution.'
+        nickName:
+          type: string
+          description: 'A user-defined nickname or alias for the bank account, allowing the user to easily identify it (e.g., ''Savings'' or ''Main Checking'').'
+        country:
+          $ref: '#/components/schemas/country'
+          description: 'The country where the bank account is held, referenced by a 3-character ISO 3166 country code.'
+        currency:
+          $ref: '#/components/schemas/currencySymbol'
+          description: 'The currency associated with the bank account, referenced by a 3-character ISO 4217 currency code.'
+        financialInstitution:
+          $ref: '#/components/schemas/financialInstitutionName'
+          description: 'The bank associated with this account, typically identified by the institution''s name or code.'
+        type:
+          $ref: '#/components/schemas/accountType'
+          description: 'The type of bank account, such as savings, checking, or other account types as defined in accountType.json.'
+        accountHolder:
+          type: string
+          description: The full legal name of the person or entity that holds the bank account.
+        accountHolderDni:
+          type: string
+          description: 'The national identification number (DNI) of the account holder, used for verification and compliance purposes.'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+          description: The timestamp indicating when the bank account record was created.
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+          description: The timestamp indicating when the bank account record was last updated.
+        iban:
+          type: string
+          description: he IBAN is a unique identifier for a bank account that is used internationally to ensure that cross-border transactions are processed correctly.
+        sortCode:
+          type: string
+          description: is a 6-digit number used by UK banks to identify specific branches when processing domestic payments.
+    walletInformation:
+      type: object
+      title: walletInformation
+      description: 'Represents a crypto wallet, detailing the address, network, and related information for executing cryptocurrency transactions.'
+      properties:
+        address:
+          type: string
+          description: The recipient's wallet address where the cryptocurrency needs to be deposited. This should be a valid wallet address on the specified blockchain network.
+        token:
+          type: string
+          enum:
+            - USDC
+        network:
+          type: string
+          enum:
+            - ETHEREUM
+            - SOLANA
+            - POLYGON
+            - BITCOIN
+            - BINANCE_SMART_CHAIN
+          description: The blockchain network on which the cryptocurrency transaction will occur. This ensures the transaction is routed on the correct blockchain protocol.
+        extendedData:
+          type: array
+          description: An array of extended data for additional information related to the wallet.
+          items:
+            $ref: '#/components/schemas/extendedData'
+    extendedData:
+      type: array
+      title: extendedData
+      description: 'The extendedData model allows for additional key-value pairs to be added to entities, providing extensibility and flexibility for custom or extra information not covered by default fields.'
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            description: The name or key of the extended data field. This serves as the identifier for the piece of extended information.
+          value:
+            type: string
+            description: The value associated with the extended data field. This is the content or data that corresponds to the specified key (name).
+    transactionType:
+      type: string
+      enum:
+        - TOPUP_ACCOUNT
+        - WITHDRAWAL
+        - TOPUP_CARD
+        - PAY_IN
+        - PAY_OUT
+        - REWARDS
+        - REMITTANCES
+        - FEE
+        - ON_RAMP
+        - OFF_RAMP
+      title: transactionType
+      description: 'Represents the various types of financial transactions, ranging from card payments to remittances, savings-related transactions, and more.'
+    product:
+      type: string
+      title: product
+      description: 'The currency pair being traded, formatted as `CURRENCY 1`:`CURRENCY 2`, where the first currency is the base currency and the second is the counter currency. This defines what is being exchanged (e.g., CLP:USD or CLP:USDC_SOLANA).'
+    transactionStatus:
+      type: string
+      enum:
+        - ATTEMPT
+        - PENDING
+        - PENDING_CAPTURED
+        - CAPTURED
+        - REFUNDED
+        - INVESTED
+        - FAILED
+      title: transactionStatus
+    enrich:
+      type: object
+      title: enrich
+      description: 'The enrich object provides details about the merchant receiving the payment, including their code, name, and location.'
+      properties:
+        merchantCode:
+          type: string
+          description: A unique identifier or code assigned to the merchant receiving the payment. This code is used to identify the merchant within payment or business systems.
+        merchantName:
+          type: string
+          description: The full name of the merchant receiving the payment. This field contains the business name or legal name of the merchant.
+        location:
+          $ref: '#/components/schemas/Address'
+          description: The physical location or address of the merchant receiving the payment.
+    Address:
+      type: object
+      title: Address
+      description: 'An Address object represents a structured location within a country, providing information about its geographic and administrative details. It captures subnational administrative divisions, street details, and the country using a 3-character ISO code.'
+      properties:
+        country:
+          $ref: '#/components/schemas/country'
+        administrativeAreaLevel1:
+          type: string
+          description: This field represents the largest subnational administrative unit of a country.
+        administrativeAreaLevel2:
+          type: string
+          description: This field represents the second subnational administrative unit of a country.
+        administrativeAreaLevel3:
+          type: string
+          description: This field represents the third subnational administrative unit of a country.
+        street:
+          type: string
+          description: The street name for the address.
+        zipcode:
+          type: string
+          description: The zipcode for the address.
+        optionalAddress:
+          type: string
+          description: Extra address detail (optional).
+    quote:
+      type: object
+      title: quote
+      description: 'The quote entity represents a specific exchange quote provided by a provider, including details such as the user, transaction, exchange rate, and status.'
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        type:
+          type: string
+          enum:
+            - SPOT
+            - DERIVATIVE
+          description: The type of exchange transaction. It could either be a real-time spot exchange (SPOT) or a derivative-based transaction (DERIVATIVE).
+        product:
+          $ref: '#/components/schemas/product'
+        status:
+          $ref: '#/components/schemas/quoteStatus'
+        origin:
+          type: object
+          description: 'The source of the funds for the quote, indicating where the funds are originating from.'
+          oneOf:
+            - $ref: '#/components/schemas/bankAccount_2'
+            - $ref: '#/components/schemas/walletInformation_2'
+        destination:
+          type: object
+          description: 'The destination of the funds for the quote, indicating where the funds will be transferred to.'
+          oneOf:
+            - $ref: '#/components/schemas/walletInformation_2'
+            - $ref: '#/components/schemas/bankAccount_2'
+        exchangeRate:
+          type: string
+          description: 'The exchange rate provided by the provider for the quote, representing the rate at which the base currency is being exchanged for the target currency.'
+        fee:
+          type: string
+          description: 'The fee taken by the provider for executing the quote, which can be a fixed amount or a percentage of the total.'
+        executable:
+          type: boolean
+          description: 'Indicates whether the quote is executable or not, meaning whether the user can proceed with the exchange based on the current quote.'
+        provider:
+          type: string
+          description: The provider responsible for offering the quote. This is the entity that is facilitating the exchange.
+        marketValue:
+          type: string
+        extendedData:
+          $ref: '#/components/schemas/extendedData'
+          description: 'Additional extended data related to the quote, which allows for extensibility and flexibility in capturing extra information.'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+    quoteStatus:
+      type: string
+      enum:
+        - CREATED
+        - PENDING
+        - FAILED
+        - COMPLETED
+        - SIMULATION
+        - REFUNDED
+      title: quoteStatus
+      description: 'The current status of the quote, which reflects the state of the quote process.'
+    walletInformation_2:
+      type: object
+      title: crypto wallet
+      description: 'Represents a crypto wallet, detailing the address, network, and related information for executing cryptocurrency transactions.'
+      properties:
+        id:
+          $ref: '#/components/schemas/id'
+        externalId:
+          type: string
+          description: 'An external reference ID related to the crypto wallet, typically used for integration with external systems.'
+        address:
+          type: string
+          description: The recipient's wallet address where the cryptocurrency needs to be deposited. This should be a valid wallet address on the specified blockchain network.
+        token:
+          type: string
+          enum:
+            - USDC
+        network:
+          type: string
+          enum:
+            - ETHEREUM
+            - SOLANA
+            - POLYGON
+            - BITCOIN
+            - BINANCE_SMART_CHAIN
+          description: The blockchain network on which the cryptocurrency transaction will occur. This ensures the transaction is routed on the correct blockchain protocol.
+        type:
+          type: string
+          enum:
+            - HOT
+            - COLD
+            - CUSTODIAL
+          description: 'The type of wallet. It can be `HOT` (online), `COLD` (offline), or `CUSTODIAL` (managed by a third-party service).'
+        multisigType:
+          type: string
+          enum:
+            - TSS
+            - ONCHAIN
+            - BLDSKG
+          description: 'Indicates the type of multi-signature (multisig) wallet, such as `TSS` (Threshold Signature Scheme), `ONCHAIN`, or `BLDSKG` (Blind Signing Key Generation).'
+        passphrase:
+          type: string
+          description: The passphrase used to secure the wallet. This value is stored encrypted for security purposes.
+        status:
+          type: string
+          enum:
+            - ACTIVE
+            - PENDING
+            - INITIALIZATION
+          description: 'The current operational status of the wallet, such as ''ACTIVE'', ''PENDING'', or ''INITIALIZATION''.'
+        provider:
+          type: string
+          enum:
+            - CONOMY
+            - BITGO
+            - BINANCE
+            - COINBASE
+            - FIREBLOCKS
+          description: 'The provider managing or offering the wallet service. This could be a third-party service like ''CONOMY'', ''BITGO'', or ''COINBASE''.'
+        keys:
+          type: object
+          description: 'Contains keychains for the wallet, including the user''s keychain, a backup keychain, and the provider''s keychain. All keys are stored encrypted.'
+          properties:
+            userKeychain:
+              type: string
+              description: 'The user keychain for the wallet, which is stored encrypted.'
+            backupKeychain:
+              type: string
+              description: 'A backup keychain for recovery, which is also stored encrypted.'
+            providerKeychain:
+              type: string
+              description: 'The provider''s keychain for managing the wallet, stored encrypted.'
+        extendedData:
+          type: array
+          description: An array of extended data for additional information related to the wallet.
+          items:
+            $ref: '#/components/schemas/extendedData'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+    currency:
+      type: object
+      title: currency
+      description: 'Represents a currency with relevant attributes such as name, symbol, decimals, country of origin, supported countries, and supported currencies for exchanges or transactions. When operating in local currency, the supported currencies will be the same as the currency itself.'
+      properties:
+        name:
+          type: string
+          description: 'The full name of the currency (e.g., US Dollar, Euro).'
+        currency:
+          $ref: '#/components/schemas/currencySymbol'
+        symbol:
+          type: string
+          description: 'The symbol used to represent the currency (e.g., $, €, ¥).'
+        decimals:
+          type: integer
+          description: 'The number of decimal places used for this currency (e.g., 2 for US Dollar).'
+        country:
+          $ref: '#/components/schemas/country'
+        supportedCountries:
+          type: array
+          description: 'A list of countries where this currency can be legally operated. If operating in local currency, this will include the country where the currency originates.'
+          items:
+            $ref: '#/components/schemas/country'
+        supportedCurrencies:
+          type: array
+          description: 'A list of currencies that can be operated or exchanged with this currency. When performing transactions in the same currency, the supported currencies will be the same as the base currency.'
+          items:
+            allOf:
+              - $ref: '#/components/schemas/currency_2'
+              - type: array
+                description: Represents a list of fees associated with operating the currency when exchanging with the supported currencies.
+                items:
+                  $ref: '#/components/schemas/Fees'
+    currency_2:
+      type: object
+      title: pairCurrency
+      description: 'Represents a currency with relevant attributes such as name, symbol, decimals, country of origin, supported countries, and supported currencies for exchanges or transactions. When operating in local currency, the supported currencies will be the same as the currency itself.'
+      properties:
+        name:
+          type: string
+          description: 'The full name of the currency (e.g., US Dollar, Euro).'
+        currency:
+          $ref: '#/components/schemas/currencySymbol'
+        symbol:
+          type: string
+          description: 'The symbol used to represent the currency (e.g., $, €, ¥).'
+        decimals:
+          type: integer
+          description: 'The number of decimal places used for this currency (e.g., 2 for US Dollar).'
+        country:
+          $ref: '#/components/schemas/country'
+        supportedCountries:
+          type: array
+          description: 'A list of countries where this currency can be legally operated. If operating in local currency, this will include the country where the currency originates.'
+          items:
+            $ref: '#/components/schemas/country'
+security:
+  - x-api-key: []
+  - Bearer: []

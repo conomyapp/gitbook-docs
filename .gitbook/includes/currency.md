@@ -1,0 +1,5 @@
+---
+title: Currency
+---
+
+<table><thead><tr><th width="217">Field</th><th width="186">Type</th><th>Description</th></tr></thead><tbody><tr><td>name</td><td><code>string</code></td><td>Full name of the currency (e.g., US Dollar, Euro).</td></tr><tr><td>currency</td><td><code>string</code></td><td>ISO code representing the currency (e.g., USD, EUR).</td></tr><tr><td>symbol</td><td><code>string</code></td><td>Currency symbol (e.g., $, €, ¥).</td></tr><tr><td>decimals</td><td><code>integer</code></td><td>Number of decimal places for the currency (e.g., 2 for USD).</td></tr><tr><td>country</td><td><code>string</code></td><td>Country of origin for the currency (ISO 3166 code).</td></tr><tr><td>supportedCountries</td><td><code>array[string]</code></td><td>List of countries where the currency can be legally operated.</td></tr><tr><td>supportedCurrencies</td><td><code>array[</code><a href="broken-reference"><code>currency</code></a><code>]</code></td><td>List of currencies supported for exchanges.</td></tr></tbody></table>

@@ -1,0 +1,718 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0",
+    "title": "Identity"
+  },
+  "paths": {
+    "/identities": {
+      "post": {
+        "summary": "",
+        "operationId": "post-identities",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/createIdentity"
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/identity"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/identities/{identityId}": {
+      "get": {
+        "summary": "",
+        "operationId": "get-identities-identityId",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/idnetityId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/identity"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "x-api-key": []
+          },
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "identityId": {
+        "name": "identityId",
+        "in": "query",
+        "description": "A unique identifier of the identity, represented as a UUID (Universally Unique Identifier).",
+        "required": false,
+        "schema": {
+          "type": "string"
+        }
+      },
+      "idnetityId": {
+        "name": "identityId",
+        "in": "path",
+        "description": "A unique identifier of the identity, represented as a UUID (Universally Unique Identifier).",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "requestBodies": {
+      "createIdentity": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/createIdentity"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "x-api-key": {
+        "type": "apiKey",
+        "name": "x-api-key",
+        "in": "header"
+      },
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "responses": {
+      "identity": {
+        "description": "Example response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/createIdentity"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "createIdentity": {
+        "type": "object",
+        "title": "responseIdentity",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "identityExternalId": {
+            "type": "string",
+            "description": "An external identifier used to represent the identity in external systems."
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "USER",
+              "COMPANY"
+            ],
+            "description": "Specifies whether the identity represents a USER or a COMPANY."
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "BLOCKED",
+              "INACTIVE",
+              "ACTIVE",
+              "PENDING",
+              "PENDING_PHONE_VALIDATION",
+              "PENDING_EMAIL_VALIDATION",
+              "PENDING_2FA",
+              "PENDING_ACCOUNTS",
+              "PENDING_VERIFICATION",
+              "PROCCESING_VERIFICATION",
+              "FAILED_VERIFICATION"
+            ],
+            "description": "The current status of the identity, covering various stages like ACTIVE, PENDING, or BLOCKED."
+          },
+          "contract": {
+            "type": "string",
+            "description": "The contract identifier associated with the identity, if applicable."
+          },
+          "image": {
+            "type": "string",
+            "description": "A URL to the image or avatar representing the identity."
+          },
+          "session": {
+            "type": "object",
+            "description": "Information about the current session for the identity, including device and login details.",
+            "properties": {
+              "deviceToken": {
+                "type": "string",
+                "description": "A unique token identifying the device being used in the session."
+              },
+              "IP": {
+                "type": "string",
+                "description": "The IP address of the device being used in the session."
+              },
+              "logginAttempts": {
+                "type": "integer",
+                "description": "The number of failed login attempts in the current session."
+              }
+            }
+          },
+          "bankAccounts": {
+            "type": "array",
+            "description": "A list of bank accounts associated with the identity.",
+            "items": {
+              "type": "object",
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "default": {
+                      "type": "boolean",
+                      "description": "Indicates whether this is the default bank account for transactions."
+                    }
+                  }
+                },
+                {
+                  "$ref": "#/components/schemas/account"
+                }
+              ]
+            }
+          },
+          "user": {
+            "$ref": "#/components/schemas/user",
+            "description": "Details of the user associated with this identity. This field is required when the 'type' is `USER`."
+          },
+          "company": {
+            "$ref": "#/components/schemas/company",
+            "description": "Details of the company associated with this identity. This field is required when the 'type' is `COMPANY`."
+          },
+          "extendedData": {
+            "$ref": "#/components/schemas/extendedData",
+            "description": "Additional data related to the identity, which can vary depending on use cases."
+          },
+          "createdAt": {
+            "$ref": "#/components/schemas/createdAt",
+            "description": "The timestamp of when the identity was created, in ISO 8601 format."
+          },
+          "updatedAt": {
+            "$ref": "#/components/schemas/updatedAt",
+            "description": "The timestamp of the last update to the identity, in ISO 8601 format."
+          }
+        }
+      },
+      "account": {
+        "type": "object",
+        "title": "account",
+        "description": "Details about a user's bank account, including the account number, bank, holder information, and associated metadata.",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id",
+            "description": "A unique identifier. UUID"
+          },
+          "identity": {
+            "type": "string",
+            "description": "The unique identifier of the user who owns the bank account."
+          },
+          "externalId": {
+            "type": "string",
+            "description": "An external identifier for the bank account, typically provided by an external service or platform for integration purposes."
+          },
+          "accountNumber": {
+            "type": "string",
+            "description": "The bank account number, typically used for transactions and identifying the account within the financial institution."
+          },
+          "nickName": {
+            "type": "string",
+            "description": "A user-defined nickname or alias for the bank account, allowing the user to easily identify it (e.g., 'Savings' or 'Main Checking')."
+          },
+          "country": {
+            "$ref": "#/components/schemas/country",
+            "description": "The country where the bank account is held, referenced by a 3-character ISO 3166 country code."
+          },
+          "currency": {
+            "$ref": "#/components/schemas/currencySymbol",
+            "description": "The currency associated with the bank account, referenced by a 3-character ISO 4217 currency code."
+          },
+          "financialInstitution": {
+            "$ref": "#/components/schemas/bank",
+            "description": "The bank associated with this account, typically identified by the institution's name or code."
+          },
+          "type": {
+            "$ref": "#/components/schemas/accountType",
+            "description": "The type of bank account, such as savings, checking, or other account types as defined in accountType.json."
+          },
+          "accountHolder": {
+            "type": "string",
+            "description": "The full legal name of the person or entity that holds the bank account."
+          },
+          "accountHolderDni": {
+            "type": "string",
+            "description": "The national identification number (DNI) of the account holder, used for verification and compliance purposes."
+          },
+          "createdAt": {
+            "$ref": "#/components/schemas/createdAt",
+            "description": "The timestamp indicating when the bank account record was created."
+          },
+          "updatedAt": {
+            "$ref": "#/components/schemas/updatedAt",
+            "description": "The timestamp indicating when the bank account record was last updated."
+          },
+          "iban": {
+            "type": "string",
+            "description": "he IBAN is a unique identifier for a bank account that is used internationally to ensure that cross-border transactions are processed correctly."
+          },
+          "sortCode": {
+            "type": "string",
+            "description": "is a 6-digit number used by UK banks to identify specific branches when processing domestic payments."
+          }
+        }
+      },
+      "id": {
+        "type": "string",
+        "title": "id",
+        "description": "A unique identifier, represented as a UUID (Universally Unique Identifier)."
+      },
+      "country": {
+        "type": "string",
+        "enum": [
+          "ARG",
+          "BOL",
+          "BRA",
+          "CHL",
+          "COL",
+          "CRI",
+          "CUB",
+          "DOM",
+          "ECU",
+          "SLV",
+          "GTM",
+          "GUY",
+          "HND",
+          "HTI",
+          "JAM",
+          "MEX",
+          "NIC",
+          "PAN",
+          "PRY",
+          "PER",
+          "SUR",
+          "TTO",
+          "URY",
+          "VEN",
+          "GBR",
+          "ALB",
+          "AND",
+          "AUT",
+          "BEL",
+          "BIH",
+          "BGR",
+          "HRV",
+          "CYP",
+          "CZE",
+          "DNK",
+          "EST",
+          "FIN",
+          "FRA",
+          "DEU",
+          "GRC",
+          "HUN",
+          "ISL",
+          "IRL",
+          "ITA",
+          "LVA",
+          "LIE",
+          "LTU",
+          "LUX",
+          "MLT",
+          "MDA",
+          "MCO",
+          "MNE",
+          "NLD",
+          "MKD",
+          "NOR",
+          "POL",
+          "PRT",
+          "ROU",
+          "RUS",
+          "SMR",
+          "SRB",
+          "SVK",
+          "SVN",
+          "ESP",
+          "SWE",
+          "CHE",
+          "UKR"
+        ],
+        "title": "country",
+        "description": "The 3-character ISO 3166 country code indicating the country of address."
+      },
+      "currencySymbol": {
+        "type": "string",
+        "enum": [
+          "ARS",
+          "BRL",
+          "CLP",
+          "COP",
+          "CRC",
+          "CUP",
+          "DOP",
+          "EUR",
+          "GBP",
+          "GTQ",
+          "JMD",
+          "MXN",
+          "PAB",
+          "PEN",
+          "PYG",
+          "USD",
+          "UYU",
+          "USDC_SOLANA",
+          "USDC_ER20",
+          "USDC_MATIC"
+        ],
+        "title": "currencySymbol",
+        "description": "Currency code supported by the payment method. For cryptocurrencies, include both the token and network (e.g., `USDC_SOLANA`). For fiat currencies, use the standard ISO 4217 currency codes."
+      },
+      "bank": {
+        "type": "string",
+        "title": "bank",
+        "description": "The financial institution that processes and captures the transaction. This refers to the bank or payment provider responsible for authorizing, handling, and recording the details of the transaction, ensuring the transfer of funds between accounts."
+      },
+      "accountType": {
+        "type": "string",
+        "enum": [
+          "CASH_ACCOUNT",
+          "CURRENT_ACCOUNT",
+          "SAVINGS_ACCOUNT",
+          "CRYPTO"
+        ],
+        "title": "accountType",
+        "description": "The classification of the account. This field is an enumeration of possible account types."
+      },
+      "createdAt": {
+        "type": "string",
+        "title": "createdAt",
+        "description": "Creation date, in ISO 8601 date format"
+      },
+      "updatedAt": {
+        "type": "string",
+        "title": "updatedAt",
+        "description": "Date of last update, in ISO 8601 date format"
+      },
+      "user": {
+        "type": "object",
+        "title": "user",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The first name of the user."
+          },
+          "lastName": {
+            "type": "string",
+            "description": "The last name (surname) of the user."
+          },
+          "email": {
+            "type": "string",
+            "description": "User's associated email address."
+          },
+          "phone": {
+            "type": "string",
+            "description": "User's phone number."
+          },
+          "documentType": {
+            "type": "string",
+            "description": "The type of identification document provided by the user. For example, 'PASSPORT', 'NATIONAL_ID', or 'DRIVER_LICENSE'."
+          },
+          "documentNumber": {
+            "type": "string",
+            "description": "The number of the user's identification document, associated with the document type."
+          },
+          "career": {
+            "type": "string",
+            "description": "The user's current career or occupation."
+          },
+          "birthDate": {
+            "type": "string",
+            "description": "The user's date of birth in ISO format (YYYY-MM-DD)."
+          },
+          "country": {
+            "$ref": "#/components/schemas/country"
+          },
+          "gender": {
+            "type": "string",
+            "description": "The gender of the user (e.g., MALE, FEMALE, NON_BINARY)."
+          },
+          "kyc": {
+            "type": "string",
+            "description": "Know Your Customer (KYC) details"
+          },
+          "aml": {
+            "type": "string",
+            "description": "Anti-Money Laundering (AML) details."
+          }
+        }
+      },
+      "company": {
+        "type": "object",
+        "title": "company",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "The full legal name of the company."
+          },
+          "nickname": {
+            "type": "string",
+            "description": "An optional shorter name or alias for the company, used informally."
+          },
+          "taxCondition": {
+            "type": "string",
+            "description": "The `taxCondition` field is a critical attribute that defines the company's tax classification. It plays a vital role in ensuring legal compliance, accurate financial reporting, and proper tax handling within the system. By correctly specifying the tax condition, companies can align their operations with regulatory requirements and avoid potential issues related to taxation."
+          },
+          "registrationNumber": {
+            "type": "string",
+            "description": "The official registration number of the company, assigned by a government or regulatory authority."
+          },
+          "companyLegalStructure": {
+            "type": "string",
+            "description": "Specifies the company's tax status as recognized by tax authorities, directly influencing tax calculations, reporting, and compliance obligations."
+          },
+          "email": {
+            "type": "string",
+            "description": "The companyEmailAddress field represents the official email address of a company used within the system for communication and verification purposes."
+          },
+          "country": {
+            "$ref": "#/components/schemas/country"
+          },
+          "activity": {
+            "type": "string",
+            "description": "The industry or sector the company operates in (e.g., Technology, Finance, Retail)."
+          },
+          "legalRepresentative": {
+            "type": "object",
+            "description": "Specifies the details of the individual legally authorized to act on behalf of the company. This field is crucial for compliance, regulatory reporting, and identity verification processes.",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "The first name of the company's contact person."
+              },
+              "lastName": {
+                "type": "string",
+                "description": "The last name (surname) of the company's contact person."
+              },
+              "email": {
+                "type": "string",
+                "description": "The email address of the contact person for company-related correspondence."
+              },
+              "phone": {
+                "type": "string",
+                "description": "The phone number of the contact person for the company."
+              },
+              "powerOfAttorneyDocument": {
+                "type": "string",
+                "description": "Provides the legal document granting the legal representative the power of attorney to act on behalf of the company. This field contains the document encoded as a Base64 string."
+              },
+              "pep": {
+                "type": "boolean"
+              }
+            }
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "beneficialOwners": {
+            "type": "array",
+            "description": "An array of objects representing the direct shareholders and/or final beneficiaries who directly or indirectly exercise real control over the company. This section is required unless the company is majority-owned by an entity listed on an authorized local or international market subject to transparency and disclosure requirements.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "The full name of the individual shareholder or the registered name of the company shareholder."
+                },
+                "identificationNumber": {
+                  "type": "string",
+                  "description": "For individuals, provide the national ID or passport number. For companies, provide the tax identification number."
+                },
+                "ownership": {
+                  "type": "string",
+                  "description": "The percentage of ownership or control the individual or company holds in the company."
+                },
+                "legalEntity": {
+                  "type": "boolean",
+                  "description": "Indicates whether the shareholder is a legal entity (company) or an individual."
+                }
+              }
+            }
+          },
+          "individualShareholders": {
+            "type": "array",
+            "description": "If a legal entity has been declared in the beneficialOwners array and holds a participation of 10% or more, provide a list of its individual shareholders or partners who hold a participation of 10% or more.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Full name of the individual shareholder."
+                },
+                "identificationNumber": {
+                  "type": "string",
+                  "description": "National ID or passport number of the individual."
+                },
+                "ownership": {
+                  "type": "string",
+                  "description": "Percentage of ownership the individual holds in the legal entity."
+                }
+              }
+            }
+          },
+          "AML": {
+            "type": "object",
+            "description": "The `AML` object contains Anti-Money Laundering (AML) compliance information for the company. It includes details required for regulatory purposes when the company is obligated to register with AML authorities. All fields within this object are required if registrationRequired is true.",
+            "properties": {
+              "registrationRequired": {
+                "type": "boolean",
+                "description": "Indicates whether the company is legally required to register with Anti-Money Laundering (AML) regulators."
+              },
+              "reportingCountries": {
+                "type": "array",
+                "description": "Lists the countries where the company must perform AML reporting.",
+                "items": {
+                  "$ref": "#/components/schemas/country"
+                }
+              },
+              "registrationDocument": {
+                "type": "string",
+                "description": "A Base64-encoded string representing legal registration document with AML agencies."
+              },
+              "officer": {
+                "type": "object",
+                "description": "The officer object contains detailed information about a designated company officer responsible for specific roles such as compliance, Anti-Money Laundering (AML), or other regulatory functions. This object captures the officer's personal and contact information necessary for compliance verification and communication purposes.",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The full name and designation (title) of the company's AML Officer."
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "The email address of the AML Officer."
+                  },
+                  "phoneNumber": {
+                    "type": "string",
+                    "description": "The contact phone number of the AML Officer, including country code."
+                  }
+                }
+              }
+            }
+          },
+          "documents": {
+            "type": "object",
+            "description": "The `documents` object represents a file uploaded to the system for verification, compliance, or informational purposes. It encapsulates the essential details of the document, including its content and metadata.",
+            "properties": {
+              "companyLegalStatus": {
+                "type": "string",
+                "description": "A file upload field for the document or certified copy that proves the company's legal status, as registered in the corresponding public registry. This document credibly certifies the company's existence and legal recognition."
+              },
+              "taxIdentification": {
+                "type": "string",
+                "description": "A file upload field for the Tax Identification documents issued by competent authorities, showing the assignment of the tax identification number or its equivalent."
+              },
+              "proofOfAddress": {
+                "type": "string",
+                "description": "A file upload field for the company's proof of address document."
+              },
+              "privacyPolicy": {
+                "type": "string",
+                "description": "A file upload field for the company's privacy policy document."
+              }
+            }
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "title": "Address",
+        "description": "An Address object represents a structured location within a country, providing information about its geographic and administrative details. It captures subnational administrative divisions, street details, and the country using a 3-character ISO code.",
+        "properties": {
+          "country": {
+            "$ref": "#/components/schemas/country"
+          },
+          "administrativeAreaLevel1": {
+            "type": "string",
+            "description": "This field represents the largest subnational administrative unit of a country."
+          },
+          "administrativeAreaLevel2": {
+            "type": "string",
+            "description": "This field represents the second subnational administrative unit of a country."
+          },
+          "administrativeAreaLevel3": {
+            "type": "string",
+            "description": "This field represents the third subnational administrative unit of a country."
+          },
+          "street": {
+            "type": "string",
+            "description": "The street name for the address."
+          },
+          "zipcode": {
+            "type": "string",
+            "description": "The zipcode for the address."
+          },
+          "optionalAddress": {
+            "type": "string",
+            "description": "Extra address detail (optional)."
+          }
+        }
+      },
+      "extendedData": {
+        "type": "array",
+        "title": "extendedData",
+        "description": "The extendedData model allows for additional key-value pairs to be added to entities, providing extensibility and flexibility for custom or extra information not covered by default fields.",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "The name or key of the extended data field. This serves as the identifier for the piece of extended information."
+            },
+            "value": {
+              "type": "string",
+              "description": "The value associated with the extended data field. This is the content or data that corresponds to the specified key (name)."
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "x-api-key": []
+    },
+    {
+      "Bearer": []
+    }
+  ]
+}

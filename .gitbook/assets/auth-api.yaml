@@ -1,0 +1,69 @@
+openapi: 3.0.1
+info:
+  version: 1.0.0
+  title: Authentication
+  description: ''
+paths:
+  /authenticate:
+    post:
+      summary: ''
+      description: ''
+      operationId: post-auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientId3:
+                  type: string
+                  description: Unique identifier for the client.
+                  example: x68d4jdeje38PvPGqpMvubPn9fpOYxty
+                clientSecret:
+                  type: string
+                  description: Secret key associated with the client for authentication.
+                  example: XKOd7RYPDtmZotPmcaOjdatInNTjG2eAh1K2rUCKszjsYwkrwvWzVHsDL2I2afmx
+              required:
+                - clientId3
+                - clientSecret
+      responses:
+        '200':
+          description: Successful authentication.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken2:
+                    type: string
+                    description: |
+                      JSON Web Token (JWT) that grants access to protected resources.
+                      It should be included in the `Authorization` header of subsequent requests.
+                    example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IlVfc05VOEpDcWVTT1p3RFBQbElzQSJ9...
+                  tokenType:
+                    type: string
+                    description: Type of the token issued. Typically "Bearer".
+                    example: Bearer
+                  expiresIn:
+                    type: integer
+                    description: |
+                      Duration in seconds for which the access token is valid.
+                      Example: 86400 seconds equals 24 hours.
+                    example: 86400
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal SERVER ERROR HOLA FELIPE
+      security:
+        - x-api-key: []
+components:
+  securitySchemes:
+    x-api-key:
+      type: apiKey
+      name: x-api-key
+      in: header
+security:
+  - x-api-key: []

@@ -1,0 +1,5 @@
+---
+title: bankAccount
+---
+
+<table><thead><tr><th width="179">Field</th><th width="148">Type</th><th>Description</th></tr></thead><tbody><tr><td>id</td><td><code>string</code></td><td>Unique identifier (UUID).</td></tr><tr><td>accountNumber</td><td><code>string</code></td><td>Bank account number.</td></tr><tr><td>country</td><td><code>string</code></td><td>Country where the bank account is held (ISO 3166 code).</td></tr><tr><td>currency</td><td><code>string</code></td><td>Currency associated with the account (ISO 4217 code).</td></tr><tr><td>accountHolder</td><td><code>string</code></td><td>Full legal name of the person or entity holding the account.</td></tr><tr><td>type</td><td><code>string</code></td><td>Type of bank account (<code>CASH_ACCOUNT</code>, <code>CURRENT_ACCOUNT</code>, etc.).</td></tr><tr><td>iban</td><td><code>string</code></td><td>IBAN for international transactions.</td></tr><tr><td>sortCode</td><td><code>string</code></td><td>Sort code for UK bank branches.</td></tr></tbody></table>

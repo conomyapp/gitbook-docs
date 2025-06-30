@@ -56,3 +56,4 @@
         kind: openapi
         spec: conomyhq-api
   ```
+* [Authentication](api-reference/authentication.md)

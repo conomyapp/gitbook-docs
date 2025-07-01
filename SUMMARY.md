@@ -50,7 +50,7 @@
 * [Identities](api-reference/identities.md)
 * [Accounts](api-reference/accounts.md)
 * [Payments](api-reference/payments/README.md)
-  * [Payment methods](api-reference/payments/payment-methods.md)
+  * [Origins and destinations](api-reference/payments/origins-and-destinations.md)
   * [Payment-attempts](api-reference/payments/payment-attempts.md)
   * [Payments](api-reference/payments/payments.md)
   * [Webhooks](api-reference/payments/webhooks.md)

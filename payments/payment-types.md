@@ -12,11 +12,11 @@ layout:
     visible: false
 ---
 
-# Transaction types
+# Payment types
 
 #### **TOPUP\_ACCOUNT**
 
-Used to fund an account within **conomy\_hq**. This transaction type enables users to add funds to their accounts for future transactions.
+Used to fund an account within **conomy\_hq**. This payment type enables users to add funds to their accounts for future payments.
 
 #### **WITHDRAWAL\_ACCOUNT**
 
@@ -24,15 +24,15 @@ Used to withdraw funds from an account within **conomy\_hq**. This allows users 
 
 #### **PURCHASE**
 
-Represents a sale transaction where the client receives payment from a third party in exchange for goods or services. Typically initiated using a payment link or payment initiation method.
+Represents a sale payment where the client receives payment from a third party in exchange for goods or services. Typically initiated using a payment link or payment initiation method.
 
 #### **FEE**
 
-Automatically generated fee transactions based on the predefined business rules set by each client. These fees are deducted as part of the transaction processing and should not be created manually.
+Automatically generated fee payments based on the predefined business rules set by each client. These fees are deducted as part of the payment processing and should not be created manually.
 
 #### **COLLECT**
 
-Used to collect funds from multiple origin accounts into a single destination account. This bulk transaction type is useful for pooling payments from different users or consolidating balances.
+Used to collect funds from multiple origin accounts into a single destination account. This bulk payment type is useful for pooling payments from different users or consolidating balances.
 
 #### **P2P**
 
@@ -51,13 +51,13 @@ Used for peer-to-peer payments between service providers or organizations. This 
 
 ***
 
-#### Transaction Types Summary
+#### Payment types summary
 
 | Type                | Description                                                    |
 | ------------------- | -------------------------------------------------------------- |
 | TOPUP\_ACCOUNT      | Funds an account in **conomy\_hq**                             |
 | WITHDRAWAL\_ACCOUNT | Withdraws funds from a **conomy\_hq** account                  |
-| PURCHASE            | Sale transaction between client and third party                |
+| PURCHASE            | Sale payment between client and third party                    |
 | FEE                 | Automatically generated fees per business rules                |
 | COLLECT             | Collects funds from multiple origins into a single destination |
 | P2P                 | Transfers between service providers or organizations           |

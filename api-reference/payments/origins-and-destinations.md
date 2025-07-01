@@ -12,7 +12,7 @@ layout:
     visible: true
 ---
 
-# Payment methods
+# Origins and destinations
 
 {% columns fullWidth="true" %}
 {% column %}
@@ -30,9 +30,9 @@ Destinations can include user accounts, external bank accounts, wallets, or thir
 
 Use the Payment Destinations API to list all destinations defined in a payment flow.
 
-Go to [origins and destinations](../../payments/origins-and-destinations.md) page for more information.
+Go to [origins and destinations](../../payments/origins-and-destinations/) page for more information.
 
-Each `origin` and `destination` must include a `type` field that defines how the funds move. Go to [Transaction node page](../../payments/transaction-nodes.md) for more information.
+Each `origin` and `destination` must include a `type` field that defines how the funds move. Go to [Payment node page](../../payments/origins-and-destinations/nodes.md) for more information.
 {% endcolumn %}
 
 {% column %}
@@ -46,19 +46,19 @@ GET /payment-destinations
 {% endcolumns %}
 
 {% openapi-schemas spec="conomyhq-api" schemas="payment-node" grouped="false" %}
-[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/552534d10e9e90a821a9938005d2ec468153b739a1864d0de7c25a1b32c21d83.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T152511Z&X-Amz-Expires=172800&X-Amz-Signature=a80375bd868596f924a26748bd84b45ea9aa7ecc6d081670b03efe3a4f91f8aa&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/39003fc9ba4a3ca3327f768c7de7c4b872ac882fd801407888a679b34d7ae294.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T222841Z&X-Amz-Expires=172800&X-Amz-Signature=d37664e1e926cae1723bc671a0424e82ca1cfde7e2a3507f7d75c99dddf543a6&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-schemas %}
 
 ### Node types
 
 {% openapi-schemas spec="conomyhq-api" schemas="payment-initiation,payment-link,wallet,bank-account,card,account" grouped="true" %}
-[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/552534d10e9e90a821a9938005d2ec468153b739a1864d0de7c25a1b32c21d83.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T152511Z&X-Amz-Expires=172800&X-Amz-Signature=a80375bd868596f924a26748bd84b45ea9aa7ecc6d081670b03efe3a4f91f8aa&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/39003fc9ba4a3ca3327f768c7de7c4b872ac882fd801407888a679b34d7ae294.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T222841Z&X-Amz-Expires=172800&X-Amz-Signature=d37664e1e926cae1723bc671a0424e82ca1cfde7e2a3507f7d75c99dddf543a6&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-schemas %}
 
 {% openapi-operation spec="conomyhq-api" path="/payment-origins" method="get" %}
-[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/552534d10e9e90a821a9938005d2ec468153b739a1864d0de7c25a1b32c21d83.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T152511Z&X-Amz-Expires=172800&X-Amz-Signature=a80375bd868596f924a26748bd84b45ea9aa7ecc6d081670b03efe3a4f91f8aa&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/39003fc9ba4a3ca3327f768c7de7c4b872ac882fd801407888a679b34d7ae294.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T222841Z&X-Amz-Expires=172800&X-Amz-Signature=d37664e1e926cae1723bc671a0424e82ca1cfde7e2a3507f7d75c99dddf543a6&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-operation %}
 
 {% openapi-operation spec="conomyhq-api" path="/payment-destinations" method="get" %}
-[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/552534d10e9e90a821a9938005d2ec468153b739a1864d0de7c25a1b32c21d83.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T152511Z&X-Amz-Expires=172800&X-Amz-Signature=a80375bd868596f924a26748bd84b45ea9aa7ecc6d081670b03efe3a4f91f8aa&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/39003fc9ba4a3ca3327f768c7de7c4b872ac882fd801407888a679b34d7ae294.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T222841Z&X-Amz-Expires=172800&X-Amz-Signature=d37664e1e926cae1723bc671a0424e82ca1cfde7e2a3507f7d75c99dddf543a6&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-operation %}

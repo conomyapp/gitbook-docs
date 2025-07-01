@@ -52,11 +52,11 @@ Sale payment between client and third party.
 
 <details>
 
-<summary><code>P2P</code></summary>
+<summary><code>REMITTANCE</code></summary>
 
-Transfers between service providers or organizations.
+Crossborder payment from an internal or external account to receipient in another country.
 
-<a href="p2p.md" class="button secondary">Go to P2P payment docs</a>
+<a href="p2p.md" class="button secondary">Go to remittance payment docs</a>
 
 </details>
 

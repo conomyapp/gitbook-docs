@@ -1,4 +1,5 @@
 ---
+hidden: true
 layout:
   title:
     visible: true
@@ -12,9 +13,9 @@ layout:
     visible: true
 ---
 
-# Payment nodes
+# Copy of Nodes
 
-In **conomy\_hq**, each transaction type supports specific combinations of **origin** and **destination** node types.\
+In **conomy\_hq**, each payment type supports specific combinations of **origin** and **destination** node types.\
 This structure is essential for validating inputs and processing transactions correctly across different payment flows.
 
 ***

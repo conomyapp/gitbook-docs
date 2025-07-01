@@ -34,9 +34,9 @@ Below are the key fields used in the Payment object:
 | `accountNumber`    | The internal account number receiving or executing the payment.                                                                                                                             |
 | `identityId`       | The entity (e.g., `USER` or `ORGANIZATION`) initiating the payment. This may be a user selling on behalf of an organization, topping up their own balance, or authorized to withdraw funds. |
 | `totalAmount`      | The final transaction amount after all fees and currency conversions have been applied.                                                                                                     |
-| `currency`         | The currency associated with `totalAmount`.                                                                                                                                                 |
+| `currency`         | The currency associated with `totalAmount`. Check the [currency page](../home/currencies.md) for more info.                                                                                 |
 | `purchaseAmount`   | The original amount before any fees or currency exchange were applied.                                                                                                                      |
-| `purchaseCurrency` | The currency in which the original `purchaseAmount` was initiated.                                                                                                                          |
+| `purchaseCurrency` | The currency in which the original `purchaseAmount` was initiated. Check the [currency page](../home/currencies.md) for more info.                                                          |
 | `product`          | Represents the payment product format, structured as `purchaseCurrency:currency`.                                                                                                           |
 | `status`           | The current status of the transaction, [see lifecycle below](payment-structure.md#transaction-lifecycle).                                                                                   |
 | `type`             | The payment type (e.g., `PURCHASE`, `TOPUP_ACCOUNT`, etc.). Check the [payment type page](payment-types/) for more info.                                                                    |
@@ -55,8 +55,9 @@ To initiate a payment, the following fields are **mandatory**:
 * `product` (e.g., `CLP:USD`)
 * `type` (one of the supported payment types)
 * Either `purchaseAmount` or `totalAmount` must be provided
+* Either `purchaseCurrency` or `currency` must be provided
 
-For **bulk payments**, the `amount` field must also be defined at the origin or destination level. Check the [Origins and Destinations page](origins-and-destinations.md) for more information.
+For **bulk payments**, the `amount` field must also be defined at the origin or destination level. Check the [Origins and Destinations page](origins-and-destinations/) for more information.
 
 ***
 

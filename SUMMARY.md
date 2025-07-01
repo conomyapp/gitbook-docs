@@ -37,8 +37,8 @@
 
 * [Transaction types](payments/transaction-types.md)
 * [Origins and Destinations](payments/origins-and-destinations.md)
-* [Payment nodes](payments/payment-nodes.md)
-* [Transaction status](payments/transaction-status.md)
+* [Payment nodes](payments/transaction-nodes.md)
+* [Payment status](payments/payment-status.md)
 * [Creating payments](payments/creating-payments.md)
 * [Add & remove fees](payments/add-and-remove-fees.md)
 * [Peer to peer payment - P2P](payments/peer-to-peer-payment-p2p.md)

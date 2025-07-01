@@ -18,11 +18,11 @@ Used to withdraw funds from an internal **conomy\_hq** account to an external de
 
 The transaction is initiated by the account owner when they decide to move money out of the platform.
 
-| Field          | Value                               |
-| -------------- | ----------------------------------- |
-| `type`         | `WITHDRAWAL_ACCOUNT`                |
-| `origins`      | One internal account                |
-| `destinations` | One or more external bank accounts. |
+| Field          | Value                                          |
+| -------------- | ---------------------------------------------- |
+| `type`         | `WITHDRAWAL_ACCOUNT`                           |
+| `origins`      | One internal account                           |
+| `destinations` | One or more external bank accounts or wallets. |
 
 ### Ownership
 

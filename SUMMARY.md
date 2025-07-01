@@ -35,6 +35,7 @@
 
 ## Payments
 
+* [Payment structure](payments/payment-structure.md)
 * [Payment types](payments/payment-types/README.md)
   * [Topup account](payments/payment-types/topup-account.md)
   * [Withdrawal account](payments/payment-types/withdrawal-account.md)
@@ -46,9 +47,9 @@
 * [Payment nodes](payments/transaction-nodes.md)
 * [Payment status](payments/transaction-status.md)
 * [Creating payments](payments/creating-payments.md)
-* [Add & remove fees](payments/add-and-remove-fees.md)
 * [Peer to peer payment - P2P](payments/peer-to-peer-payment-p2p.md)
 * [Collect](payments/collect.md)
+* [Add & remove fees](payments/add-and-remove-fees.md)
 
 ## API REFERENCE
 

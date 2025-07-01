@@ -58,9 +58,9 @@ POST client-url
 {% endcolumns %}
 
 {% openapi-schemas spec="conomyhq-api" schemas="payment" grouped="false" %}
-[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/9e913261f18bf8e7a90637d3f1294b0bfecd67eb52c7c10bede7117e509d979a.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T144932Z&X-Amz-Expires=172800&X-Amz-Signature=16aefa96a9b978dc6cc71ccd31d3003992b9218aef5e2fe317dfb2dc8c89a5e3&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/552534d10e9e90a821a9938005d2ec468153b739a1864d0de7c25a1b32c21d83.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T145422Z&X-Amz-Expires=172800&X-Amz-Signature=52c2ba90159b7ed1c953d566fdc51ceb1d0da24241fa682ebf1c1f356dcff1a4&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-schemas %}
 
-{% openapi-schemas spec="conomyhq-api" schemas="Fee" grouped="false" %}
-[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/9e913261f18bf8e7a90637d3f1294b0bfecd67eb52c7c10bede7117e509d979a.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T144933Z&X-Amz-Expires=172800&X-Amz-Signature=a25d9b191eb9696aee844aea6ca875a3568c01b037ea66dccaa8ffa58f51a99f&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% openapi-schemas spec="conomyhq-api" schemas="fee" grouped="false" %}
+[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/552534d10e9e90a821a9938005d2ec468153b739a1864d0de7c25a1b32c21d83.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T145422Z&X-Amz-Expires=172800&X-Amz-Signature=52c2ba90159b7ed1c953d566fdc51ceb1d0da24241fa682ebf1c1f356dcff1a4&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-schemas %}

@@ -46,19 +46,9 @@
 
 ## API REFERENCE
 
-* ```yaml
-  type: builtin:openapi
-  props:
-    models: false
-  dependencies:
-    spec:
-      ref:
-        kind: openapi
-        spec: conomyhq-api
-  ```
 * [Authentication](api-reference/authentication.md)
-* [Identity](api-reference/identity.md)
-* [Account](api-reference/account.md)
+* [Identities](api-reference/identities.md)
+* [Accounts](api-reference/accounts.md)
 * [Payments](api-reference/payments/README.md)
   * [Payment methods](api-reference/payments/payment-methods.md)
   * [Payment-attempts](api-reference/payments/payment-attempts.md)

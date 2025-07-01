@@ -12,53 +12,54 @@ layout:
     visible: true
 ---
 
-# Payments
+# Accounts
 
 {% columns %}
 {% column %}
-Payments represent the intent and execution of moving funds from one or more origins to one or more destinations using a defined method.
+[Accounts](accounts.md#the-account-object) represent financial containers used to hold and manage funds.
 
-Each payment moves through a lifecycle that may include optional authorization and capture stages before final confirmation by the payment provider. Payments are linked to prior attempts and become the definitive execution step once initiated.
+Each account can store `balances`, receive or send funds, and be associated with a specific user or organization. Accounts can be [created](accounts.md#post-accounts), [updated](accounts.md#patch-accounts-id), and [deleted](accounts.md#delete-accounts-id) via the `API`, and are identified by a unique ID.
 
-A payment can be authorized (reserved but not yet charged), captured (confirmed for collection), and marked as received when the provider notifies that the payment was successful. Final reconciliation (settled) occurs in a separate stage and is managed by a different set of APIs.
-
-Use the Payments API to create payments, retrieve them, or transition them through their authorization, capture, and received stages.
+Use the Accounts API to[ list all accounts](accounts.md#get-accounts), create new ones, r[etrieve details of a specific account](accounts.md#get-accounts), update metadata, or delete an account when it’s no longer needed.
 {% endcolumn %}
 
 {% column %}
 {% code title="Endpoints" overflow="wrap" %}
-```http
-GET /payments
-GET /payments/:id
-POST /payments
-POST /payments/:id/authorized
-POST /payments/:id/captured
-POST /payments/:id/received
+```
+GET /accounts
+POST /accounts
+GET /accounts/:id
+PATCH /accounts/:id
+DELETE /accounts/:id
 ```
 {% endcode %}
 {% endcolumn %}
 {% endcolumns %}
 
-{% openapi-operation spec="conomyhq-api" path="/payments" method="get" %}
+{% openapi-schemas spec="conomyhq-api" schemas="Account" grouped="false" %}
+[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/af0d993cbae1a2ba3ceb1bb12e6b8b7abad4ca5ad73395a05077cf81b10d57d5.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T041213Z&X-Amz-Expires=172800&X-Amz-Signature=3a8205cefc3a50a7333750425fcada59d5ed905bd482fcd02324fa8ee19e1689&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% endopenapi-schemas %}
+
+{% openapi-schemas spec="conomyhq-api" schemas="BankAccount" grouped="false" %}
+[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/af0d993cbae1a2ba3ceb1bb12e6b8b7abad4ca5ad73395a05077cf81b10d57d5.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T041213Z&X-Amz-Expires=172800&X-Amz-Signature=3a8205cefc3a50a7333750425fcada59d5ed905bd482fcd02324fa8ee19e1689&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+{% endopenapi-schemas %}
+
+{% openapi-operation spec="conomyhq-api" path="/accounts" method="get" %}
 [OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/af0d993cbae1a2ba3ceb1bb12e6b8b7abad4ca5ad73395a05077cf81b10d57d5.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T041213Z&X-Amz-Expires=172800&X-Amz-Signature=3a8205cefc3a50a7333750425fcada59d5ed905bd482fcd02324fa8ee19e1689&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="conomyhq-api" path="/payments/{id}" method="get" %}
+{% openapi-operation spec="conomyhq-api" path="/accounts" method="post" %}
 [OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/af0d993cbae1a2ba3ceb1bb12e6b8b7abad4ca5ad73395a05077cf81b10d57d5.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T041213Z&X-Amz-Expires=172800&X-Amz-Signature=3a8205cefc3a50a7333750425fcada59d5ed905bd482fcd02324fa8ee19e1689&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="conomyhq-api" path="/payments" method="post" %}
+{% openapi-operation spec="conomyhq-api" path="/accounts/{id}" method="get" %}
 [OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/af0d993cbae1a2ba3ceb1bb12e6b8b7abad4ca5ad73395a05077cf81b10d57d5.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T041213Z&X-Amz-Expires=172800&X-Amz-Signature=3a8205cefc3a50a7333750425fcada59d5ed905bd482fcd02324fa8ee19e1689&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="conomyhq-api" path="/payments/{id}/authorized" method="post" %}
+{% openapi-operation spec="conomyhq-api" path="/accounts/{id}" method="patch" %}
 [OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/af0d993cbae1a2ba3ceb1bb12e6b8b7abad4ca5ad73395a05077cf81b10d57d5.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T041213Z&X-Amz-Expires=172800&X-Amz-Signature=3a8205cefc3a50a7333750425fcada59d5ed905bd482fcd02324fa8ee19e1689&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="conomyhq-api" path="/payments/{id}/captured" method="post" %}
-[OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/af0d993cbae1a2ba3ceb1bb12e6b8b7abad4ca5ad73395a05077cf81b10d57d5.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T041213Z&X-Amz-Expires=172800&X-Amz-Signature=3a8205cefc3a50a7333750425fcada59d5ed905bd482fcd02324fa8ee19e1689&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
-{% endopenapi-operation %}
-
-{% openapi-operation spec="conomyhq-api" path="/payments/received" method="post" %}
+{% openapi-operation spec="conomyhq-api" path="/accounts/{id}" method="delete" %}
 [OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/af0d993cbae1a2ba3ceb1bb12e6b8b7abad4ca5ad73395a05077cf81b10d57d5.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T041213Z&X-Amz-Expires=172800&X-Amz-Signature=3a8205cefc3a50a7333750425fcada59d5ed905bd482fcd02324fa8ee19e1689&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-operation %}

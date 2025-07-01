@@ -17,7 +17,7 @@ layout:
 The `Payments` entity represents all transactions processed through the **conomy\_hq** platform. This includes:
 
 * Local payments
-* International payments
+* Crossborder payments
 * Mass (bulk) payments
 * Internal transfers (e.g., P2P or Collect)
 
@@ -29,20 +29,20 @@ All payments involve at least one **internal account**, either as the origin or 
 
 Below are the key fields used in the Payment object:
 
-| Field              | Description                                                                                                                                                                       |
-| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `accountNumber`    | The internal account number receiving or executing the payment.                                                                                                                   |
-| `identityId`       | The entity (e.g., user or system) initiating the payment. This may be a user selling on behalf of an organization, topping up their own balance, or authorized to withdraw funds. |
-| `totalAmount`      | The final transaction amount after all fees and currency conversions have been applied.                                                                                           |
-| `currency`         | The currency associated with `totalAmount`.                                                                                                                                       |
-| `purchaseAmount`   | The original amount before any fees or currency exchange were applied.                                                                                                            |
-| `purchaseCurrency` | The currency in which the original purchase was initiated.                                                                                                                        |
-| `product`          | Represents the payment product format, structured as `purchaseCurrency:currency`.                                                                                                 |
-| `status`           | The current status of the transaction (see lifecycle below).                                                                                                                      |
-| `type`             | The transaction type (e.g., `PURCHASE`, `TOPUP_ACCOUNT`, etc.).                                                                                                                   |
-| `fees`             | An array containing all fee transactions applied to this payment.                                                                                                                 |
-| `origins`          | Array of origin sources (internal or external) involved in the transaction.                                                                                                       |
-| `destinations`     | Array of destinations receiving the funds.                                                                                                                                        |
+| Field              | Description                                                                                                                                                                                 |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `accountNumber`    | The internal account number receiving or executing the payment.                                                                                                                             |
+| `identityId`       | The entity (e.g., `USER` or `ORGANIZATION`) initiating the payment. This may be a user selling on behalf of an organization, topping up their own balance, or authorized to withdraw funds. |
+| `totalAmount`      | The final transaction amount after all fees and currency conversions have been applied.                                                                                                     |
+| `currency`         | The currency associated with `totalAmount`.                                                                                                                                                 |
+| `purchaseAmount`   | The original amount before any fees or currency exchange were applied.                                                                                                                      |
+| `purchaseCurrency` | The currency in which the original `purchaseAmount` was initiated.                                                                                                                          |
+| `product`          | Represents the payment product format, structured as `purchaseCurrency:currency`.                                                                                                           |
+| `status`           | The current status of the transaction, [see lifecycle below](payment-structure.md#transaction-lifecycle).                                                                                   |
+| `type`             | The payment type (e.g., `PURCHASE`, `TOPUP_ACCOUNT`, etc.). Check the [payment type page](payment-types/) for more info.                                                                    |
+| `fees`             | An array containing all fee transactions applied to this payment.                                                                                                                           |
+| `origins`          | Array of origin sources (internal or external) involved in the transaction.                                                                                                                 |
+| `destinations`     | Array of destinations receiving the funds.                                                                                                                                                  |
 
 ***
 
@@ -56,14 +56,13 @@ To initiate a payment, the following fields are **mandatory**:
 * `type` (one of the supported payment types)
 * Either `purchaseAmount` or `totalAmount` must be provided
 
-For **bulk payments**, the `amount` field must also be defined at the origin or destination level.\
-→ See the Origins and Destinations page for more information.
+For **bulk payments**, the `amount` field must also be defined at the origin or destination level. Check the [Origins and Destinations page](origins-and-destinations.md) for more information.
 
 ***
 
 ### Transaction Lifecycle
 
-The status of a payment evolves through the following lifecycle stages:
+The step of a payment evolves through the following lifecycle stages. For more information check the [payment status page](transaction-status.md).
 
 | Status        | Description                                                                                               |
 | ------------- | --------------------------------------------------------------------------------------------------------- |
@@ -78,15 +77,13 @@ The status of a payment evolves through the following lifecycle stages:
 
 ***
 
-### Execution & Timing
+### Settlement
 
 The execution flow and expected processing time of a payment depend on the **combination of origins and destinations**.\
 For example:
 
 * External origins (e.g., card, bank transfer) may involve delays depending on the provider.
-* Internal transactions (e.g., P2P, Collect) are typically instant.
-* International payments may require currency conversion and additional processing time.
+* Internal transactions (e.g., P2P, Collect) are instant.
+* Crossborder payments may require currency conversion and sometimes additional processing time.
 
-***
-
-This entity serves as the **core model for all payment operations** within Conomy. A correct understanding and setup of this structure is essential for building reliable and traceable financial workflows.
+This entity serves as the **core model for all payment operations** within **conomy\_hq**. A correct understanding and setup of this structure is essential for building reliable and traceable financial workflows.

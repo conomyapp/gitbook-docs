@@ -35,7 +35,7 @@
 
 ## Payments
 
-* [Transaction types](payments/transaction-types.md)
+* [Payment types](payments/payment-types.md)
 * [Origins and Destinations](payments/origins-and-destinations.md)
 * [Payment nodes](payments/transaction-nodes.md)
 * [Payment status](payments/transaction-status.md)

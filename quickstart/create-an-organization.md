@@ -18,7 +18,7 @@ layout:
 Each organization under the same Client must have a unique `documentNumber`. If an entity with the same values already exists, the request will fail.
 {% endhint %}
 
-Once you have obtained an access token, you can create an organization using ([Create Identy](broken-reference)) the following `POST` request:
+Once you have obtained an access token, you can create an organization using ([Create Identy](../api-reference/identities.md#post-identities)) the following `POST` request:
 
 #### **Request**
 

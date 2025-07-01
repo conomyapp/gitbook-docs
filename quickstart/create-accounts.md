@@ -20,7 +20,7 @@ Allows account types: `CHECKING`, `ASSET` & `SAVINGS`&#x20;
 
 ### **Create the Organization's Account**
 
-To [create an account](broken-reference) for the **organization**, make the following `POST` request:
+To [create an account](../api-reference/accounts.md#post-accounts) for the **organization**, make the following `POST` request:
 
 #### **Request**
 
@@ -69,7 +69,7 @@ curl --location --request POST 'https://api.conomyhq.com/sandbox/accounts' \
 
 ### Create Users's Account
 
-To [create an account](broken-reference) for the **first user**, make the following `POST` request:
+To [create an account](../api-reference/accounts.md#post-accounts) for the **first user**, make the following `POST` request:
 
 #### **Request**
 

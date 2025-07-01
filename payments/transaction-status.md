@@ -12,37 +12,37 @@ layout:
     visible: true
 ---
 
-# Transaction status
+# Payment status
 
 #### **ATTEMPT**
 
 Represents an initial attempt to process a transaction. At this stage, no payment is initiated, nor are pre-registrations or pre-authorizations issued. This step is optional in the payment flow.
 
-* **Endpoint:** [`/payment-attempts`](broken-reference)
+* **Endpoint:** [`/payment-attempts`](../api-reference/payments/payment-attempts.md#post-payment-attempts)
 
 #### **PENDING**
 
 Indicates that the transaction has been initiated. If a pre-authorization or pre-registration is required, it is provided at this stage. This step is mandatory for further processing.
 
-* **Endpoint:** [`/payments`](broken-reference)
+* **Endpoint:** [`/payments`](../api-reference/payments/payments.md#post-payments)
 
 #### **AUTHORIZED**
 
 Used to reserve funds in payment methods that support fund reservation. At this stage, funds are held but not yet captured by the payment provider. This step is optional in the payment flow.
 
-* **Endpoint:** [`/payments/{id}/authorized`](broken-reference)
+* **Endpoint:** [`/payments/{id}/authorized`](../api-reference/payments/payments.md#post-payments-id-authorized)
 
 #### **CAPTURED**
 
 The instruction to capture the payment is sent to the payment provider. While the funds have not yet arrived in the destination account, the payment request has been successfully processed. This step is mandatory for further processing.
 
-* **Endpoint:** [`/payments/{id}/captured`](broken-reference)
+* **Endpoint:** [`/payments/{id}/captured`](../api-reference/payments/payments.md#post-payments-id-captured)
 
 #### **RECEIVED**
 
 The payment provider confirms that the funds have been successfully transferred to the destination account. The transaction is considered complete, but **conomy\_hq** still needs to validate the payment internally through a reconciliation process.
 
-* **Endpoint:** [`/payments/received/{payment-provider}`](broken-reference)
+* **Endpoint:** [`/payments/received`](../api-reference/payments/payments.md#post-payments-received)
 
 #### **SETTLED**
 

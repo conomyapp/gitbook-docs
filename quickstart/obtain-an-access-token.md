@@ -14,7 +14,7 @@ layout:
 
 # Obtain an Access Token
 
-To obtain an access token, make the following `POST` request to the [Auth endpoint](broken-reference).
+To obtain an access token, make the following `POST` request to the [Auth endpoint](../api-reference/authentication.md#post-auth).
 
 {% hint style="success" %}
 Use the returned `accessToken` in the `Authorization` header for subsequent API requests.

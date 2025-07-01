@@ -33,7 +33,7 @@ After creating an **organization**, you need to create two **users** associated 
 
 ### Create the First User
 
-Make the following `POST` request ([Create Identity](broken-reference)) to create the first user
+Make the following `POST` request ([Create Identity](../api-reference/identities.md#post-identities)) to create the first user
 
 #### **Request**
 

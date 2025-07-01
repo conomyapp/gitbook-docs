@@ -58,6 +58,7 @@
   ```
 * [Authentication](api-reference/authentication.md)
 * [Identity](api-reference/identity.md)
+* [Account](api-reference/account.md)
 * [Payments](api-reference/payments/README.md)
   * [Payment methods](api-reference/payments/payment-methods.md)
   * [Payment-attempts](api-reference/payments/payment-attempts.md)

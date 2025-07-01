@@ -57,4 +57,4 @@
         spec: conomyhq-api
   ```
 * [Authentication](api-reference/authentication.md)
-* [Identities](api-reference/identities.md)
+* [Identities](api-reference/identity.md)

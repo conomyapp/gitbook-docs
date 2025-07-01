@@ -59,4 +59,7 @@
 * [Authentication](api-reference/authentication.md)
 * [Identity](api-reference/identity.md)
 * [Payments](api-reference/payments/README.md)
-  * [Page 1](api-reference/payments/page-1.md)
+  * [Payment methods](api-reference/payments/payment-methods.md)
+  * [Payment-attempts](api-reference/payments/payment-attempts.md)
+  * [Payments](api-reference/payments/payments.md)
+  * [Webhooks](api-reference/payments/webhooks.md)

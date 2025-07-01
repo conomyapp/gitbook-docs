@@ -35,7 +35,13 @@
 
 ## Payments
 
-* [Payment types](payments/payment-types.md)
+* [Payment types](payments/payment-types/README.md)
+  * [Topup account](payments/payment-types/topup-account.md)
+  * [Withdrawal account](payments/payment-types/withdrawal-account.md)
+  * [Purchase](payments/payment-types/purchase.md)
+  * [P2P](payments/payment-types/p2p.md)
+  * [Collect](payments/payment-types/collect.md)
+  * [Fee](payments/payment-types/fee.md)
 * [Origins and Destinations](payments/origins-and-destinations.md)
 * [Payment nodes](payments/transaction-nodes.md)
 * [Payment status](payments/transaction-status.md)

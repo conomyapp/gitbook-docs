@@ -20,7 +20,7 @@ A payment uses the transaction model. The model has several key elements that ar
 
 * **identityId**: The identity initiating the payment.
 * **accountNumber**: The account number linked to the payment. It must be an account owned by the identity assigned in `identityId`.
-* **type**: The [transaction types](payment-types.md) as defined in the system.
+* **type**: The [transaction types](payment-types/) as defined in the system.
 * **purchaseAmount**: The amount before any fees are applied. A payment can be initiated using either `purchaseAmount` or `totalAmount`, but only one of the two should be provided.
 * **purchaseCurrency**: The currency associated with `purchaseAmount`.
 * **totalAmount**: The final amount after all fees have been applied. A payment can be initiated using either `purchaseAmount` or `totalAmount`, but only one of the two should be provided.

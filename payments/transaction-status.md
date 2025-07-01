@@ -42,8 +42,6 @@ The instruction to capture the payment is sent to the payment provider. While th
 
 The payment provider confirms that the funds have been successfully transferred to the destination account. The transaction is considered complete, but **conomy\_hq** still needs to validate the payment internally through a reconciliation process.
 
-* **Endpoint:** [`/payments/received`](../api-reference/payments/payments.md#post-payments-received)
-
 #### **SETTLED**
 
 Thee payment has been successfully received by the payment provider and has been reconciled with **conomy\_hq**'s internal payment and account systems. This status confirms that the funds are verified, matched, and fully available within the platform.

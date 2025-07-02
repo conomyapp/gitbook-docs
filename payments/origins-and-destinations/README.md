@@ -1,17 +1,3 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: false
-  pagination:
-    visible: false
----
-
 # Origins and Destinations
 
 In every payment, the flow of funds is defined by **origins** (where the money comes from) and **destinations** (where the money goes). Each item is represented as an object within the `origins[]` or `destinations[]` array.

@@ -1,5 +1,4 @@
 ---
-hidden: true
 layout:
   title:
     visible: true
@@ -104,12 +103,7 @@ Represents a reusable or one-time link to initiate a payment.
 
 **Required node fields**
 
-| Fields                | Description                                                                                 |
-| --------------------- | ------------------------------------------------------------------------------------------- |
-| customer              | Information on who pays the transaction.                                                    |
-| paymentMethodsAllowed | Allowed payment methods. If the fields is empty, all payment methods allowed will be shown. |
-| metadata              | Information will be displayed in the link.                                                  |
-| redirectURL           | The URL to which the end user will be redirected after completing the payment.              |
+<table><thead><tr><th valign="top">Fields</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top">customer</td><td valign="top">Information on who pays the transaction.</td></tr><tr><td valign="top">paymentMethodsAllowed</td><td valign="top">Allowed payment methods. If the fields is empty, all payment methods allowed will be shown.</td></tr><tr><td valign="top">metadata</td><td valign="top">Information will be displayed in the link.</td></tr><tr><td valign="top">redirectURL</td><td valign="top">The URL to which the end user will be redirected after completing the payment.</td></tr></tbody></table>
 
 **Origin request example**
 
@@ -140,51 +134,71 @@ Represents a reusable or one-time link to initiate a payment.
 * To learn more about the supported payment methods, please refer to the Payment Methods page.
 * Once the payment is successfully processed, the user will be redirected to the `redirectURL` provided in the request.
 * A payment link can be configured with an `expiredAt` timestamp to define its expiration time.
-* The response also includes a `paymentMethod` object, which contains a `type` field. This field determines the structure of the payment method used by the customer to complete the payment. E.g., if type is `CARD`, the object will include a `card` node; if type is `PAYMENT_INITIATION`, it will include a `paymentInitiation` node, and so on.
+* The `response` also includes a `paymentMethod` object, which contains a `type` field. This field determines the structure of the payment method used by the customer to complete the payment. E.g., if type is `CARD`, the object will include a `card` node; if type is `PAYMENT_INITIATION`, it will include a `paymentInitiation` node, and so on.
 
 </details>
 
 <details>
 
-<summary><strong>Payment link</strong></summary>
+<summary><strong>Payment initiation</strong></summary>
 
 Represents a reusable or one-time link to initiate a payment.
 
-| Payment-node type | node          |
-| ----------------- | ------------- |
-| `PAYMENT_LINK`    | `paymentLink` |
+| Payment-node type    | node                |
+| -------------------- | ------------------- |
+| `PAYMENT_INITIATION` | `paymentInitiation` |
 
 **Required node fields**
 
-| Fields                | Description                                                                                 |
-| --------------------- | ------------------------------------------------------------------------------------------- |
-| payer                 | Information on who pays the transaction.                                                    |
-| paymentMethodsAllowed | Allowed payment methods. If the fields is empty, all payment methods allowed will be shown. |
-| metadata              | Information will be displayed in the link.                                                  |
+<table><thead><tr><th valign="top">Fields</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top">provider</td><td valign="top">Payment initiation provider.</td></tr><tr><td valign="top">referenceId</td><td valign="top">Identifier of the account in the payment initiation provider.</td></tr><tr><td valign="top">redirectUrl</td><td valign="top">URL where the user will be redirected after completing the payment.</td></tr></tbody></table>
 
 **Origin request example**
 
 ```json
     {
-      "type": "PAYMENT_LINK",
-      "paymentLink": {
-        "payer": {
-          "name": "Jhon Doe",
-          "email": "jhon@email.com"
-        },
-        "paymentMethodsAllowed": [
-          "CARD",
-          "ETPAY",
-          "PIX"
-        ],
-        "metadata": {
-          "description": "Payments"
-        }
+      "type": "PAYMENT_INITIATION",
+      "paymentInitiation": {
+        "provider": "PLAID",
+        "referenceId": "1230222",
+        "redirectUrl": "https://url.com"
+      }
+    }
+```
+
+#### Notes
+
+* For some payment initiation providers, bank accounts can be registered. When this occurs, the referenceId field is required.
+* When a bank account is successfully registered, the account information will be sent via `webhook` notification.
+* The `response` returns the `referenceToken`, which is required to continue the payment flow.
+* The `language` field can be used to localize the user experience. Only some providers support this field — refer to the Payment Methods page for more details.
+* The `minimumAmount` and `maximumAmount` fields define the allowed transaction range for this payment initiation.
+
+</details>
+
+<details>
+
+<summary>Crypto</summary>
+
+Crypto wallet for sending or receiving crypto.
+
+| Payment-node type | node     |
+| ----------------- | -------- |
+| `CRYPTO`          | `wallet` |
+
+**Required node fields**
+
+<table><thead><tr><th valign="top">Fields</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top">address</td><td valign="top">Wallet's address</td></tr></tbody></table>
+
+**Origin request example**
+
+```json
+    {
+      "type": "CRYPTO",
+      "wallet": {
+        "address": "0x123...456"
       }
     }
 ```
 
 </details>
-
-
 

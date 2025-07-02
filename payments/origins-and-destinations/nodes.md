@@ -1,17 +1,3 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: false
-  pagination:
-    visible: true
----
-
 # Nodes
 
 The node field is a dynamic object inside a payment-node and defines the specific resource used to execute the payment depending on the value of `origin` or `destination` type.
@@ -202,3 +188,34 @@ Crypto wallet for sending or receiving crypto.
 
 </details>
 
+<details>
+
+<summary>Card</summary>
+
+Card-based payments (debit, credit, prepaid).
+
+| Payment-node type | node   |
+| ----------------- | ------ |
+| `CARD`            | `card` |
+
+**Required node fields**
+
+<table><thead><tr><th valign="top">Fields</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top">token</td><td valign="top">Card token</td></tr></tbody></table>
+
+**Origin request example**
+
+```json
+    {
+      "type": "CARD",
+      "card": {
+        "token": "111111111111"
+      }
+    }
+```
+
+#### Notes
+
+* To perform a card payment via API, the card must first be pre-registered and tokenized. Refer to the Payment Methods page for more information on how to tokenize cards.
+* The response will include the card holder and a masked card number containing the last 4 digits.
+
+</details>

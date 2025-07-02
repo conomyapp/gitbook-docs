@@ -65,16 +65,15 @@ For **bulk payments**, the `amount` field must also be defined at the origin or 
 
 The step of a payment evolves through the following lifecycle stages. For more information check the [payment status page](transaction-status.md).
 
-| Status        | Description                                                                                               |
-| ------------- | --------------------------------------------------------------------------------------------------------- |
-| `CREATED`     | Transaction is created. If an external payment link is needed, it is generated at this stage.             |
-| `INITIALIZED` | Indicates that the payment has been initialized. Useful when external payment gateways notify the system. |
-| `AUTHORIZED`  | Applies to flows where funds can be reserved before final capture.                                        |
-| `CAPTURED`    | Confirms that funds have been captured from the source of money.                                          |
-| `RECEIVED`    | Notification received from the payment provider confirming the transaction was successfully paid.         |
-| `SETTLED`     | The transaction amount was validated as correctly paid.                                                   |
-| `DISPUTED`    | A dispute has been opened before the transaction is settled.                                              |
-| `REVERSED`    | The transaction was cancelled before settlement was completed.                                            |
+| Status       | Description                                                                                       |
+| ------------ | ------------------------------------------------------------------------------------------------- |
+| `CREATED`    | Transaction is created. If an external payment link is needed, it is generated at this stage.     |
+| `AUTHORIZED` | Applies to flows where funds can be reserved before final capture.                                |
+| `CAPTURED`   | Confirms that funds have been captured from the source of money.                                  |
+| `RECEIVED`   | Notification received from the payment provider confirming the transaction was successfully paid. |
+| `SETTLED`    | The transaction amount was validated as correctly paid.                                           |
+| `DISPUTED`   | A dispute has been opened before the transaction is settled.                                      |
+| `REVERSED`   | The transaction was cancelled before settlement was completed.                                    |
 
 ***
 

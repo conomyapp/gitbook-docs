@@ -23,7 +23,7 @@ Below are the supported `node` types and their expected structure by `payment-no
 
 <details>
 
-<summary>ACCOUNT</summary>
+<summary><strong>Account</strong></summary>
 
 Represents an internal account within the **conomy\_hq**.
 
@@ -37,7 +37,7 @@ Represents an internal account within the **conomy\_hq**.
 | ------------- | ----------------------------------------- |
 | accountNumber | Internal reference number for the account |
 
-**Example**
+**Origin/Destination request example**
 
 ```json
 {
@@ -53,13 +53,13 @@ Represents an internal account within the **conomy\_hq**.
 
 <details>
 
-<summary>BANK_ACCOUNT</summary>
+<summary><strong>Bank account</strong></summary>
 
-Represents an internal account within the **conomy\_hq**.
+Represents an external bank account, typically used for payouts or remittances.
 
-| Payment-node type | node           |
-| ----------------- | -------------- |
-| `BANK_ACCOUNT`    | `BANK_ACCOUNT` |
+| Payment-node type | node   |
+| ----------------- | ------ |
+| `BANK_ACCOUNT`    | `bank` |
 
 **Required node fields**
 
@@ -73,7 +73,7 @@ Represents an internal account within the **conomy\_hq**.
 | country          | The country of the bank account.                                    |
 | currency         | The currency of the bank account.                                   |
 
-**Example**
+**Origin/Destination request example**
 
 ```json
     {
@@ -94,220 +94,44 @@ Represents an internal account within the **conomy\_hq**.
 
 <details>
 
-<summary>ACCOUNT</summary>
+<summary><strong>Payment link</strong></summary>
 
-Represents an internal account within the **conomy\_hq**.
+Represents a reusable or one-time link to initiate a payment.
 
-| Payment-node type | node      |
-| ----------------- | --------- |
-| `ACCOUNT`         | `account` |
-
-**Required node fields**
-
-| Fields        | Description                               |
-| ------------- | ----------------------------------------- |
-| accountNumber | Internal reference number for the account |
-
-**Origin example**
-
-```json
-{
-  "type": "ACCOUNT",
-  "currency": "CLP",
-  "account": {
-    "accountNumber": "174XXX"
-  }
-}
-```
-
-**Destination example**
-
-```json
-{
-  "type": "ACCOUNT",
-  "currency": "COP",
-  "amount": "10000",
-  "account": {
-    "accountNumber": "174XXX"
-  }
-}
-```
-
-</details>
-
-<details>
-
-<summary>ACCOUNT</summary>
-
-Represents an internal account within the **conomy\_hq**.
-
-| Payment-node type | node      |
-| ----------------- | --------- |
-| `ACCOUNT`         | `account` |
+| Payment-node type | node          |
+| ----------------- | ------------- |
+| `PAYMENT_LINK`    | `paymentLink` |
 
 **Required node fields**
 
-| Fields        | Description                               |
-| ------------- | ----------------------------------------- |
-| accountNumber | Internal reference number for the account |
+| Fields           | Description                                                         |
+| ---------------- | ------------------------------------------------------------------- |
+| provider         | The bank account number.                                            |
+| typeAccount      | The type of bank account. `CHECKING_ACOUNT` `SAVINGS`               |
+| bank             | The name of the bank where the account is held.                     |
+| accountHolder    | The full name of the account holder.                                |
+| accountHolderDni | The national identification number or tax ID of the account holder. |
+| country          | The country of the bank account.                                    |
+| currency         | The currency of the bank account.                                   |
 
-**Origin example**
-
-```json
-{
-  "type": "ACCOUNT",
-  "currency": "CLP",
-  "account": {
-    "accountNumber": "174XXX"
-  }
-}
-```
-
-**Destination example**
+**Origin/Destination request example**
 
 ```json
-{
-  "type": "ACCOUNT",
-  "currency": "COP",
-  "amount": "10000",
-  "account": {
-    "accountNumber": "174XXX"
-  }
-}
-```
-
-</details>
-
-<details>
-
-<summary>ACCOUNT</summary>
-
-Represents an internal account within the **conomy\_hq**.
-
-| Payment-node type | node      |
-| ----------------- | --------- |
-| `ACCOUNT`         | `account` |
-
-**Required node fields**
-
-| Fields        | Description                               |
-| ------------- | ----------------------------------------- |
-| accountNumber | Internal reference number for the account |
-
-**Origin example**
-
-```json
-{
-  "type": "ACCOUNT",
-  "currency": "CLP",
-  "account": {
-    "accountNumber": "174XXX"
-  }
-}
-```
-
-**Destination example**
-
-```json
-{
-  "type": "ACCOUNT",
-  "currency": "COP",
-  "amount": "10000",
-  "account": {
-    "accountNumber": "174XXX"
-  }
-}
+    {
+      "type": "BANK_ACCOUNT",
+      "bank": {
+        "accountNumber": "11111111",
+        "bank": "BANCO_SANTANDER",
+        "currency": "CLP",
+        "country": "CHL",
+        "typeAccount": "CHECKING_ACCOUNT",
+        "accountHolder": "John Doe",
+        "accountHolderDni": "162115031-7",
+      }
+    }
 ```
 
 </details>
-
-<details>
-
-<summary>ACCOUNT</summary>
-
-Represents an internal account within the **conomy\_hq**.
-
-| Payment-node type | node      |
-| ----------------- | --------- |
-| `ACCOUNT`         | `account` |
-
-**Required node fields**
-
-| Fields        | Description                               |
-| ------------- | ----------------------------------------- |
-| accountNumber | Internal reference number for the account |
-
-**Origin example**
-
-```json
-{
-  "type": "ACCOUNT",
-  "currency": "CLP",
-  "account": {
-    "accountNumber": "174XXX"
-  }
-}
-```
-
-**Destination example**
-
-```json
-{
-  "type": "ACCOUNT",
-  "currency": "COP",
-  "amount": "10000",
-  "account": {
-    "accountNumber": "174XXX"
-  }
-}
-```
-
-</details>
-
-<details>
-
-<summary>ACCOUNT</summary>
-
-Represents an internal account within the **conomy\_hq**.
-
-| Payment-node type | node      |
-| ----------------- | --------- |
-| `ACCOUNT`         | `account` |
-
-**Required node fields**
-
-| Fields        | Description                               |
-| ------------- | ----------------------------------------- |
-| accountNumber | Internal reference number for the account |
-
-**Origin example**
-
-```json
-{
-  "type": "ACCOUNT",
-  "currency": "CLP",
-  "account": {
-    "accountNumber": "174XXX"
-  }
-}
-```
-
-**Destination example**
-
-```json
-{
-  "type": "ACCOUNT",
-  "currency": "COP",
-  "amount": "10000",
-  "account": {
-    "accountNumber": "174XXX"
-  }
-}
-```
-
-</details>
-
-
 
 
 

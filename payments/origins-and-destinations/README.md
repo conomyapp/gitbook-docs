@@ -58,7 +58,7 @@ The table below defines the valid combinations of `origin` and `destination` typ
 
 | Payment Type         | Valid Origin Types                                                                 | Valid Destination Types |
 | -------------------- | ---------------------------------------------------------------------------------- | ----------------------- |
-| `P2P`                | `ACCOUNT`, `WALLET`                                                                | `ACCOUNT`               |
+| `P2P`                | `ACCOUNT`                                                                          | `ACCOUNT`               |
 | `TOPUP_ACCOUNT`      | `PAYMENT_LINK`, `WALLET`, `CARD`, `PAYMENT_INITIATION`, `BANK_ACCOUNT`             | `ACCOUNT`               |
 | `REMITTANCE`         | `ACCOUNT`, `WALLET`, `PAYMENT_LINK`, `CARD`, `PAYMENT_INITIATION`, `BANK_ACCOUNT`  | `BANK_ACCOUNT`          |
 | `WITHDRAWAL_ACCOUNT` | `ACCOUNT`                                                                          | `BANK_ACCOUNT`          |

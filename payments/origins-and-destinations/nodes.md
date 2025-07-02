@@ -163,7 +163,7 @@ Represents a reusable or one-time link to initiate a payment.
 
 <details>
 
-<summary>Crypto</summary>
+<summary><strong>Crypto</strong></summary>
 
 Crypto wallet for sending or receiving crypto.
 
@@ -190,7 +190,7 @@ Crypto wallet for sending or receiving crypto.
 
 <details>
 
-<summary>Card</summary>
+<summary><strong>Card</strong></summary>
 
 Card-based payments (debit, credit, prepaid).
 

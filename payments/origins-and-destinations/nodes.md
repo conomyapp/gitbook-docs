@@ -8,77 +8,6 @@ Below are the supported `node` types and their expected structure by `payment-no
 
 <details>
 
-<summary><strong>Account</strong></summary>
-
-Represents an internal account within the **conomy\_hq**.
-
-| Payment-node type | node      |
-| ----------------- | --------- |
-| `ACCOUNT`         | `account` |
-
-**Required node fields**
-
-| Fields        | Description                               |
-| ------------- | ----------------------------------------- |
-| accountNumber | Internal reference number for the account |
-
-**Origin/Destination request example**
-
-```json
-{
-  "type": "ACCOUNT",
-  "currency": "CLP",
-  "account": {
-    "accountNumber": "174XXX"
-  }
-}
-```
-
-</details>
-
-<details>
-
-<summary><strong>Bank account</strong></summary>
-
-Represents an external bank account, typically used for payouts or remittances.
-
-| Payment-node type | node   |
-| ----------------- | ------ |
-| `BANK_ACCOUNT`    | `bank` |
-
-**Required node fields**
-
-| Fields           | Description                                                         |
-| ---------------- | ------------------------------------------------------------------- |
-| accountNumber    | The bank account number.                                            |
-| typeAccount      | The type of bank account. `CHECKING_ACOUNT` `SAVINGS`               |
-| bank             | The name of the bank where the account is held.                     |
-| accountHolder    | The full name of the account holder.                                |
-| accountHolderDni | The national identification number or tax ID of the account holder. |
-| country          | The country of the bank account.                                    |
-| currency         | The currency of the bank account.                                   |
-
-**Origin/Destination request example**
-
-```json
-    {
-      "type": "BANK_ACCOUNT",
-      "bank": {
-        "accountNumber": "11111111",
-        "bank": "BANCO_SANTANDER",
-        "currency": "CLP",
-        "country": "CHL",
-        "typeAccount": "CHECKING_ACCOUNT",
-        "accountHolder": "John Doe",
-        "accountHolderDni": "162115031-7",
-      }
-    }
-```
-
-</details>
-
-<details>
-
 <summary><strong>Payment link</strong></summary>
 
 Represents a reusable or one-time link to initiate a payment.
@@ -163,25 +92,69 @@ Represents a reusable or one-time link to initiate a payment.
 
 <details>
 
-<summary><strong>Crypto</strong></summary>
+<summary><strong>Account</strong></summary>
 
-Crypto wallet for sending or receiving crypto.
+Represents an internal account within the **conomy\_hq**.
 
-| Payment-node type | node     |
-| ----------------- | -------- |
-| `CRYPTO`          | `wallet` |
+| Payment-node type | node      |
+| ----------------- | --------- |
+| `ACCOUNT`         | `account` |
 
 **Required node fields**
 
-<table><thead><tr><th valign="top">Fields</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top">address</td><td valign="top">Wallet's address</td></tr></tbody></table>
+| Fields        | Description                               |
+| ------------- | ----------------------------------------- |
+| accountNumber | Internal reference number for the account |
 
-**Origin request example**
+**Origin/Destination request example**
+
+```json
+{
+  "type": "ACCOUNT",
+  "currency": "CLP",
+  "account": {
+    "accountNumber": "174XXX"
+  }
+}
+```
+
+</details>
+
+<details>
+
+<summary><strong>Bank account</strong></summary>
+
+Represents an external bank account, typically used for payouts or remittances.
+
+| Payment-node type | node   |
+| ----------------- | ------ |
+| `BANK_ACCOUNT`    | `bank` |
+
+**Required node fields**
+
+| Fields           | Description                                                         |
+| ---------------- | ------------------------------------------------------------------- |
+| accountNumber    | The bank account number.                                            |
+| typeAccount      | The type of bank account. `CHECKING_ACOUNT` `SAVINGS`               |
+| bank             | The name of the bank where the account is held.                     |
+| accountHolder    | The full name of the account holder.                                |
+| accountHolderDni | The national identification number or tax ID of the account holder. |
+| country          | The country of the bank account.                                    |
+| currency         | The currency of the bank account.                                   |
+
+**Origin/Destination request example**
 
 ```json
     {
-      "type": "CRYPTO",
-      "wallet": {
-        "address": "0x123...456"
+      "type": "BANK_ACCOUNT",
+      "bank": {
+        "accountNumber": "11111111",
+        "bank": "BANCO_SANTANDER",
+        "currency": "CLP",
+        "country": "CHL",
+        "typeAccount": "CHECKING_ACCOUNT",
+        "accountHolder": "John Doe",
+        "accountHolderDni": "162115031-7",
       }
     }
 ```
@@ -217,5 +190,32 @@ Card-based payments (debit, credit, prepaid).
 
 * To perform a card payment via API, the card must first be pre-registered and tokenized. Refer to the Payment Methods page for more information on how to tokenize cards.
 * The response will include the card holder and a masked card number containing the last 4 digits.
+
+</details>
+
+<details>
+
+<summary><strong>Crypto</strong></summary>
+
+Crypto wallet for sending or receiving crypto.
+
+| Payment-node type | node     |
+| ----------------- | -------- |
+| `CRYPTO`          | `wallet` |
+
+**Required node fields**
+
+<table><thead><tr><th valign="top">Fields</th><th valign="top">Description</th></tr></thead><tbody><tr><td valign="top">address</td><td valign="top">Wallet's address</td></tr></tbody></table>
+
+**Origin request example**
+
+```json
+    {
+      "type": "CRYPTO",
+      "wallet": {
+        "address": "0x123...456"
+      }
+    }
+```
 
 </details>

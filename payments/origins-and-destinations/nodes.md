@@ -104,36 +104,87 @@ Represents a reusable or one-time link to initiate a payment.
 
 **Required node fields**
 
-| Fields           | Description                                                         |
-| ---------------- | ------------------------------------------------------------------- |
-| provider         | The bank account number.                                            |
-| typeAccount      | The type of bank account. `CHECKING_ACOUNT` `SAVINGS`               |
-| bank             | The name of the bank where the account is held.                     |
-| accountHolder    | The full name of the account holder.                                |
-| accountHolderDni | The national identification number or tax ID of the account holder. |
-| country          | The country of the bank account.                                    |
-| currency         | The currency of the bank account.                                   |
+| Fields                | Description                                                                                 |
+| --------------------- | ------------------------------------------------------------------------------------------- |
+| customer              | Information on who pays the transaction.                                                    |
+| paymentMethodsAllowed | Allowed payment methods. If the fields is empty, all payment methods allowed will be shown. |
+| metadata              | Information will be displayed in the link.                                                  |
+| redirectURL           | The URL to which the end user will be redirected after completing the payment.              |
 
-**Origin/Destination request example**
+**Origin request example**
 
 ```json
     {
-      "type": "BANK_ACCOUNT",
-      "bank": {
-        "accountNumber": "11111111",
-        "bank": "BANCO_SANTANDER",
-        "currency": "CLP",
-        "country": "CHL",
-        "typeAccount": "CHECKING_ACCOUNT",
-        "accountHolder": "John Doe",
-        "accountHolderDni": "162115031-7",
+      "type": "PAYMENT_LINK",
+      "paymentLink": {
+        "customer": {
+          "name": "Jhon Doe",
+          "email": "jhon@email.com"
+        },
+        "paymentMethodsAllowed": [
+          "CARD",
+          "ETPAY",
+          "PIX"
+        ],
+        "metadata": {
+          "description": "Payments"
+        }
+      }
+    }
+```
+
+#### Notes
+
+* If some `customer` information is missing, the customer will be able to complete it directly within the payment link.
+* When a payment link is created, the response includes a url and a token that can be used to construct the final link and access the payment interface.
+* To learn more about the supported payment methods, please refer to the Payment Methods page.
+* Once the payment is successfully processed, the user will be redirected to the `redirectURL` provided in the request.
+* A payment link can be configured with an `expiredAt` timestamp to define its expiration time.
+* The response also includes a `paymentMethod` object, which contains a `type` field. This field determines the structure of the payment method used by the customer to complete the payment. E.g., if type is `CARD`, the object will include a `card` node; if type is `PAYMENT_INITIATION`, it will include a `paymentInitiation` node, and so on.
+
+</details>
+
+<details>
+
+<summary><strong>Payment link</strong></summary>
+
+Represents a reusable or one-time link to initiate a payment.
+
+| Payment-node type | node          |
+| ----------------- | ------------- |
+| `PAYMENT_LINK`    | `paymentLink` |
+
+**Required node fields**
+
+| Fields                | Description                                                                                 |
+| --------------------- | ------------------------------------------------------------------------------------------- |
+| payer                 | Information on who pays the transaction.                                                    |
+| paymentMethodsAllowed | Allowed payment methods. If the fields is empty, all payment methods allowed will be shown. |
+| metadata              | Information will be displayed in the link.                                                  |
+
+**Origin request example**
+
+```json
+    {
+      "type": "PAYMENT_LINK",
+      "paymentLink": {
+        "payer": {
+          "name": "Jhon Doe",
+          "email": "jhon@email.com"
+        },
+        "paymentMethodsAllowed": [
+          "CARD",
+          "ETPAY",
+          "PIX"
+        ],
+        "metadata": {
+          "description": "Payments"
+        }
       }
     }
 ```
 
 </details>
-
-
 
 
 

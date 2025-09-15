@@ -64,4 +64,6 @@
   * [Origins and destinations](api-reference/payments/origins-and-destinations.md)
   * [Payment-attempts](api-reference/payments/payment-attempts.md)
   * [Payments](api-reference/payments/payments.md)
+  * [Payment-links](api-reference/payments/payment-links.md)
+  * [checkout session](api-reference/payments/checkout-session.md)
   * [Webhooks](api-reference/payments/webhooks.md)

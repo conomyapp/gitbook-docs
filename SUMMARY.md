@@ -90,3 +90,5 @@
   * [Payment-links](api-reference/payments/payment-links.md)
   * [checkout session](api-reference/payments/checkout-session.md)
   * [Webhooks](api-reference/payments/webhooks.md)
+  * [Banks](api-reference/payments/banks.md)
+  * [Products](api-reference/payments/products.md)

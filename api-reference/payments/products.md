@@ -1,35 +1,5 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: false
-  tableOfContents:
-    visible: true
-  outline:
-    visible: true
-  pagination:
-    visible: true
----
+# Products
 
-# Available Products
-
-{% columns fullWidth="true" %}
-{% column %}
-Returns all payment products enabled for an identity, grouped by currency. Each entry lists available pay-in and pay-out methods along with their schemas, required fields, and amount limits.
-
-Use this endpoint to dynamically build payment flows without hardcoding supported methods. See the [Available Products](../../payments/available-products.md) page for full documentation.
-{% endcolumn %}
-
-{% column %}
-{% code title="Endpoints" overflow="wrap" %}
-```http
-GET /payments/available-products
-```
-{% endcode %}
-{% endcolumn %}
-{% endcolumns %}
-
-{% openapi-operation Payment API path="/payments/available-products" method="get" %}
-[Payment API](../../.gitbook/assets/Payment%20API.yaml)
+{% openapi-operation spec="conomyhq-api" path="/payments/available-products" method="get" %}
+[OpenAPI conomyhq-api](https://4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/gitbook-x-prod-openapi/raw/17d054ca6f1f82ffc0ac6c5ca258648bf9276ad3233875930d6934f6f1f2c995.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20260305%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260305T192104Z&X-Amz-Expires=172800&X-Amz-Signature=c58c5270aa1a6a0687542c24ebda102978257d8dbd4aaca0cae0018c800ef015&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-operation %}

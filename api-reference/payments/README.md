@@ -59,6 +59,68 @@ POST client-url
 {% endcolumn %}
 {% endcolumns %}
 
+{% hint style="info" %}
+Recommended execution flow: `payment-origins/payment-destinations` → `payment-attempt` (optional) → `payment` lifecycle (`authorized`, `captured`, `received`) + webhook reconciliation.
+{% endhint %}
+
+## Explore Endpoints
+
+{% columns fullWidth="true" %}
+{% column %}
+{% content-ref url="banks.md" %}
+[Banks](banks.md)
+{% endcontent-ref %}
+{% endcolumn %}
+
+{% column %}
+{% content-ref url="products.md" %}
+[Products](products.md)
+{% endcontent-ref %}
+{% endcolumn %}
+{% endcolumns %}
+
+{% columns fullWidth="true" %}
+{% column %}
+{% content-ref url="origins-and-destinations.md" %}
+[Origins and destinations](origins-and-destinations.md)
+{% endcontent-ref %}
+{% endcolumn %}
+
+{% column %}
+{% content-ref url="payment-attempts.md" %}
+[Payment-attempts](payment-attempts.md)
+{% endcontent-ref %}
+{% endcolumn %}
+{% endcolumns %}
+
+{% columns fullWidth="true" %}
+{% column %}
+{% content-ref url="payments.md" %}
+[Payments](payments.md)
+{% endcontent-ref %}
+{% endcolumn %}
+
+{% column %}
+{% content-ref url="payment-links.md" %}
+[Payment-links](payment-links.md)
+{% endcontent-ref %}
+{% endcolumn %}
+{% endcolumns %}
+
+{% columns fullWidth="true" %}
+{% column %}
+{% content-ref url="checkout-session.md" %}
+[Checkout session](checkout-session.md)
+{% endcontent-ref %}
+{% endcolumn %}
+
+{% column %}
+{% content-ref url="webhooks.md" %}
+[Webhooks](webhooks.md)
+{% endcontent-ref %}
+{% endcolumn %}
+{% endcolumns %}
+
 {% openapi-schemas Payment API schemas="payment" grouped="false" %}
 [OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/552534d10e9e90a821a9938005d2ec468153b739a1864d0de7c25a1b32c21d83.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T145422Z&X-Amz-Expires=172800&X-Amz-Signature=52c2ba90159b7ed1c953d566fdc51ceb1d0da24241fa682ebf1c1f356dcff1a4&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-schemas %}

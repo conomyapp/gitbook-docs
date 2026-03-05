@@ -14,79 +14,43 @@ layout:
 
 # Introduction
 
-This guide will help you integrate with our API step by step, allowing you to create organizations, users, accounts, and process transactions.
+This guide walks you through a complete sandbox flow: authenticate, create entities, open accounts, and move funds.
+
+{% hint style="info" %}
+Recommended flow: complete each step in order and keep the generated IDs from every response (`identityId`, `accountNumber`, `paymentId`).
+{% endhint %}
 
 ### Prerequisites
 
 Before you begin, ensure you have
 
-* A valid **API Key**.
-* Your **Client ID** and **Client Secret**.
-* A development environment with `cURL` or an API testing tool like **Postman**.
-* A registered **sandbox** account.
+- A valid `x-api-key`.
+- Your `clientId` and `clientSecret`.
+- A development environment with `cURL` or Postman.
+- A registered sandbox account.
 
-***
+### Step-by-Step
 
-### Quick Start Overview
+{% content-ref url="obtain-an-access-token.md" %}
+[Step 1: Obtain an access token](obtain-an-access-token.md)
+{% endcontent-ref %}
 
-This guide will walk you through the following steps
+{% content-ref url="create-an-organization.md" %}
+[Step 2: Create an organization](create-an-organization.md)
+{% endcontent-ref %}
 
-<details>
+{% content-ref url="create-users.md" %}
+[Step 3: Create users](create-users.md)
+{% endcontent-ref %}
 
-<summary><strong>Step 1: Obtain an access token</strong> </summary>
+{% content-ref url="create-accounts.md" %}
+[Step 4: Create accounts](create-accounts.md)
+{% endcontent-ref %}
 
-Authenticate your API requests by obtaining an access token. This will be used in all subsequent API calls.
+{% content-ref url="create-your-first-top-up.md" %}
+[Step 5: Create your first top-up](create-your-first-top-up.md)
+{% endcontent-ref %}
 
-<a href="obtain-an-access-token.md" class="button secondary">Go to step 1</a>
-
-</details>
-
-<details>
-
-<summary><strong>Step 2: Create an Organization</strong></summary>
-
-Set up an **organization** that will be used to manage users and transactions.
-
-<a href="create-an-organization.md" class="button secondary">Go to step 2</a>
-
-</details>
-
-<details>
-
-<summary><strong>Step 3: Create Users</strong></summary>
-
-Register two users and link them to the organization.
-
-<a href="create-users.md" class="button secondary">Go to step 3</a>
-
-</details>
-
-<details>
-
-<summary><strong>Step 4: Create Accounts</strong></summary>
-
-Open a **checking account** for the organization and users.
-
-<a href="create-accounts.md" class="button secondary">Go to step 4</a>
-
-</details>
-
-<details>
-
-<summary><strong>Step 5: Create your first Top-up</strong></summary>
-
-Fund an account by making a **top-up payment**.
-
-<a href="create-your-first-top-up.md" class="button secondary">Go to step 5</a>
-
-</details>
-
-<details>
-
-<summary><strong>Step 6: Create your first Withdrawal</strong></summary>
-
-Make a **withdrawal** from an account.
-
-<a href="create-your-first-withdrawal.md" class="button secondary">Go to step 6</a>
-
-</details>
+{% content-ref url="create-your-first-withdrawal.md" %}
+[Step 6: Create your first withdrawal](create-your-first-withdrawal.md)
+{% endcontent-ref %}

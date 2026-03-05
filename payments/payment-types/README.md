@@ -16,66 +16,66 @@ layout:
 
 `conomy_hq` supports multiple types of transactions to manage the movement of funds across internal and external accounts. Each payment type defines a specific financial behavior within the platform, including who initiates the transaction, what types of accounts are involved, and how the funds flow.
 
-Only the **owner of a given account** has the privileges to initiate or authorize payments from that account.
+{% hint style="info" %}
+Only the owner of an account can initiate or authorize payments from that account.
+{% endhint %}
 
-Below you will find detailed documentation for each supported payment type:
+## Available Types
 
-<details>
+{% columns fullWidth="true" %}
+{% column %}
+{% content-ref url="topup-account.md" %}
+[TOPUP\_ACCOUNT](topup-account.md)
+{% endcontent-ref %}
+{% endcolumn %}
 
-<summary><code>TOPUP_ACCOUNT</code></summary>
+{% column %}
+{% content-ref url="withdrawal-account.md" %}
+[WITHDRAWAL\_ACCOUNT](withdrawal-account.md)
+{% endcontent-ref %}
+{% endcolumn %}
+{% endcolumns %}
 
-Funds an account in `conomy_hq`.
+{% columns fullWidth="true" %}
+{% column %}
+{% content-ref url="purchase.md" %}
+[PURCHASE](purchase.md)
+{% endcontent-ref %}
+{% endcolumn %}
 
-<a href="topup-account.md" class="button secondary">Go to topup payment docs</a>
+{% column %}
+{% content-ref url="remittance.md" %}
+[REMITTANCE](remittance.md)
+{% endcontent-ref %}
+{% endcolumn %}
+{% endcolumns %}
 
-</details>
+{% columns fullWidth="true" %}
+{% column %}
+{% content-ref url="p2p.md" %}
+[P2P](p2p.md)
+{% endcontent-ref %}
+{% endcolumn %}
 
-<details>
+{% column %}
+{% content-ref url="collect.md" %}
+[COLLECT](collect.md)
+{% endcontent-ref %}
+{% endcolumn %}
+{% endcolumns %}
 
-<summary><code>WITHDRAWAL_ACCOUNT</code></summary>
+{% content-ref url="fee.md" %}
+[FEE](fee.md)
+{% endcontent-ref %}
 
-Withdraws funds from a `conomy_hq` account.
+## Selection Guide
 
-<a href="withdrawal-account.md" class="button secondary">Go to withdrawal payment docs</a>
-
-</details>
-
-<details>
-
-<summary><code>PURCHASE</code></summary>
-
-Sale payment between client and third party.
-
-<a href="purchase.md" class="button secondary">Go to purchase payment docs</a>
-
-</details>
-
-<details>
-
-<summary><code>REMITTANCE</code></summary>
-
-Cross-border payment from an internal or external account to a recipient in another country.
-
-<a href="remittance.md" class="button secondary">Go to remittance payment docs</a>
-
-</details>
-
-<details>
-
-<summary><code>COLLECT</code></summary>
-
-Collects funds from multiple origins into a single destination.
-
-<a href="collect.md" class="button secondary">Go to collect payment docs</a>
-
-</details>
-
-<details>
-
-<summary><code>FEE</code></summary>
-
-Automatically generated fees per business rules.
-
-<a href="./#topup_account" class="button secondary">Go to fee docs</a>
-
-</details>
+| Use case | Recommended type |
+| --- | --- |
+| Add funds to an internal balance | `TOPUP_ACCOUNT` |
+| Send funds to external rails/banks | `WITHDRAWAL_ACCOUNT` |
+| Charge customers for goods/services | `PURCHASE` |
+| Cross-border transfer to another country | `REMITTANCE` |
+| Internal transfer account-to-account | `P2P` |
+| Pull funds from multiple internal accounts | `COLLECT` |
+| Auto-generated business fees | `FEE` |

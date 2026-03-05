@@ -19,6 +19,10 @@ layout:
 
 At `conomy_hq`, we help businesses grow globally. Below are the countries where we currently operate, along with the products available in each region. Country codes follow the `ISO 3166-1 alpha-3` standard.
 
+{% hint style="info" %}
+Country support can vary by `rail`, `currency`, and compliance configuration. Use `available-products` and `banks` endpoints to resolve runtime availability.
+{% endhint %}
+
 ### Where We Operate
 
 | Region         | Code                        | Payments     | Accounts     |
@@ -76,3 +80,7 @@ Each country supports specific payment rails for moving funds in and out of the 
 ### Need Another Country?
 
 If you need our services in a country not listed here, reach out at [hola@conomyhq.com](mailto:hola@conomyhq.com). We're always open to expanding.
+
+{% content-ref url="currencies.md" %}
+[View supported currencies](currencies.md)
+{% endcontent-ref %}

@@ -19,6 +19,10 @@ layout:
 
 At `conomy_hq`, we support both fiat and cryptocurrencies across different payment networks. Fiat currencies follow the `ISO 4217` standard. Cryptocurrencies are identified by token code; the network is specified in the payment node configuration.
 
+{% hint style="info" %}
+A currency can be available in multiple rails with different capabilities (`pay-in`, `pay-out`, settlement speed, and required fields).
+{% endhint %}
+
 ---
 
 ### Supported Fiat Currencies
@@ -105,3 +109,7 @@ Each currency is processed through a specific payment rail. The rail determines 
 ### Need Another Currency?
 
 If you need a currency that's not listed, contact us at [hola@conomyhq.com](mailto:hola@conomyhq.com).
+
+{% content-ref url="countries.md" %}
+[View supported countries](countries.md)
+{% endcontent-ref %}

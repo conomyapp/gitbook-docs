@@ -24,6 +24,10 @@ layout:
 
 Our financial institutions section covers the banks and financial entities we partner with. Use the `bank` field in [BANK\_ACCOUNT](../payments/origins-and-destinations/nodes/bank-account.md), [BREB](../payments/origins-and-destinations/nodes/breb.md), or [SPEI](../payments/origins-and-destinations/nodes/spei.md) nodes with the codes listed below.
 
+{% hint style="info" %}
+Bank availability depends on country, rail, and currency. Always fetch the latest list dynamically before rendering bank options in your UI.
+{% endhint %}
+
 You can also query the full list programmatically via the [Banks API](../api-reference/payments/banks.md):
 
 ```http
@@ -35,3 +39,17 @@ GET /payments/banks/{country}
 ### Need a New Bank?
 
 If you need us to support an additional bank or institution, reach out at [hola@conomyhq.com](mailto:hola@conomyhq.com).
+
+{% columns %}
+{% column %}
+{% content-ref url="countries.md" %}
+[Countries](countries.md)
+{% endcontent-ref %}
+{% endcolumn %}
+
+{% column %}
+{% content-ref url="currencies.md" %}
+[Currencies](currencies.md)
+{% endcontent-ref %}
+{% endcolumn %}
+{% endcolumns %}

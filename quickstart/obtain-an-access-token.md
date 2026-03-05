@@ -20,10 +20,15 @@ To obtain an access token, make the following `POST` request to the [Auth endpoi
 Use the returned `accessToken` in the `Authorization` header for subsequent API requests.
 {% endhint %}
 
-#### **Request**
+{% hint style="warning" %}
+Never expose `clientSecret` in frontend code. Exchange credentials only from trusted backend services.
+{% endhint %}
 
-{% code fullWidth="false" %}
-```sh
+### Request and Response
+
+{% tabs %}
+{% tab title="cURL request" %}
+```bash
 curl --location --request POST 'https://api.conomyhq.com/sandbox/auth' \
 --header 'x-api-key: {YOUR_API_KEY}' \
 --header 'User-Agent: {YOUR_CLIENT_APPLICATION}' \
@@ -36,14 +41,15 @@ curl --location --request POST 'https://api.conomyhq.com/sandbox/auth' \
     "clientSecret": {YOUR_CLIENT_SECRET}
 }'
 ```
-{% endcode %}
+{% endtab %}
 
-#### **Response**
-
-```sh
+{% tab title="Sample response" %}
+```json
 {
     "accessToken": {YOUR_ACCESS_TOKEN},
     "tokenType": "Bearer",
     "expiresIn": 3600
 }
 ```
+{% endtab %}
+{% endtabs %}

@@ -23,6 +23,24 @@ The `Payments` entity represents all transactions processed through the `conomy_
 
 All payments involve at least one **internal account**, either as the origin or the destination of funds.
 
+{% hint style="info" %}
+Think of a payment as: `origins` + `destinations` + `type` + `product`.
+{% endhint %}
+
+{% columns fullWidth="true" %}
+{% column %}
+{% content-ref url="payment-types/README.md" %}
+[Payment types](payment-types/README.md)
+{% endcontent-ref %}
+{% endcolumn %}
+
+{% column %}
+{% content-ref url="origins-and-destinations/nodes/README.md" %}
+[Nodes reference](origins-and-destinations/nodes/README.md)
+{% endcontent-ref %}
+{% endcolumn %}
+{% endcolumns %}
+
 ***
 
 ### Core Fields
@@ -58,6 +76,10 @@ To initiate a payment, the following fields are **mandatory**:
 * Either `purchaseCurrency` or `currency` must be provided
 
 For **bulk payments**, the `amount` field must also be defined at the origin or destination level. Check the [Origins and Destinations page](origins-and-destinations/) for more information.
+
+{% hint style="warning" %}
+Provide either `purchaseAmount` or `totalAmount` (not both) and ensure `product` matches `purchaseCurrency:currency`.
+{% endhint %}
 
 ***
 

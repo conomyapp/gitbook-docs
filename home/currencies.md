@@ -17,7 +17,7 @@ layout:
 
 # Currencies
 
-At **conomy\_hq**, we support both fiat and cryptocurrencies across different payment networks. Fiat currencies follow the ISO 4217 standard. Cryptocurrencies are identified by token code; the network is specified in the payment node configuration.
+At `conomy_hq`, we support both fiat and cryptocurrencies across different payment networks. Fiat currencies follow the `ISO 4217` standard. Cryptocurrencies are identified by token code; the network is specified in the payment node configuration.
 
 ---
 
@@ -84,21 +84,21 @@ Each currency is processed through a specific payment rail. The rail determines 
 
 | Code           | Payments | Accounts |
 | -------------- | -------- | -------- |
-| `CLP`          |        | CHL   |
-| `MXN`          |        | MEX   |
-| `COP`          |        | COL   |
-| `PEN`          |        | PER   |
-| `BOB`          |        | BOL   |
-| `PYG`          |        | -     |
-| `AUD`          |        | -     |
-| `ARS`          |        | ARG   |
-| `BRL`          |        | BRA   |
-| `USD`          |        | -     |
-| `CAD`          |        | -     |
-| `EUR`          |        | -     |
-| `GBP`          |        | -     |
-| `USDC`         |        |        |
-| `USDT`         |        |        |
+| `CLP`          | `ETPAY`, `FINTOC`, `WEBPAY`                     | `CHL` |
+| `MXN`          | `SPEI`                                           | `MEX` |
+| `COP`          | `PSE`, `BANCOLOMBIA`, `DAVIVIENDA`, `DAVIPLATA`, `NEQUI`, `BREB` | `COL` |
+| `PEN`          | `LIGO`, `SIP`                                    | `PER` |
+| `BOB`          | `SIP`                                            | `BOL` |
+| `PYG`          | `BANK_ACCOUNT`                                   | `-`   |
+| `AUD`          | `BANK_ACCOUNT`                                   | `-`   |
+| `ARS`          | `PCT`, `CVU`                                     | `ARG` |
+| `BRL`          | `PIX`                                            | `BRA` |
+| `USD`          | `ACH`, `WIRE`, `FEDNOW`, `RTP`, `SWIFT`         | `-`   |
+| `CAD`          | `SWIFT`                                          | `-`   |
+| `EUR`          | `SEPA`, `SWIFT`                                  | `-`   |
+| `GBP`          | `FPE`, `SWIFT`                                   | `-`   |
+| `USDC`         | `CRYPTO`                                         | `-`   |
+| `USDT`         | `CRYPTO`                                         | `-`   |
 
 ---
 

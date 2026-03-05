@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: Default module
-  description: ''
+  description: Endpoint and schema details are documented below.
   version: 1.0.0
 tags:
   - name: Auth
@@ -22,7 +22,7 @@ paths:
     post:
       summary: Authentication
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: auth
       tags:
         - Auth
@@ -63,7 +63,7 @@ paths:
             examples: {}
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -89,10 +89,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security: []
   /identities/{id}/permissions:
     post:
@@ -141,7 +141,7 @@ paths:
                   - admin
       responses:
         '201':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -150,10 +150,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     get:
@@ -191,7 +191,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -201,10 +201,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /identities/{id}/permissions/{toremoveId}:
@@ -248,7 +248,7 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -257,17 +257,17 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /identities:
     post:
       summary: Create Identity
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: create-identity
       tags:
         - Identities
@@ -467,7 +467,7 @@ paths:
               children: []
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -475,23 +475,23 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     get:
       summary: Get Identities
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-identities
       tags:
         - Identities
       parameters:
         - name: type
           in: query
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: false
           schema:
             $ref: '#/components/schemas/identity-type'
@@ -516,7 +516,7 @@ paths:
             type: string
         - name: country
           in: query
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: false
           schema:
             $ref: '#/components/schemas/country'
@@ -556,7 +556,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -577,17 +577,17 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /identities/{id}:
     get:
       summary: Get Identity
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-identity
       tags:
         - Identities
@@ -616,7 +616,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -624,16 +624,16 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     patch:
       summary: Update Identity
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: update-identity
       tags:
         - Identities
@@ -797,7 +797,7 @@ paths:
               nickname: Thomas
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -950,16 +950,16 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     delete:
       summary: Delete Identity
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: delete-identity
       tags:
         - Identities
@@ -988,7 +988,7 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -997,10 +997,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /identities/{id}/children:
@@ -1055,7 +1055,7 @@ paths:
                 - 3cbf2e28-ff31-804c-829e-bf97ed3d44a2
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -1063,16 +1063,16 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     delete:
       summary: Remove Child from Children
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: remove-children
       tags:
         - Identities
@@ -1119,7 +1119,7 @@ paths:
                 - 67fee5eb0bfde89026114369
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -1127,10 +1127,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /payments:
@@ -1249,7 +1249,7 @@ paths:
                     accountNumber: '123456'
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -1257,16 +1257,16 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     get:
       summary: Get Payments
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-payments
       tags:
         - Payments
@@ -1280,7 +1280,7 @@ paths:
             type: string
         - name: type
           in: query
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: false
           example: PURCHASE
           schema:
@@ -1366,7 +1366,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -1495,10 +1495,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /payments/{id}/authorized:
@@ -1516,7 +1516,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: true
           schema:
             type: string
@@ -1538,7 +1538,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -1546,10 +1546,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /payments/{id}/captured:
@@ -1589,7 +1589,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -1694,17 +1694,17 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /payments/{id}:
     get:
       summary: Get Payment
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-payment
       tags:
         - Payments
@@ -1733,7 +1733,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -1741,10 +1741,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /payments/received:
@@ -1804,7 +1804,7 @@ paths:
               id: YNgma4fqAjwIftRM5Za6D
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -1812,10 +1812,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /client-url:
@@ -1884,7 +1884,7 @@ paths:
       parameters: []
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -1953,7 +1953,7 @@ paths:
     post:
       summary: Create Account
       deprecated: false
-      description: '  '
+      description: Endpoint and schema details are documented below.
       operationId: create-account
       tags:
         - Accounts
@@ -2044,7 +2044,7 @@ paths:
               parentId: a3f87719-1dd7-46c7-9953-e0f3a71542a3
       responses:
         '201':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -2052,16 +2052,16 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     get:
       summary: Get multiple accounts
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-accounts
       tags:
         - Accounts
@@ -2092,13 +2092,13 @@ paths:
             type: string
         - name: type
           in: query
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: false
           schema:
             $ref: '#/components/schemas/account-type'
         - name: currency
           in: query
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: false
           schema:
             $ref: '#/components/schemas/country'
@@ -2156,7 +2156,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -2181,10 +2181,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /accounts/{id}:
@@ -2222,7 +2222,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -2230,16 +2230,16 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     patch:
       summary: Update Account
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: update-account
       tags:
         - Accounts
@@ -2280,7 +2280,7 @@ paths:
               status: BLOCKED
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -2288,16 +2288,16 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     delete:
       summary: Delete Account
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: delete-account
       tags:
         - Accounts
@@ -2326,7 +2326,7 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -2335,17 +2335,17 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /payment-origins:
     get:
       summary: Get payment-origins
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-payment-origins
       tags:
         - Payment-methods
@@ -2359,13 +2359,13 @@ paths:
             type: string
         - name: currency
           in: query
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: false
           schema:
             $ref: '#/components/schemas/currency'
         - name: purchaseCurrency
           in: query
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: false
           schema:
             $ref: '#/components/schemas/currency'
@@ -2387,7 +2387,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -2397,17 +2397,17 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /payment-destinations:
     get:
       summary: Get payment-destinations
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-payment-destinations
       tags:
         - Payment-methods
@@ -2444,7 +2444,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -2454,10 +2454,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /payments/available-products:
@@ -2506,7 +2506,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -2579,10 +2579,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /payments/banks/{country}:
@@ -2621,7 +2621,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -2641,17 +2641,17 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /payment-attempts:
     post:
       summary: Create Attempt
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: create-payment-attempt
       tags:
         - Payment-attempts
@@ -2761,7 +2761,7 @@ paths:
                     accountNumber: '123456'
       responses:
         '201':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -2769,16 +2769,16 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     get:
       summary: Get payment-attempts
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-payment-attempts
       tags:
         - Payment-attempts
@@ -2797,7 +2797,7 @@ paths:
             type: string
         - name: type
           in: query
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: false
           schema:
             $ref: '#/components/schemas/payment-type'
@@ -2843,7 +2843,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -2864,17 +2864,17 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /payment-attempts/{id}:
     get:
       summary: Get payment-attempt
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-payment-attempt
       tags:
         - Payment-attempts
@@ -2903,7 +2903,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -2911,17 +2911,17 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /payment-links:
     post:
       summary: Create payment link
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: create-payment-link
       tags:
         - Payment-links
@@ -2950,7 +2950,7 @@ paths:
             examples: {}
       responses:
         '201':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -3116,16 +3116,16 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - bearer: []
     get:
       summary: Get payment links
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-payment-links
       tags:
         - Payment-links
@@ -3206,7 +3206,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -3226,17 +3226,17 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - bearer: []
   /payment-links/{id}:
     get:
       summary: Get payment link
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-payment-link
       tags:
         - Payment-links
@@ -3265,7 +3265,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -3273,13 +3273,13 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '404':
           $ref: '#/components/responses/Not Found'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - bearer: []
     delete:
@@ -3314,31 +3314,31 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
+          description: Endpoint and schema details are documented below.
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '404':
           $ref: '#/components/responses/Not Found'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - bearer: []
   /payment-links/{id}/activate:
     post:
       summary: Activate payment link
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: activate-payment-link
       tags:
         - Payment-links
       parameters:
         - name: id
           in: path
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: true
           schema:
             type: string
@@ -3360,7 +3360,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -3368,17 +3368,17 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - bearer: []
   /payment-links/token/{checkout-token}/checkout-sessions:
     post:
       summary: Create checkout session from payment-link
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: create-checkout-payment-link
       tags:
         - Payment-links
@@ -3386,7 +3386,7 @@ paths:
       parameters:
         - name: checkout-token
           in: path
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: true
           schema:
             type: string
@@ -3415,7 +3415,7 @@ paths:
             examples: {}
       responses:
         '201':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -3423,17 +3423,17 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - bearer: []
   /checkout-sessions:
     post:
       summary: Create checkout session
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: refresh-checkout-session
       tags:
         - Checkout-sessions
@@ -3462,7 +3462,7 @@ paths:
             examples: {}
       responses:
         '201':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -3627,16 +3627,16 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - bearer: []
     get:
       summary: Get Checkout sessions
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-checkout-sessions
       tags:
         - Checkout-sessions
@@ -3723,7 +3723,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -3904,24 +3904,24 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - bearer: []
   /checkout-sessions/{checkout_session_id}:
     get:
       summary: Get checkout session
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-checkout-session
       tags:
         - Checkout-sessions
       parameters:
         - name: checkout_session_id
           in: path
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: true
           schema:
             type: string
@@ -3943,7 +3943,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -4108,23 +4108,23 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - bearer: []
     delete:
       summary: Delete checkout session
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: delete-checkout-session
       tags:
         - Checkout-sessions
       parameters:
         - name: checkout_session_id
           in: path
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: true
           schema:
             type: string
@@ -4146,7 +4146,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -4155,10 +4155,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - bearer: []
   /checkout-sessions/{checkout_session_id}/payments:
@@ -4174,7 +4174,7 @@ paths:
       parameters:
         - name: checkout_session_id
           in: path
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: true
           schema:
             type: string
@@ -4210,7 +4210,7 @@ paths:
                     referenceId: external_payment_id_1
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -4218,24 +4218,24 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - bearer: []
   /checkout-sessions/token/{checkout-token}/refresh:
     post:
       summary: Refresh checkout session
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: create-checkout-session
       tags:
         - Checkout-sessions
       parameters:
         - name: checkout-token
           in: path
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: true
           schema:
             type: string
@@ -4264,7 +4264,7 @@ paths:
             examples: {}
       responses:
         '201':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -4429,10 +4429,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - bearer: []
   /settlement/transactions:
@@ -4683,7 +4683,7 @@ paths:
                 value: '0.5'
       responses:
         '201':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -4704,16 +4704,16 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     get:
       summary: Get rules
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-rules
       tags:
         - Rules
@@ -4793,7 +4793,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -4813,10 +4813,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /rules/{rule-id}:
@@ -4852,7 +4852,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -4860,10 +4860,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     delete:
@@ -4898,14 +4898,14 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
+          description: Endpoint and schema details are documented below.
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /customers/{customer-id}:
@@ -4919,7 +4919,7 @@ paths:
       parameters:
         - name: customer-id
           in: path
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: true
           schema:
             type: string
@@ -4972,7 +4972,7 @@ paths:
             examples: {}
       responses:
         '201':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -4993,10 +4993,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     get:
@@ -5009,7 +5009,7 @@ paths:
       parameters:
         - name: customer-id
           in: path
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: true
           schema:
             type: string
@@ -5031,7 +5031,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -5039,10 +5039,10 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     delete:
@@ -5055,7 +5055,7 @@ paths:
       parameters:
         - name: customer-id
           in: path
-          description: ''
+          description: Endpoint and schema details are documented below.
           required: true
           schema:
             type: string
@@ -5077,14 +5077,14 @@ paths:
             type: string
       responses:
         '204':
-          description: ''
+          description: Endpoint and schema details are documented below.
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
   /customers:
@@ -5120,7 +5120,7 @@ paths:
             examples: {}
       responses:
         '201':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -5141,16 +5141,16 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
     get:
       summary: Get customers
       deprecated: false
-      description: ''
+      description: Endpoint and schema details are documented below.
       operationId: get-customers
       tags:
         - Customers
@@ -5215,7 +5215,7 @@ paths:
             type: string
       responses:
         '200':
-          description: ''
+          description: Endpoint and schema details are documented below.
           content:
             application/json:
               schema:
@@ -5235,15 +5235,16 @@ paths:
           headers: {}
         '400':
           $ref: '#/components/responses/Bad request'
-          description: ''
+          description: Endpoint and schema details are documented below.
         '500':
           $ref: '#/components/responses/Internal server error'
-          description: ''
+          description: Endpoint and schema details are documented below.
       security:
         - BearerToken: []
 components:
   schemas:
     card:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         holder:
@@ -5277,6 +5278,7 @@ components:
         - token
       title: ''
     payment-link:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         id:
@@ -5320,6 +5322,7 @@ components:
         - paymentMethodsAllowed
         - id
     pix:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         data:
@@ -5380,6 +5383,7 @@ components:
         - data
         - customer
     pct:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         qrCode:
@@ -5399,6 +5403,7 @@ components:
       required:
         - customer
     etpay:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         customer:
@@ -5422,6 +5427,7 @@ components:
           type: string
           description: Redirect url in case of failure
     wompi:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         customer:
@@ -5437,6 +5443,7 @@ components:
         signatureToken:
           type: string
     card-wrapper:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         card:
@@ -5466,6 +5473,7 @@ components:
       required:
         - card
     etpay-wapper:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         etpay:
@@ -5474,12 +5482,14 @@ components:
         - etpay
       title: ETPAY
     wompi-wapper: &ref_0
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         wompi:
           $ref: '#/components/schemas/wompi'
       title: WOMPI
     account-wrapper:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         account:
@@ -5508,6 +5518,7 @@ components:
       required:
         - account
     bank-account-wrapper: &ref_1
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         bank:
@@ -5545,6 +5556,7 @@ components:
       required:
         - bank
     wallet-wrapper: &ref_2
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         wallet:
@@ -5559,6 +5571,7 @@ components:
         - wallet
       title: CRYPTO
     pix-wrapper:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         pix:
@@ -5567,6 +5580,7 @@ components:
         - pix
       title: PIX
     pct-wrapper:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         pct:
@@ -6121,6 +6135,7 @@ components:
         - byCurrency
       title: available-products
     limits-payment-node:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         minimumAmount:
@@ -6132,6 +6147,7 @@ components:
           description: Minimum amount allowed.
           pattern: ^\d+$
     node-wrapper-get:
+      description: Endpoint and schema details are documented below.
       discriminator:
         propertyName: type
         mapping:
@@ -6192,6 +6208,7 @@ components:
         - $ref: '#/components/schemas/swift-wrapper'
       title: subnode-get
     etpay-wrapper:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         etpay:
@@ -6231,6 +6248,7 @@ components:
       title: PCT
     wompi-wappe: *ref_0
     card-wrapper1:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         card:
@@ -6260,6 +6278,7 @@ components:
         - card
       title: CARD
     account-wrapper2:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         account:
@@ -6310,6 +6329,7 @@ components:
     bank-account-wrapper4: *ref_1
     wallet-wrapper3: *ref_2
     pix-wrapper5:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         pix:
@@ -6327,6 +6347,7 @@ components:
         - pix
       title: PIX
     node-wrapper:
+      description: Endpoint and schema details are documented below.
       discriminator:
         propertyName: type
         mapping:
@@ -6485,6 +6506,7 @@ components:
         - createdAt
         - updatedAt
     payment-node:
+      description: Endpoint and schema details are documented below.
       allOf:
         - type: object
           properties:
@@ -6540,6 +6562,7 @@ components:
         - $ref: '#/components/schemas/node-wrapper'
       title: payment-node
     payment-node-get:
+      description: Endpoint and schema details are documented below.
       allOf:
         - type: object
           properties:
@@ -6630,6 +6653,7 @@ components:
         - $ref: '#/components/schemas/node-wrapper-get'
       title: payment-node-get
     payment-node-base:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         name:
@@ -6695,6 +6719,7 @@ components:
         - type
         - currency
     node-identity:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         identityId:
@@ -6719,6 +6744,7 @@ components:
       required:
         - identityId
     create-payment-body:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         externalId:
@@ -7043,6 +7069,7 @@ components:
           description: Zipcode f the address
       description: The entity’s address information.
     identity:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         id:
@@ -7185,6 +7212,7 @@ components:
           description: Address information.
           $ref: '#/components/schemas/address'
     Scopes:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         resource:
@@ -7203,6 +7231,7 @@ components:
         - reference
         - permissions
     rule:
+      description: Endpoint and schema details are documented below.
       type: object
       title: rule
       properties:
@@ -7390,6 +7419,7 @@ components:
         - allowedValues
         - key
     payment-link-destination:
+      description: Endpoint and schema details are documented below.
       allOf:
         - type: object
           properties:
@@ -7436,6 +7466,7 @@ components:
             - type
           type: object
     payment-link9:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         id:
@@ -7592,6 +7623,7 @@ components:
         - totalAmount
         - checkoutToken
     payment-items:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         preTaxAmount:
@@ -7648,6 +7680,7 @@ components:
         - PROCESSING_PAYMENT
         - FAILED
     checkout-session:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         id:
@@ -7805,6 +7838,7 @@ components:
         - expiresAt
         - owner
     payment-method-config:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         id:
@@ -7831,6 +7865,7 @@ components:
         - requiredFields
         - purchaseAmount
     currency-config:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         currency:
@@ -7853,6 +7888,7 @@ components:
         - exchangeRate
         - paymentMethods
     checkout-session-payment:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         description:
@@ -7864,6 +7900,7 @@ components:
           items:
             $ref: '#/components/schemas/payment-node'
     create-checkout-session:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         checkoutToken:
@@ -8103,6 +8140,7 @@ components:
         - parentId
         - id
     wallet:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         provider:
@@ -8135,6 +8173,7 @@ components:
         An object containing pagination metadata that helps navigate through the
         dataset.
     pagination-cursor:
+      description: Endpoint and schema details are documented below.
       type: object
       properties:
         count:
@@ -8232,19 +8271,19 @@ components:
         - message
   responses:
     Bad request:
-      description: ''
+      description: Endpoint and schema details are documented below.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/error'
     Internal server error:
-      description: ''
+      description: Endpoint and schema details are documented below.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/error'
     Not Found:
-      description: ''
+      description: Endpoint and schema details are documented below.
       content:
         application/json:
           schema:

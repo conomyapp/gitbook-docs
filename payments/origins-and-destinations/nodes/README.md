@@ -45,7 +45,7 @@ The rule is simple: the `type` field must always be in uppercase, and there must
 | Field | Type | Description |
 |---|---|---|
 | `type` | `string` | The rail identifier in uppercase (e.g., `"PIX"`, `"ACH"`, `"SEPA"`) |
-| `currency` | `string` | ISO 4217 currency code (e.g., `"BRL"`, `"USD"`, `"EUR"`) |
+| `currency` | `string` | `ISO 4217` currency code (e.g., `"BRL"`, `"USD"`, `"EUR"`) |
 | `amount` | `string` | Amount in the smallest currency unit (e.g., cents) |
 | `<rail>` | `object` | Rail-specific data object — name matches `type` in camelCase |
 
@@ -93,7 +93,7 @@ Most rails require a `customer` object nested inside the rail sub-object. It car
 | `phoneNumberPrefix` | `string` | Country calling code (e.g., `"54"`) |
 | `documentNumber` | `string` | National ID or tax number |
 | `documentType` | `string` | Document type (e.g., `"CPF"`, `"DNI"`, `"CC"`) |
-| `country` | `string` | ISO 3166-1 alpha-2 country code (e.g., `"BR"`, `"MX"`) |
+| `country` | `string` | `ISO 3166-1 alpha-2` country code (e.g., `"BR"`, `"MX"`) |
 | `address` | `object` | Address object — required by some rails |
 
 ## What happens after you submit

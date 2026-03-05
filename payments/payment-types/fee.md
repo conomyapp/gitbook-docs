@@ -16,7 +16,7 @@ layout:
 
 Represents an automatically generated transaction based on the business rules defined by the client's organization.
 
-Fees are not manually initiated and are collected by an internal **FEE** account.
+Fees are not manually initiated and are collected by an internal `FEE` account.
 
 | Field          | Value                 |
 | -------------- | --------------------- |

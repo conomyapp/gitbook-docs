@@ -18,7 +18,7 @@ layout:
 You can use `payment-attempts` or create the payment directly.
 {% endhint %}
 
-A **P2P** (peer-to-peer) transaction is used to **transfer funds between service providers or organizations**. This is ideal for internal transfers, operator-to-operator flows, or any case where both origin and destination are known entities.\
+A `P2P` (peer-to-peer) transaction is used to **transfer funds between service providers or organizations**. This is ideal for internal transfers, operator-to-operator flows, or any case where both origin and destination are known entities.
 Although similar in structure to `PURCHASE`, it must not be used for customer payment flows.
 
 #### Payment flow

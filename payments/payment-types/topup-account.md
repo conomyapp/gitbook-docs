@@ -14,7 +14,7 @@ layout:
 
 # Topup account
 
-Used to fund an account within **conomy\_hq**.
+Used to fund an account within `conomy_hq`.
 
 This payment type enables users to add funds to their internal balance for future use, such as payout or transfers. The action is initiated by the account owner.
 

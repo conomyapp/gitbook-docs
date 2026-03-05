@@ -14,10 +14,10 @@ layout:
 
 # Payment structure
 
-The `Payments` entity represents all transactions processed through the **conomy\_hq** platform. This includes:
+The `Payments` entity represents all transactions processed through the `conomy_hq` platform. This includes:
 
 * Local payments
-* Crossborder payments
+* Cross-border payments
 * Mass (bulk) payments
 * Internal transfers (e.g., P2P or Collect)
 
@@ -80,11 +80,11 @@ The step of a payment evolves through the following lifecycle stages. For more i
 
 ### Settlement
 
-The execution flow and expected processing time of a payment depend on the **combination of origins and destinations**.\
+The execution flow and expected processing time of a payment depend on the **combination of origins and destinations**.
 For example:
 
 * External origins (e.g., card, bank transfer) may involve delays depending on the provider.
 * Internal transactions (e.g., P2P, Collect) are instant.
-* Crossborder payments may require currency conversion and sometimes additional processing time.
+* Cross-border payments may require currency conversion and sometimes additional processing time.
 
-This entity serves as the **core model for all payment operations** within **conomy\_hq**. A correct understanding and setup of this structure is essential for building reliable and traceable financial workflows.
+This entity serves as the **core model for all payment operations** within `conomy_hq`. A correct understanding and setup of this structure is essential for building reliable and traceable financial workflows.

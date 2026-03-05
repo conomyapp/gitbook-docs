@@ -29,7 +29,7 @@ The `GET /payments/available-products` endpoint returns a complete view of the p
 
 | Field | Type | Description |
 |---|---|---|
-| `currency` | `string` | ISO 4217 currency code |
+| `currency` | `string` | `ISO 4217` currency code |
 | `payin.paymentMethods` | `string[]` | Pay-in node types for this currency |
 | `payin.products` | `payment-node-get[]` | Full product details for each pay-in method |
 | `payout.withdrawalMethods` | `string[]` | Pay-out node types for this currency |

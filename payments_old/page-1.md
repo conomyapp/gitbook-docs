@@ -34,10 +34,10 @@ We offer two main approaches to handling payments. Choose the one that best fits
 
 Every payment in our system consists of these key elements:
 
-* **Origins**: Where the money comes from (e.g., bank account, card, crypto wallet).
-* **Destinations**: Where the money goes.
-* **Amounts**: Original and final amounts (including fees).
-* **Fees**: Transaction costs.
+* `Origins`: Where the money comes from (e.g., bank account, card, crypto wallet).
+* `Destinations`: Where the money goes.
+* `Amounts`: Original and final amounts (including fees).
+* `Fees`: Transaction costs.
 * **Exchange Rates**: When currency conversion is involved.
 
 Let's move forward to the next step, where we’ll dive into creating your first payment, [click here! ✌️](quickstart.md).

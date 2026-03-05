@@ -14,7 +14,7 @@ layout:
 
 # Withdrawal account
 
-Used to withdraw funds from an internal **conomy\_hq** account to an external destination.
+Used to withdraw funds from an internal `conomy_hq` account to an external destination.
 
 The transaction is initiated by the account owner when they decide to move money out of the platform.
 

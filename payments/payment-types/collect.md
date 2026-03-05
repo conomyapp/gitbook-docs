@@ -26,8 +26,8 @@ This transaction is useful for pooling funds or collecting payments within an or
 
 ### Flow
 
-* **Origin**: One or more internal accounts (paying accounts).
-* **Destination**: One internal account (collector).
+* `Origin`: One or more internal accounts (paying accounts).
+* `Destination`: One internal account (collector).
 
 ### Ownership
 
@@ -41,4 +41,4 @@ Collect transactions are processed instantly.
 
 To perform a bulk payment for collection using `COLLECT`:
 
-* **Structure**: multiple internal origins and one internal destination.
+* `Structure`: multiple internal origins and one internal destination.

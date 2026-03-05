@@ -14,7 +14,7 @@ layout:
 
 # Payment types
 
-**conomy\_hq** supports multiple types of transactions to manage the movement of funds across internal and external accounts. Each payment type defines a specific financial behavior within the platform, including who initiates the transaction, what types of accounts are involved, and how the funds flow.
+`conomy_hq` supports multiple types of transactions to manage the movement of funds across internal and external accounts. Each payment type defines a specific financial behavior within the platform, including who initiates the transaction, what types of accounts are involved, and how the funds flow.
 
 Only the **owner of a given account** has the privileges to initiate or authorize payments from that account.
 
@@ -24,7 +24,7 @@ Below you will find detailed documentation for each supported payment type:
 
 <summary><code>TOPUP_ACCOUNT</code></summary>
 
-Funds an account in **conomy\_hq.**
+Funds an account in `conomy_hq`.
 
 <a href="topup-account.md" class="button secondary">Go to topup payment docs</a>
 
@@ -34,7 +34,7 @@ Funds an account in **conomy\_hq.**
 
 <summary><code>WITHDRAWAL_ACCOUNT</code></summary>
 
-Withdraws funds from a **conomy\_hq** account.
+Withdraws funds from a `conomy_hq` account.
 
 <a href="withdrawal-account.md" class="button secondary">Go to withdrawal payment docs</a>
 
@@ -54,9 +54,9 @@ Sale payment between client and third party.
 
 <summary><code>REMITTANCE</code></summary>
 
-Crossborder payment from an internal or external account to receipient in another country.
+Cross-border payment from an internal or external account to a recipient in another country.
 
-<a href="p2p.md" class="button secondary">Go to remittance payment docs</a>
+<a href="remittance.md" class="button secondary">Go to remittance payment docs</a>
 
 </details>
 

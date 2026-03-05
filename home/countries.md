@@ -17,33 +17,33 @@ layout:
 
 # Countries
 
-At **conomy\_hq**, we help businesses grow globally. Below are the countries where we currently operate, along with the products available in each region. Country codes follow the `ISO 3166-1 alpha-3` standard.
+At `conomy_hq`, we help businesses grow globally. Below are the countries where we currently operate, along with the products available in each region. Country codes follow the `ISO 3166-1 alpha-3` standard.
 
 ### Where We Operate
 
 | Region         | Code                        | Payments     | Accounts     |
 | -------------- | --------------------------- | ------------ | ------------ |
-| Chile          | `CHL`                       |  available |  available |
-| Mexico         | `MEX`                       |  available |  available |
-| Colombia       | `COL`                       |  available |  available |
-| Brazil         | `BRA`                       |  available |  available   |
-| Argentina      | `ARG`                       |  available |  available   |
-| Peru           | `PER`                       |  available |  available   |
-| Bolivia        | `BOL`                       |  available |  available   |
-| Paraguay       | `PRY`                       |  available |  not available   |
-| Australia      | `AUS`                       |  available |  not available   |
-| Costa Rica     | `CRI`                       |  available |  not available   |
-| Dominican Republic | `DOM`                   |  available |  not available   |
-| Ecuador        | `ECU`                       |  available |  not available   |
-| Panama         | `PAN`                       |  available |  not available   |
-| Uruguay        | `URY`                       |  available |  not available   |
-| Venezuela      | `VEN`                       |  available |  not available   |
-| United States  | `USA`                       |  available |  not available |
-| Canada         | `CAN`                       |  available |  not available   |
-| United Kingdom | `GBR`                       |  available |  not available   |
-| European Union | `FRA`, `DEU`, `ESP`, etc.   |  available |  not available   |
-| China          | `CHN`                       |  available |  not available   |
-| Hong Kong      | `HKG`                       |  available |  not available   |
+| Chile          | `CHL`                       | `available` | `available` |
+| Mexico         | `MEX`                       | `available` | `available` |
+| Colombia       | `COL`                       | `available` | `available` |
+| Brazil         | `BRA`                       | `available` | `available` |
+| Argentina      | `ARG`                       | `available` | `available` |
+| Peru           | `PER`                       | `available` | `available` |
+| Bolivia        | `BOL`                       | `available` | `available` |
+| Paraguay       | `PRY`                       | `available` | `not available` |
+| Australia      | `AUS`                       | `available` | `not available` |
+| Costa Rica     | `CRI`                       | `available` | `not available` |
+| Dominican Republic | `DOM`                   | `available` | `not available` |
+| Ecuador        | `ECU`                       | `available` | `not available` |
+| Panama         | `PAN`                       | `available` | `not available` |
+| Uruguay        | `URY`                       | `available` | `not available` |
+| Venezuela      | `VEN`                       | `available` | `not available` |
+| United States  | `USA`                       | `available` | `not available` |
+| Canada         | `CAN`                       | `available` | `not available` |
+| United Kingdom | `GBR`                       | `available` | `not available` |
+| European Union | `FRA`, `DEU`, `ESP`, etc.   | `available` | `not available` |
+| China          | `CHN`                       | `available` | `not available` |
+| Hong Kong      | `HKG`                       | `available` | `not available` |
 
 ### Payment Rails per Country
 

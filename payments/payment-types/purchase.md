@@ -14,7 +14,7 @@ layout:
 
 # Purchase
 
-Represents a payment for goods or services provided by a client using **conomy\_hq**.
+Represents a payment for goods or services provided by a client using `conomy_hq`.
 
 Typically initiated via a payment link or external checkout method, this transaction allows third-party customers to send funds to a client's internal account.
 

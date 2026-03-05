@@ -14,7 +14,7 @@ layout:
 
 # P2P
 
-Used for peer-to-peer transfers between internal accounts in **conomy\_hq**.
+Used for peer-to-peer transfers between internal accounts in `conomy_hq`.
 
 This push-based transaction allows an account owner to send funds directly to one or more internal accounts, such as users, services, or other organizations.
 
@@ -36,4 +36,4 @@ P2P transactions are processed instantly.
 
 To perform a bulk payment for disbursement using `P2P`:
 
-* **Structure**: one origin and multiple internal destinations.
+* `Structure`: one origin and multiple internal destinations.

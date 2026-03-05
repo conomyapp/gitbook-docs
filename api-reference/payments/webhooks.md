@@ -4,7 +4,7 @@
 {% column %}
 Webhooks allow your application to receive real-time notifications when payment events occur on the platform.
 
-Instead of polling the API for updates, you register an endpoint and Conomy sends HTTP POST requests to it whenever relevant events happen, such as a payment being received or a transaction status changing.
+Instead of polling the API for updates, you register an endpoint and Conomy sends HTTP `POST` requests to it whenever relevant events happen, such as a payment being received or a transaction status changing.
 
 Use the Webhooks API to listen for payment lifecycle events and react to them in your backend systems.
 {% endcolumn %}

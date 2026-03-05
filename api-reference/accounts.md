@@ -25,7 +25,7 @@ layout:
 
 Each account can store `balances`, receive or send funds, and be associated with a specific user or organization. Accounts can be [created](accounts.md#post-accounts), [updated](accounts.md#patch-accounts-id), and [deleted](accounts.md#delete-accounts-id) via the `API`, and are identified by a unique ID.
 
-Use the Accounts API to[ list all accounts](accounts.md#get-accounts), create new ones, r[etrieve details of a specific account](accounts.md#get-accounts), update metadata, or delete an account when it’s no longer needed.
+Use the Accounts API to [list all accounts](accounts.md#get-accounts), create new ones, [retrieve details of a specific account](accounts.md#get-accounts-id), update metadata, or delete an account when it’s no longer needed.
 {% endcolumn %}
 
 {% column %}

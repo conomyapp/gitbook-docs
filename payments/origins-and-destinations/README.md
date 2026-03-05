@@ -1,8 +1,8 @@
 # Origins and Destinations
 
-In every payment, the flow of funds is defined by **origins** (where the money comes from) and **destinations** (where the money goes). Each item is represented as an object within the `origins[]` or `destinations[]` array.
+In every payment, the flow of funds is defined by `origins` (where the money comes from) and `destinations` (where the money goes). Each item is represented as an object within the `origins[]` or `destinations[]` array.
 
-Both **origins** and **destinations** are defined using the `payment-node` entity, which encapsulates the configuration needed for the payment source or target.
+Both `origins` and `destinations` are defined using the `payment-node` entity, which encapsulates the configuration needed for the payment source or target.
 
 The payment-node includes a `type` field. Based on the selected `type`, a corresponding `node` must be provided, containing the specific structure required to process the payment.
 

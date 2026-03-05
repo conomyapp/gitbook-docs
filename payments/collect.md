@@ -18,7 +18,7 @@ layout:
 You can use `payment-attempts` or create the payment directly.
 {% endhint %}
 
-A **COLLECT** transaction allows you to **gather funds from multiple accounts** into a single destination account. It is commonly used for pooling money, collecting shared payments, or consolidating balances from multiple users.
+A `COLLECT` transaction allows you to **gather funds from multiple accounts** into a single destination account. It is commonly used for pooling money, collecting shared payments, or consolidating balances from multiple users.
 
 ***
 

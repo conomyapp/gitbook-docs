@@ -55,9 +55,9 @@ Choose your rail based on country and direction:
 
 | Rail | Country | Currency | Direction | Type |
 |---|---|---|---|---|
-| [PIX](pix.md) | Brazil | BRL | Pay-in | Redirect / QR |
+| [PIX](pix.md) | Brazil | BRL | Pay-in / Pay-out | Redirect / QR |
 | [PCT](pct.md) | Argentina | ARS | Pay-in | QR |
-| [CVU](cvu.md) | Argentina | ARS | Pay-out | Bank transfer |
+| [CVU](cvu.md) | Argentina | ARS | Pay-in | Bank transfer |
 | [ETPAY](etpay.md) | Chile | CLP | Pay-in | Redirect |
 | [FINTOC](fintoc.md) | Chile | CLP | Pay-in | Open banking |
 | [WEBPAY](webpay.md) | Chile | CLP | Pay-in | Redirect |

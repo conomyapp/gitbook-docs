@@ -18,11 +18,11 @@ Used to withdraw funds from an internal `conomy_hq` account to an external desti
 
 The transaction is initiated by the account owner when they decide to move money out of the platform.
 
-| Field          | Value                                                              |
-| -------------- | ------------------------------------------------------------------ |
-| `type`         | `WITHDRAWAL_ACCOUNT`                                               |
-| `origins`      | One internal `ACCOUNT` node                                        |
-| `destinations` | One or more payout rail nodes (e.g., `BANK_ACCOUNT`, `SPEI`, `PIX`, `ACH`, etc.) |
+| Field          | Value                                                                                                             |
+| -------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `type`         | `WITHDRAWAL_ACCOUNT`                                                                                              |
+| `origins`      | One internal `ACCOUNT` node                                                                                       |
+| `destinations` | One or more payout rail nodes (for example: `BANK_ACCOUNT`, `CVU`, `SPEI`, `PIX`, `ACH`, `WIRE`, `SEPA`, `SWIFT`) |
 
 The destination must be a payout rail specific to the recipient's country and currency. See [Nodes](../origins-and-destinations/nodes.md) for all available payout rails.
 
@@ -90,8 +90,27 @@ Bulk disbursements are **supported**: one origin, multiple destinations.
 | Argentina  | CVU/CBU       | `CVU`          |
 | Mexico     | CLABE         | `SPEI`         |
 | Brazil     | PIX key       | `PIX`          |
+| Colombia   | Bank payout   | `BREB`         |
 | USA        | Bank transfer | `ACH`          |
+| USA        | Wire          | `WIRE`         |
+| USA        | Instant bank  | `FEDNOW`       |
+| USA        | Real-time     | `RTP`          |
 | UK         | Faster Pay    | `FPE`          |
 | Europe     | IBAN          | `SEPA`         |
+| Global     | International | `SWIFT`        |
 | Chile      | Bank transfer | `BANK_ACCOUNT` |
 | Colombia   | Bank transfer | `BANK_ACCOUNT` |
+| Peru       | Bank transfer | `BANK_ACCOUNT` |
+| Bolivia    | Bank transfer | `BANK_ACCOUNT` |
+| Paraguay   | Bank transfer | `BANK_ACCOUNT` |
+| Australia  | Bank transfer | `BANK_ACCOUNT` |
+| Costa Rica | Bank transfer | `BANK_ACCOUNT` |
+| Dominican Republic | Bank transfer | `BANK_ACCOUNT` |
+| Ecuador    | Bank transfer | `BANK_ACCOUNT` |
+| Panama     | Bank transfer | `BANK_ACCOUNT` |
+| Uruguay    | Bank transfer | `BANK_ACCOUNT` |
+| Venezuela  | Bank transfer | `BANK_ACCOUNT` |
+| Canada     | Bank transfer | `BANK_ACCOUNT` |
+| Canada     | International | `SWIFT`        |
+| China      | International | `SWIFT`        |
+| Hong Kong  | International | `SWIFT`        |

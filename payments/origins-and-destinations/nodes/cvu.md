@@ -1,12 +1,12 @@
 ---
-description: Argentina's virtual account identifier for bank transfers. Used for pay-out in Argentina.
+description: Argentina's virtual account identifier for bank transfers. Used for pay-in in Argentina.
 ---
 
 # CVU
 
 CVU (Clave Virtual Uniforme) is the virtual account identifier used in Argentina for instant bank transfers between banks and fintechs. Use it as a destination when sending funds to an Argentine recipient.
 
-**Country:** Argentina | **Currency:** ARS | **Direction:** Pay-out
+**Country:** Argentina | **Currency:** ARS | **Direction:** Pay-in
 
 ## Required fields
 

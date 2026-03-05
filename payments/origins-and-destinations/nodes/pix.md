@@ -1,12 +1,12 @@
 ---
-description: Brazilian instant payment system. Used for pay-in in Brazil.
+description: Brazilian instant payment system. Used for pay-in and pay-out in Brazil.
 ---
 
 # PIX
 
 PIX is Brazil's instant payment rail operated by the Banco Central do Brasil. When used as an origin, it generates a QR code and a PIX copy-paste code that the user scans or copies to complete the payment.
 
-**Country:** Brazil | **Currency:** BRL | **Direction:** Pay-in
+**Country:** Brazil | **Currency:** BRL | **Direction:** Pay-in / Pay-out
 
 ## Required fields
 

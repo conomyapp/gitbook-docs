@@ -30,6 +30,6 @@ GET /payments/available-products
 {% endcolumn %}
 {% endcolumns %}
 
-{% openapi-operation spec="conomyhq-api" path="/payments/available-products" method="get" %}
+{% openapi-operation Payment API path="/payments/available-products" method="get" %}
 [Payment API](../../.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-operation %}

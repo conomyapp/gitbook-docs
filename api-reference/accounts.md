@@ -36,26 +36,26 @@ DELETE /accounts/:id
 {% endcolumn %}
 {% endcolumns %}
 
-{% openapi-schemas spec="conomyhq-api" schemas="account" grouped="false" %}
+{% openapi-schemas Payment API schemas="account" grouped="false" %}
 [OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/552534d10e9e90a821a9938005d2ec468153b739a1864d0de7c25a1b32c21d83.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T145654Z&X-Amz-Expires=172800&X-Amz-Signature=ded9094f1a3995941bafc4d41acf45aa841c1b8712591685b8adf6816f7c3d70&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-schemas %}
 
-{% openapi-operation spec="conomyhq-api" path="/accounts" method="get" %}
+{% openapi-operation Payment API path="/accounts" method="get" %}
 [OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/552534d10e9e90a821a9938005d2ec468153b739a1864d0de7c25a1b32c21d83.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T145654Z&X-Amz-Expires=172800&X-Amz-Signature=ded9094f1a3995941bafc4d41acf45aa841c1b8712591685b8adf6816f7c3d70&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="conomyhq-api" path="/accounts" method="post" %}
+{% openapi-operation Payment API path="/accounts" method="post" %}
 [OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/552534d10e9e90a821a9938005d2ec468153b739a1864d0de7c25a1b32c21d83.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T145654Z&X-Amz-Expires=172800&X-Amz-Signature=ded9094f1a3995941bafc4d41acf45aa841c1b8712591685b8adf6816f7c3d70&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="conomyhq-api" path="/accounts/{id}" method="get" %}
+{% openapi-operation Payment API path="/accounts/{id}" method="get" %}
 [OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/552534d10e9e90a821a9938005d2ec468153b739a1864d0de7c25a1b32c21d83.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T145654Z&X-Amz-Expires=172800&X-Amz-Signature=ded9094f1a3995941bafc4d41acf45aa841c1b8712591685b8adf6816f7c3d70&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="conomyhq-api" path="/accounts/{id}" method="patch" %}
+{% openapi-operation Payment API path="/accounts/{id}" method="patch" %}
 [OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/552534d10e9e90a821a9938005d2ec468153b739a1864d0de7c25a1b32c21d83.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T145654Z&X-Amz-Expires=172800&X-Amz-Signature=ded9094f1a3995941bafc4d41acf45aa841c1b8712591685b8adf6816f7c3d70&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="conomyhq-api" path="/accounts/{id}" method="delete" %}
+{% openapi-operation Payment API path="/accounts/{id}" method="delete" %}
 [OpenAPI conomyhq-api](https://gitbook-x-prod-openapi.4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/raw/552534d10e9e90a821a9938005d2ec468153b739a1864d0de7c25a1b32c21d83.txt?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20250701%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20250701T145654Z&X-Amz-Expires=172800&X-Amz-Signature=ded9094f1a3995941bafc4d41acf45aa841c1b8712591685b8adf6816f7c3d70&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
 {% endopenapi-operation %}

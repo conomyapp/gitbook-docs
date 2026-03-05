@@ -30,6 +30,6 @@ GET /payments/banks/{country}
 {% endcolumn %}
 {% endcolumns %}
 
-{% openapi-operation spec="conomyhq-api" path="/payments/banks/{country}" method="get" %}
+{% openapi-operation Payment API path="/payments/banks/{country}" method="get" %}
 [Payment API](../../.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-operation %}

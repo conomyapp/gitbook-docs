@@ -1,0 +1,5 @@
+# macOS FUSE temporary files
+.fuse_hidden*
+
+# macOS
+.DS_Store

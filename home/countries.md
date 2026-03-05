@@ -30,12 +30,12 @@ At **conomy\_hq**, we help businesses grow globally. Below are the countries whe
 | Argentina      | `ARG`                       |  available |  available   |
 | Peru           | `PER`                       |  available |  available   |
 | Bolivia        | `BOL`                       |  available |  available   |
-| Paraguay       | `PRY`                       |  available |  available   |
-| Australia      | `AUS`                       |  available |  available   |
-| United States  | `USA`                       |  available |  available |
-| Canada         | `CAN`                       |  available |   backlong   |
-| United Kingdom | `GBR`                       |  available |  available   |
-| European Union | `FRA`, `DEU`, `ESP`, etc.   |  available |  backlog   |
+| Paraguay       | `PRY`                       |  available |  not available   |
+| Australia      | `AUS`                       |  available |  not available   |
+| United States  | `USA`                       |  available |  not available |
+| Canada         | `CAN`                       |  available |  not available   |
+| United Kingdom | `GBR`                       |  available |  not available   |
+| European Union | `FRA`, `DEU`, `ESP`, etc.   |  available |  not available   |
 
 ### Payment Rails per Country
 
@@ -48,10 +48,10 @@ Each country supports specific payment rails for moving funds in and out of the 
 | Colombia   | `PSE`, `BANCOLOMBIA`, `DAVIVIENDA`, `DAVIPLATA`, `NEQUI` | `BREB`, `BANK_ACCOUNT`               |
 | Brazil     | `PIX`                                               | `PIX`                             |
 | Argentina  | `PCT`                                               | `CVU`, `BANK_ACCOUNT`             |
-| Peru       | `LIGO`, `SIP`                                       | `VITAWALLET`, `KOYWE`             |
-| Bolivia    | `SIP`                                               | `VITAWALLET`, `KOYWE`             |
-| Paraguay   | `VITAWALLET`                                        | `VITAWALLET`                      |
-| Australia  | `VITAWALLET`                                        | `VITAWALLET`                      |
+| Peru       | `LIGO`, `SIP`                                       | `BANK_ACCOUNT`                    |
+| Bolivia    | `SIP`                                               | `BANK_ACCOUNT`                    |
+| Paraguay   | —                                                   | —                                 |
+| Australia  | —                                                   | —                                 |
 | USA        | —                                                   | `ACH`, `WIRE`, `FEDNOW`, `RTP`    |
 | Canada     | —                                                   | `BANK_ACCOUNT`                    |
 | UK         | —                                                   | `FPE`                             |

@@ -70,8 +70,6 @@ Each currency is processed through a specific payment rail. The rail determines 
 | `LIGO`        | `PEN`    | Peru       | QR-based payment system                        |
 | `SIP`         | `PEN`    | Peru       | Interoperable payment system                   |
 | `SIP`         | `BOB`    | Bolivia    | Interoperable payment system                   |
-| `VITAWALLET`  | Multi    | Multi      | Vitawallet digital payment service             |
-| `KOYWE`       | Multi    | Multi      | Koywe payment network                          |
 | `ACH`         | `USD`    | USA        | Automated Clearing House bank transfers        |
 | `WIRE`        | `USD`    | USA        | Wire transfer via correspondent banks          |
 | `FEDNOW`      | `USD`    | USA        | FedNow instant payment service                 |
@@ -91,14 +89,14 @@ Each currency is processed through a specific payment rail. The rail determines 
 | `COP`          |        | COL   |
 | `PEN`          |        | PER   |
 | `BOB`          |        | BOL   |
-| `PYG`          |        | PRY   |
-| `AUD`          |        | AUS   |
+| `PYG`          |        | -     |
+| `AUD`          |        | -     |
 | `ARS`          |        | ARG   |
 | `BRL`          |        | BRA   |
-| `USD`          |        | USA   |
-| `CAD`          |        | CAN   |
-| `EUR`          |        | FRA   |
-| `GBP`          |        | GBR   |
+| `USD`          |        | -     |
+| `CAD`          |        | -     |
+| `EUR`          |        | -     |
+| `GBP`          |        | -     |
 | `USDC`         |        |        |
 | `USDT`         |        |        |
 

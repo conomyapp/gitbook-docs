@@ -5819,47 +5819,6 @@ components:
       required:
         - sip
       title: SIP
-    vitawallet-wrapper:
-      type: object
-      description: >-
-        VITAWALLET pay-in/pay-out node. Multi-country digital payment service
-        (Peru, Bolivia, Paraguay, Australia).
-      properties:
-        vitawallet:
-          type: object
-          properties:
-            customer:
-              $ref: '#/components/schemas/customer'
-            successUrl:
-              type: string
-              description: Redirect URL on successful payment.
-            failedUrl:
-              type: string
-              description: Redirect URL on failed payment.
-          required:
-            - customer
-      required:
-        - vitawallet
-      title: VITAWALLET
-    koywe-wrapper:
-      type: object
-      description: >-
-        KOYWE pay-out node. Multi-country payment network
-        (Peru, Bolivia).
-      properties:
-        koywe:
-          type: object
-          properties:
-            customer:
-              $ref: '#/components/schemas/customer'
-            network:
-              type: string
-              description: Target blockchain or payment network.
-          required:
-            - customer
-      required:
-        - koywe
-      title: KOYWE
     ach-wrapper:
       type: object
       description: ACH pay-in/pay-out node for USA (USD). Automated Clearing House bank transfers.
@@ -6040,6 +5999,42 @@ components:
       required:
         - swift
       title: SWIFT
+    ach:
+      $ref: '#/components/schemas/ach-wrapper/properties/ach'
+    bancolombia:
+      $ref: '#/components/schemas/bancolombia-wrapper/properties/bancolombia'
+    breb:
+      $ref: '#/components/schemas/breb-wrapper/properties/breb'
+    cvu:
+      $ref: '#/components/schemas/cvu-wrapper/properties/cvu'
+    daviplata:
+      $ref: '#/components/schemas/daviplata-wrapper/properties/daviplata'
+    davivienda:
+      $ref: '#/components/schemas/davivienda-wrapper/properties/davivienda'
+    fednow:
+      $ref: '#/components/schemas/fednow-wrapper/properties/fedNow'
+    fintoc:
+      $ref: '#/components/schemas/fintoc-wrapper/properties/fintoc'
+    fpe:
+      $ref: '#/components/schemas/fpe-wrapper/properties/fpe'
+    nequi:
+      $ref: '#/components/schemas/nequi-wrapper/properties/nequi'
+    pago-movil:
+      $ref: '#/components/schemas/sip-wrapper/properties/sip'
+    pse:
+      $ref: '#/components/schemas/pse-wrapper/properties/pse'
+    rtp:
+      $ref: '#/components/schemas/rtp-wrapper/properties/rtp'
+    sepa:
+      $ref: '#/components/schemas/sepa-wrapper/properties/sepa'
+    spei:
+      $ref: '#/components/schemas/spei-wrapper/properties/spei'
+    swift:
+      $ref: '#/components/schemas/swift-wrapper/properties/swift'
+    webpay:
+      $ref: '#/components/schemas/webpay-wrapper/properties/webpay'
+    wire:
+      $ref: '#/components/schemas/wire-wrapper/properties/wire'
     bank:
       type: object
       description: A financial institution supported by conomy for a given country.
@@ -6160,8 +6155,6 @@ components:
           SPEI: '#/components/schemas/spei-wrapper'
           LIGO: '#/components/schemas/ligo-wrapper'
           SIP: '#/components/schemas/sip-wrapper'
-          VITAWALLET: '#/components/schemas/vitawallet-wrapper'
-          KOYWE: '#/components/schemas/koywe-wrapper'
           ACH: '#/components/schemas/ach-wrapper'
           WIRE: '#/components/schemas/wire-wrapper'
           FEDNOW: '#/components/schemas/fednow-wrapper'
@@ -6190,8 +6183,6 @@ components:
         - $ref: '#/components/schemas/spei-wrapper'
         - $ref: '#/components/schemas/ligo-wrapper'
         - $ref: '#/components/schemas/sip-wrapper'
-        - $ref: '#/components/schemas/vitawallet-wrapper'
-        - $ref: '#/components/schemas/koywe-wrapper'
         - $ref: '#/components/schemas/ach-wrapper'
         - $ref: '#/components/schemas/wire-wrapper'
         - $ref: '#/components/schemas/fednow-wrapper'
@@ -6359,8 +6350,6 @@ components:
           SPEI: '#/components/schemas/spei-wrapper'
           LIGO: '#/components/schemas/ligo-wrapper'
           SIP: '#/components/schemas/sip-wrapper'
-          VITAWALLET: '#/components/schemas/vitawallet-wrapper'
-          KOYWE: '#/components/schemas/koywe-wrapper'
           ACH: '#/components/schemas/ach-wrapper'
           WIRE: '#/components/schemas/wire-wrapper'
           FEDNOW: '#/components/schemas/fednow-wrapper'
@@ -6389,8 +6378,6 @@ components:
         - $ref: '#/components/schemas/spei-wrapper'
         - $ref: '#/components/schemas/ligo-wrapper'
         - $ref: '#/components/schemas/sip-wrapper'
-        - $ref: '#/components/schemas/vitawallet-wrapper'
-        - $ref: '#/components/schemas/koywe-wrapper'
         - $ref: '#/components/schemas/ach-wrapper'
         - $ref: '#/components/schemas/wire-wrapper'
         - $ref: '#/components/schemas/fednow-wrapper'
@@ -6897,10 +6884,6 @@ components:
 
         | `SIP`         | `sip`         | Peru, Bolivia  | Pay-in           |
 
-        | `VITAWALLET`  | `vitawallet`  | Multi          | Pay-in / Pay-out |
-
-        | `KOYWE`       | `koywe`       | Peru, Bolivia  | Pay-out          |
-
         | `ACH`         | `ach`         | USA            | Pay-in / Pay-out |
 
         | `WIRE`        | `wire`        | USA            | Pay-out          |
@@ -6935,8 +6918,6 @@ components:
         - WOMPI
         - LIGO
         - SIP
-        - VITAWALLET
-        - KOYWE
         - ACH
         - WIRE
         - FEDNOW
@@ -6965,8 +6946,6 @@ components:
         WOMPI: Wompi payment gateway pay-in for Colombia (COP). Opens the wompi node.
         LIGO: QR-based payment system pay-in for Peru (PEN). Opens the ligo node.
         SIP: Interoperable payment system for Peru (PEN) and Bolivia (BOB). Opens the sip node.
-        VITAWALLET: Vitawallet digital payment — multi-country (Peru, Bolivia, Paraguay, Australia). Opens the vitawallet node.
-        KOYWE: Koywe payment network payout for Peru (PEN) and Bolivia (BOB). Opens the koywe node.
         ACH: Automated Clearing House bank transfers for USA (USD). Opens the ach node.
         WIRE: Wire transfer via correspondent banks for USA (USD). Opens the wire node.
         FEDNOW: FedNow instant payment service for USA (USD). Opens the fedNow node.

@@ -2,8 +2,8 @@
 description: >-
   Discover financial institutions that operate in our supported countries,
   currencies, and networks.
-hidden: true
 layout:
+  width: default
   title:
     visible: true
   description:
@@ -14,6 +14,10 @@ layout:
     visible: false
   pagination:
     visible: false
+  metadata:
+    visible: true
+  tags:
+    visible: true
 ---
 
 # Financial institutions
@@ -26,7 +30,7 @@ You can also query the full list programmatically via the [Banks API](../api-ref
 GET /payments/banks/{country}
 ```
 
----
+***
 
 ### Need a New Bank?
 

@@ -10,15 +10,15 @@ PCT (Pago con Transferencia) is Argentina's BCRA-regulated QR-based instant tran
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"PCT"` |
-| `currency` | `string` | Yes | Must be `"ARS"` |
-| `pct.customer.phoneNumber` | `string` | Yes | Payer's phone number (digits only) |
-| `pct.customer.phoneNumberPrefix` | `string` | Yes | Country code (e.g., `"54"` for Argentina) |
-| `pct.customer.email` | `string` | Yes | Payer's email |
-| `pct.successUrl` | `string` | No | Redirect URL on success |
-| `pct.failedUrl` | `string` | No | Redirect URL on failure |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"PCT"` |
+| `currency` | `string` | Must be `"ARS"` |
+| `pct.customer.phoneNumber` | `string` | Payer's phone number (digits only) |
+| `pct.customer.phoneNumberPrefix` | `string` | Country code (e.g., `"54"` for Argentina) |
+| `pct.customer.email` | `string` | Payer's email |
+| `pct.successUrl` | `string` | Redirect URL on success |
+| `pct.failedUrl` | `string` | Redirect URL on failure |
 
 ## Example
 
@@ -42,6 +42,14 @@ PCT (Pago con Transferencia) is Argentina's BCRA-regulated QR-based instant tran
 
 | Field | Description |
 |---|---|
-| `qrCode` | QR code string for scanning |
+| `pct.qrCode` | QR code string for scanning |
 
 Display the `qrCode` to your user. They can scan it with Mercado Pago, BBVA, Galicia, Naranja X, or any other PCT-compatible app.
+
+## Valid destinations
+
+When PCT is used as origin, the valid destinations are:
+
+| Node | Description |
+|---|---|
+| `ACCOUNT` | Internal platform account |

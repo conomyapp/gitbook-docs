@@ -10,19 +10,19 @@ ACH (Automated Clearing House) is the standard US bank-to-bank transfer network.
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"ACH"` |
-| `currency` | `string` | Yes | Must be `"USD"` |
-| `ach.bank.accountNumber` | `string` | Yes | US bank account number |
-| `ach.routingNumber` | `string` | Yes | 9-digit ABA routing number |
-| `ach.customer.firstName` | `string` | Yes | Account holder's first name |
-| `ach.customer.lastName` | `string` | Yes | Account holder's last name |
-| `ach.customer.email` | `string` | Yes | Account holder's email |
-| `ach.customer.documentNumber` | `string` | Yes | SSN or ITIN |
-| `ach.customer.documentType` | `string` | Yes | Document type (e.g., `"SSN"`) |
-| `ach.accountType` | `string` | No | `"CHECKING"` or `"SAVINGS"` |
-| `ach.accountHolderType` | `string` | No | `"INDIVIDUAL"` or `"BUSINESS"` |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"ACH"` |
+| `currency` | `string` | Must be `"USD"` |
+| `ach.bank.accountNumber` | `string` | US bank account number |
+| `ach.routingNumber` | `string` | 9-digit ABA routing number |
+| `ach.customer.firstName` | `string` | Account holder's first name |
+| `ach.customer.lastName` | `string` | Account holder's last name |
+| `ach.customer.email` | `string` | Account holder's email |
+| `ach.customer.documentNumber` | `string` | SSN or ITIN |
+| `ach.customer.documentType` | `string` | Document type (e.g., `"SSN"`) |
+| `ach.accountType` | `string` | `"CHECKING"` or `"SAVINGS"` |
+| `ach.accountHolderType` | `string` | `"INDIVIDUAL"` or `"BUSINESS"` |
 
 ## Example
 

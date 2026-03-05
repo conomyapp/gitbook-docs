@@ -10,17 +10,17 @@ RTP (Real-Time Payments) is The Clearing House's instant payment network, operat
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"RTP"` |
-| `currency` | `string` | Yes | Must be `"USD"` |
-| `rtp.bank.accountNumber` | `string` | Yes | Bank account number |
-| `rtp.routingNumber` | `string` | Yes | 9-digit ABA routing number |
-| `rtp.customer.firstName` | `string` | Yes | Account holder's first name |
-| `rtp.customer.lastName` | `string` | Yes | Account holder's last name |
-| `rtp.customer.email` | `string` | Yes | Account holder's email |
-| `rtp.customer.documentNumber` | `string` | Yes | SSN or ITIN |
-| `rtp.customer.documentType` | `string` | Yes | Document type |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"RTP"` |
+| `currency` | `string` | Must be `"USD"` |
+| `rtp.bank.accountNumber` | `string` | Bank account number |
+| `rtp.routingNumber` | `string` | 9-digit ABA routing number |
+| `rtp.customer.firstName` | `string` | Account holder's first name |
+| `rtp.customer.lastName` | `string` | Account holder's last name |
+| `rtp.customer.email` | `string` | Account holder's email |
+| `rtp.customer.documentNumber` | `string` | SSN or ITIN |
+| `rtp.customer.documentType` | `string` | Document type |
 
 ## Example
 

@@ -10,14 +10,14 @@ CVU (Clave Virtual Uniforme) is the virtual account identifier used in Argentina
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"CVU"` |
-| `currency` | `string` | Yes | Must be `"ARS"` |
-| `cvu.code` | `string` | Yes | 22-digit CVU code of the recipient |
-| `cvu.customer.firstName` | `string` | Yes | Recipient's first name |
-| `cvu.customer.lastName` | `string` | Yes | Recipient's last name |
-| `cvu.customer.email` | `string` | Yes | Recipient's email |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"CVU"` |
+| `currency` | `string` | Must be `"ARS"` |
+| `cvu.code` | `string` | 22-digit CVU code of the recipient |
+| `cvu.customer.firstName` | `string` | Recipient's first name |
+| `cvu.customer.lastName` | `string` | Recipient's last name |
+| `cvu.customer.email` | `string` | Recipient's email |
 
 ## Example
 
@@ -35,3 +35,11 @@ CVU (Clave Virtual Uniforme) is the virtual account identifier used in Argentina
   }
 }
 ```
+
+## Valid origins
+
+When CVU is used as destination, the valid origins are:
+
+| Node | Description |
+|---|---|
+| `ACCOUNT` | Internal platform account |

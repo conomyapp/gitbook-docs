@@ -26,12 +26,15 @@ At **conomy\_hq**, we help businesses grow globally. Below are the countries whe
 | Chile          | `CHL`                       |  available |  available |
 | Mexico         | `MEX`                       |  available |  available |
 | Colombia       | `COL`                       |  available |  available |
-| Brazil         | `BRA`                       |  available |  backlog   |
-| Argentina      | `ARG`                       |  available |  backlog   |
-| Peru           | `PER`                       |  available |  backlog   |
+| Brazil         | `BRA`                       |  available |  available   |
+| Argentina      | `ARG`                       |  available |  available   |
+| Peru           | `PER`                       |  available |  available   |
+| Bolivia        | `BOL`                       |  available |  available   |
+| Paraguay       | `PRY`                       |  available |  available   |
+| Australia      | `AUS`                       |  available |  available   |
 | United States  | `USA`                       |  available |  available |
-| Canada         | `CAN`                       |  available |  backlog   |
-| United Kingdom | `GBR`                       |  available |  backlog   |
+| Canada         | `CAN`                       |  available |   backlong   |
+| United Kingdom | `GBR`                       |  available |  available   |
 | European Union | `FRA`, `DEU`, `ESP`, etc.   |  available |  backlog   |
 
 ### Payment Rails per Country
@@ -42,13 +45,17 @@ Each country supports specific payment rails for moving funds in and out of the 
 | -------------- | --------------------------------------------------- | --------------------------------- |
 | Chile      | `ETPAY`, `FINTOC`, `WEBPAY`                         | `BANK_ACCOUNT`                    |
 | Mexico     | —                                                   | `SPEI`                            |
-| Colombia   | `PSE`, `BANCOLOMBIA`, `DAVIVIENDA`, `DAVIPLATA`, `NEQUI` | `BANK_ACCOUNT`               |
+| Colombia   | `PSE`, `BANCOLOMBIA`, `DAVIVIENDA`, `DAVIPLATA`, `NEQUI` | `BREB`, `BANK_ACCOUNT`               |
 | Brazil     | `PIX`                                               | `PIX`                             |
 | Argentina  | `PCT`                                               | `CVU`, `BANK_ACCOUNT`             |
-| USA        | —                                                   | `ACH`                             |
+| Peru       | `LIGO`, `SIP`                                       | `VITAWALLET`, `KOYWE`             |
+| Bolivia    | `SIP`                                               | `VITAWALLET`, `KOYWE`             |
+| Paraguay   | `VITAWALLET`                                        | `VITAWALLET`                      |
+| Australia  | `VITAWALLET`                                        | `VITAWALLET`                      |
+| USA        | —                                                   | `ACH`, `WIRE`, `FEDNOW`, `RTP`    |
 | Canada     | —                                                   | `BANK_ACCOUNT`                    |
 | UK         | —                                                   | `FPE`                             |
-| Europe     | —                                                   | `SEPA`                            |
+| Europe     | —                                                   | `SEPA`, `SWIFT`                   |
 
 ### Need Another Country?
 

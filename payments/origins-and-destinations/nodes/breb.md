@@ -10,15 +10,15 @@ BREB (Banco de la República Electronic Bridge) is Colombia's interbank settleme
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"BREB"` |
-| `currency` | `string` | Yes | Must be `"COP"` |
-| `breB.bankId` | `string` | Yes | Bank code of the recipient's bank |
-| `breB.customer.firstName` | `string` | Yes | Recipient's first name |
-| `breB.customer.lastName` | `string` | Yes | Recipient's last name |
-| `breB.customer.email` | `string` | Yes | Recipient's email |
-| `breB.bank.accountNumber` | `string` | No | Recipient's account number |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"BREB"` |
+| `currency` | `string` | Must be `"COP"` |
+| `breB.bankId` | `string` | Bank code of the recipient's bank |
+| `breB.customer.firstName` | `string` | Recipient's first name |
+| `breB.customer.lastName` | `string` | Recipient's last name |
+| `breB.customer.email` | `string` | Recipient's email |
+| `breB.bank.accountNumber` | `string` | Recipient's account number |
 
 ## Example
 

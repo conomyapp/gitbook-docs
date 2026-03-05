@@ -10,13 +10,13 @@ Daviplata is Davivienda's mobile wallet, widely used for transfers among unbanke
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"DAVIPLATA"` |
-| `currency` | `string` | Yes | Must be `"COP"` |
-| `daviplata.customer.documentType` | `string` | Yes | Document type (e.g., `"CC"`) |
-| `daviplata.customer.documentNumber` | `string` | Yes | Colombian ID number |
-| `daviplata.customer.email` | `string` | Yes | Customer's email |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"DAVIPLATA"` |
+| `currency` | `string` | Must be `"COP"` |
+| `daviplata.customer.documentType` | `string` | Document type (e.g., `"CC"`) |
+| `daviplata.customer.documentNumber` | `string` | Colombian ID number |
+| `daviplata.customer.email` | `string` | Customer's email |
 
 ## Example
 

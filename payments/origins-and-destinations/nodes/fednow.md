@@ -10,17 +10,17 @@ FedNow is the Federal Reserve's instant payment service, enabling real-time 24/7
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"FEDNOW"` |
-| `currency` | `string` | Yes | Must be `"USD"` |
-| `fedNow.bank.accountNumber` | `string` | Yes | Bank account number |
-| `fedNow.routingNumber` | `string` | Yes | 9-digit ABA routing number |
-| `fedNow.customer.firstName` | `string` | Yes | Account holder's first name |
-| `fedNow.customer.lastName` | `string` | Yes | Account holder's last name |
-| `fedNow.customer.email` | `string` | Yes | Account holder's email |
-| `fedNow.customer.documentNumber` | `string` | Yes | SSN or ITIN |
-| `fedNow.customer.documentType` | `string` | Yes | Document type |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"FEDNOW"` |
+| `currency` | `string` | Must be `"USD"` |
+| `fedNow.bank.accountNumber` | `string` | Bank account number |
+| `fedNow.routingNumber` | `string` | 9-digit ABA routing number |
+| `fedNow.customer.firstName` | `string` | Account holder's first name |
+| `fedNow.customer.lastName` | `string` | Account holder's last name |
+| `fedNow.customer.email` | `string` | Account holder's email |
+| `fedNow.customer.documentNumber` | `string` | SSN or ITIN |
+| `fedNow.customer.documentType` | `string` | Document type |
 
 ## Example
 

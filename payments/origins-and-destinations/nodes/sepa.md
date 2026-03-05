@@ -10,17 +10,17 @@ SEPA (Single Euro Payments Area) is the European standard for bank transfers in 
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"SEPA"` |
-| `currency` | `string` | Yes | Must be `"EUR"` |
-| `sepa.iban` | `string` | Yes | Recipient's IBAN |
-| `sepa.customer.firstName` | `string` | Yes | Recipient's first name |
-| `sepa.customer.lastName` | `string` | Yes | Recipient's last name |
-| `sepa.customer.email` | `string` | Yes | Recipient's email |
-| `sepa.customer.documentNumber` | `string` | Yes | National ID or tax number |
-| `sepa.customer.documentType` | `string` | Yes | Document type |
-| `sepa.bic` | `string` | No | BIC/SWIFT code of the bank |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"SEPA"` |
+| `currency` | `string` | Must be `"EUR"` |
+| `sepa.iban` | `string` | Recipient's IBAN |
+| `sepa.customer.firstName` | `string` | Recipient's first name |
+| `sepa.customer.lastName` | `string` | Recipient's last name |
+| `sepa.customer.email` | `string` | Recipient's email |
+| `sepa.customer.documentNumber` | `string` | National ID or tax number |
+| `sepa.customer.documentType` | `string` | Document type |
+| `sepa.bic` | `string` | BIC/SWIFT code of the bank |
 
 ## Example
 

@@ -10,17 +10,17 @@ PSE (Pagos Seguros en Línea) is Colombia's primary online bank transfer system.
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"PSE"` |
-| `currency` | `string` | Yes | Must be `"COP"` |
-| `pse.bankId` | `string` | Yes | Bank code selected by the user |
-| `pse.customer.firstName` | `string` | Yes | Payer's first name |
-| `pse.customer.lastName` | `string` | Yes | Payer's last name |
-| `pse.customer.documentNumber` | `string` | Yes | Colombian ID number |
-| `pse.customer.documentType` | `string` | Yes | Document type (e.g., `"CC"`, `"CE"`, `"NIT"`) |
-| `pse.customer.phoneNumber` | `string` | Yes | Payer's phone number |
-| `pse.customer.email` | `string` | Yes | Payer's email |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"PSE"` |
+| `currency` | `string` | Must be `"COP"` |
+| `pse.bankId` | `string` | Bank code selected by the user |
+| `pse.customer.firstName` | `string` | Payer's first name |
+| `pse.customer.lastName` | `string` | Payer's last name |
+| `pse.customer.documentNumber` | `string` | Colombian ID number |
+| `pse.customer.documentType` | `string` | Document type (e.g., `"CC"`, `"CE"`, `"NIT"`) |
+| `pse.customer.phoneNumber` | `string` | Payer's phone number |
+| `pse.customer.email` | `string` | Payer's email |
 
 ## Example
 

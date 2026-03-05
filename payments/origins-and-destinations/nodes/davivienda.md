@@ -10,12 +10,12 @@ Davivienda's payment button lets Davivienda account holders authorize a payment 
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"DAVIVIENDA"` |
-| `currency` | `string` | Yes | Must be `"COP"` |
-| `davivienda.customer.email` | `string` | Yes | Payer's email |
-| `davivienda.bankId` | `string` | No | Bank identifier |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"DAVIVIENDA"` |
+| `currency` | `string` | Must be `"COP"` |
+| `davivienda.customer.email` | `string` | Payer's email |
+| `davivienda.bankId` | `string` | Bank identifier |
 
 ## Example
 

@@ -10,14 +10,14 @@ SPEI (Sistema de Pagos Electrónicos Interbancarios) is Mexico's real-time inter
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"SPEI"` |
-| `currency` | `string` | Yes | Must be `"MXN"` |
-| `spei.customer.firstName` | `string` | Yes | Customer's first name |
-| `spei.customer.lastName` | `string` | Yes | Customer's last name |
-| `spei.clabe` | `string` | No | 18-digit CLABE (required for pay-out) |
-| `spei.bankId` | `string` | No | Bank identifier code |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"SPEI"` |
+| `currency` | `string` | Must be `"MXN"` |
+| `spei.customer.firstName` | `string` | Customer's first name |
+| `spei.customer.lastName` | `string` | Customer's last name |
+| `spei.clabe` | `string` | 18-digit CLABE (required for pay-out) |
+| `spei.bankId` | `string` | Bank identifier code |
 
 ## Pay-in example
 

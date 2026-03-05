@@ -10,12 +10,12 @@ Nequi is Bancolombia's digital wallet with over 20 million users in Colombia. It
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"NEQUI"` |
-| `currency` | `string` | Yes | Must be `"COP"` |
-| `nequi.customer.phoneNumber` | `string` | Yes | Nequi phone number (digits only) |
-| `nequi.customer.email` | `string` | Yes | Customer's email |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"NEQUI"` |
+| `currency` | `string` | Must be `"COP"` |
+| `nequi.customer.phoneNumber` | `string` | Nequi phone number (digits only) |
+| `nequi.customer.email` | `string` | Customer's email |
 
 ## Example
 

@@ -10,13 +10,13 @@ Wompi is a Colombian payment gateway that supports multiple payment methods incl
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"WOMPI"` |
-| `currency` | `string` | Yes | Must be `"COP"` |
-| `wompi.redirectUrl` | `string` | Yes | URL to redirect after payment |
-| `wompi.customer.firstName` | `string` | Yes | Payer's first name |
-| `wompi.customer.email` | `string` | Yes | Payer's email |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"WOMPI"` |
+| `currency` | `string` | Must be `"COP"` |
+| `wompi.redirectUrl` | `string` | URL to redirect after payment |
+| `wompi.customer.firstName` | `string` | Payer's first name |
+| `wompi.customer.email` | `string` | Payer's email |
 
 ## Example
 

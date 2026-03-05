@@ -35,6 +35,8 @@ Use this section to:
 {% column %}
 {% code title="Endpoints" overflow="wrap" %}
 ```http
+GET /payments/banks/{country}
+GET /payments/available-products
 GET /payment-origins
 GET /payment-destinations
 POST /payment-attempts

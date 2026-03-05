@@ -10,15 +10,15 @@ FPE (Faster Payments) is the UK's real-time payment network. Payments settle in 
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"FPE"` |
-| `currency` | `string` | Yes | Must be `"GBP"` |
-| `fpe.accountNumber` | `string` | Yes | UK bank account number (8 digits) |
-| `fpe.sortCode` | `string` | Yes | Sort code (6 digits, e.g., `"200415"`) |
-| `fpe.customer.firstName` | `string` | Yes | Recipient's first name |
-| `fpe.customer.lastName` | `string` | Yes | Recipient's last name |
-| `fpe.customer.email` | `string` | Yes | Recipient's email |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"FPE"` |
+| `currency` | `string` | Must be `"GBP"` |
+| `fpe.accountNumber` | `string` | UK bank account number (8 digits) |
+| `fpe.sortCode` | `string` | Sort code (6 digits, e.g., `"200415"`) |
+| `fpe.customer.firstName` | `string` | Recipient's first name |
+| `fpe.customer.lastName` | `string` | Recipient's last name |
+| `fpe.customer.email` | `string` | Recipient's email |
 
 ## Example
 

@@ -10,13 +10,13 @@ Webpay is the Transbank gateway, widely used in Chile for both debit and credit 
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"WEBPAY"` |
-| `currency` | `string` | Yes | Must be `"CLP"` |
-| `webpay.customer.firstName` | `string` | Yes | Payer's first name |
-| `webpay.customer.lastName` | `string` | Yes | Payer's last name |
-| `webpay.customer.email` | `string` | Yes | Payer's email |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"WEBPAY"` |
+| `currency` | `string` | Must be `"CLP"` |
+| `webpay.customer.firstName` | `string` | Payer's first name |
+| `webpay.customer.lastName` | `string` | Payer's last name |
+| `webpay.customer.email` | `string` | Payer's email |
 
 ## Example
 

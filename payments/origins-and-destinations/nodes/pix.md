@@ -10,16 +10,16 @@ PIX is Brazil's instant payment rail operated by the Banco Central do Brasil. Wh
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"PIX"` |
-| `currency` | `string` | Yes | Must be `"BRL"` |
-| `pix.customer.firstName` | `string` | Yes | Payer's first name |
-| `pix.customer.lastName` | `string` | Yes | Payer's last name |
-| `pix.customer.email` | `string` | Yes | Payer's email |
-| `pix.customer.documentNumber` | `string` | Yes | Brazilian CPF (11 digits) |
-| `pix.successUrl` | `string` | No | Redirect URL on success |
-| `pix.failedUrl` | `string` | No | Redirect URL on failure |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"PIX"` |
+| `currency` | `string` | Must be `"BRL"` |
+| `pix.customer.firstName` | `string` | Payer's first name |
+| `pix.customer.lastName` | `string` | Payer's last name |
+| `pix.customer.email` | `string` | Payer's email |
+| `pix.customer.documentNumber` | `string` | Brazilian CPF (11 digits) |
+| `pix.successUrl` | `string` | Redirect URL on success |
+| `pix.failedUrl` | `string` | Redirect URL on failure |
 
 ## Example
 

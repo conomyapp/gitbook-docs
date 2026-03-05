@@ -10,14 +10,14 @@ ETPAY is a Chilean open banking provider that lets users pay directly from their
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"ETPAY"` |
-| `currency` | `string` | Yes | Must be `"CLP"` |
-| `etpay.successUrl` | `string` | Yes | URL to redirect after successful payment |
-| `etpay.failedUrl` | `string` | Yes | URL to redirect if payment fails |
-| `etpay.customer.firstName` | `string` | Yes | Payer's first name |
-| `etpay.customer.email` | `string` | Yes | Payer's email |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"ETPAY"` |
+| `currency` | `string` | Must be `"CLP"` |
+| `etpay.successUrl` | `string` | URL to redirect after successful payment |
+| `etpay.failedUrl` | `string` | URL to redirect if payment fails |
+| `etpay.customer.firstName` | `string` | Payer's first name |
+| `etpay.customer.email` | `string` | Payer's email |
 
 ## Example
 

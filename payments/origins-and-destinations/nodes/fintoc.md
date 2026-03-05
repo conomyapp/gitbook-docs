@@ -10,11 +10,11 @@ Fintoc is a Chilean open banking provider. It uses a hosted widget where the use
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"FINTOC"` |
-| `currency` | `string` | Yes | Must be `"CLP"` |
-| `fintoc.customer` | `object` | No | Optional payer information |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"FINTOC"` |
+| `currency` | `string` | Must be `"CLP"` |
+| `fintoc.customer` | `object` | Optional payer information |
 
 ## Example
 

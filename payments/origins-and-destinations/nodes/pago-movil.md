@@ -10,15 +10,15 @@ Pago Móvil is Venezuela's interbank mobile payment system, allowing users to tr
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"PAGO_MOVIL"` |
-| `currency` | `string` | Yes | Must be `"VES"` |
-| `pagoMovil.customer.firstName` | `string` | Yes | Payer's first name |
-| `pagoMovil.customer.lastName` | `string` | Yes | Payer's last name |
-| `pagoMovil.customer.email` | `string` | Yes | Payer's email |
-| `pagoMovil.customer.phoneNumber` | `string` | Yes | Payer's registered Pago Móvil phone number |
-| `pagoMovil.bankId` | `string` | No | Bank code |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"PAGO_MOVIL"` |
+| `currency` | `string` | Must be `"VES"` |
+| `pagoMovil.customer.firstName` | `string` | Payer's first name |
+| `pagoMovil.customer.lastName` | `string` | Payer's last name |
+| `pagoMovil.customer.email` | `string` | Payer's email |
+| `pagoMovil.customer.phoneNumber` | `string` | Payer's registered Pago Móvil phone number |
+| `pagoMovil.bankId` | `string` | Bank code |
 
 ## Example
 

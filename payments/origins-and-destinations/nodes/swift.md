@@ -10,18 +10,18 @@ SWIFT transfers are the standard for international cross-border payments. They r
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"SWIFT"` |
-| `currency` | `string` | Yes | Currency of the transfer (e.g., `"USD"`, `"EUR"`) |
-| `swift.bank.accountNumber` | `string` | Yes | Recipient's bank account number |
-| `swift.swiftCode` | `string` | Yes | SWIFT/BIC code of the recipient's bank |
-| `swift.customer.firstName` | `string` | Yes | Recipient's first name |
-| `swift.customer.lastName` | `string` | Yes | Recipient's last name |
-| `swift.customer.email` | `string` | Yes | Recipient's email |
-| `swift.customer.documentNumber` | `string` | Yes | ID or tax number |
-| `swift.customer.documentType` | `string` | Yes | Document type |
-| `swift.iban` | `string` | No | IBAN (required for SEPA-zone recipients) |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"SWIFT"` |
+| `currency` | `string` | Currency of the transfer (e.g., `"USD"`, `"EUR"`) |
+| `swift.bank.accountNumber` | `string` | Recipient's bank account number |
+| `swift.swiftCode` | `string` | SWIFT/BIC code of the recipient's bank |
+| `swift.customer.firstName` | `string` | Recipient's first name |
+| `swift.customer.lastName` | `string` | Recipient's last name |
+| `swift.customer.email` | `string` | Recipient's email |
+| `swift.customer.documentNumber` | `string` | ID or tax number |
+| `swift.customer.documentType` | `string` | Document type |
+| `swift.iban` | `string` | IBAN (required for SEPA-zone recipients) |
 
 ## Example
 

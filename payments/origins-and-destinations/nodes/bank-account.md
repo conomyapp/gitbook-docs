@@ -10,15 +10,15 @@ BANK_ACCOUNT is a generic destination node for payouts to external bank accounts
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"BANK_ACCOUNT"` |
-| `currency` | `string` | Yes | Currency of the transfer |
-| `bank.accountNumber` | `string` | Yes | Recipient's bank account number |
-| `bank.bank` | `string` | Yes | Bank name or identifier |
-| `bank.typeAccount` | `string` | No | Account type: `"CHECKING"` or `"SAVINGS"` |
-| `bank.country` | `string` | No | 2-letter ISO country code (e.g., `"AR"`, `"CA"`) |
-| `customer` | `object` | No | Recipient's identity information |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"BANK_ACCOUNT"` |
+| `currency` | `string` | Currency of the transfer |
+| `bank.accountNumber` | `string` | Recipient's bank account number |
+| `bank.bank` | `string` | Bank name or identifier |
+| `bank.typeAccount` | `string` | Account type: `"CHECKING"` or `"SAVINGS"` |
+| `bank.country` | `string` | 2-letter ISO country code (e.g., `"AR"`, `"CA"`) |
+| `customer` | `object` | Recipient's identity information |
 
 ## Example
 

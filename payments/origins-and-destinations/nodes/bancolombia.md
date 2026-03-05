@@ -10,11 +10,11 @@ Bancolombia's transfer button allows Bancolombia account holders to authorize a 
 
 ## Required fields
 
-| Field | Type | Required | Description |
-|---|---|---|---|
-| `type` | `string` | Yes | Must be `"BANCOLOMBIA"` |
-| `currency` | `string` | Yes | Must be `"COP"` |
-| `bancolombia.customer.email` | `string` | Yes | Payer's email |
+| Field | Type | Description |
+|---|---|---|
+| `type` | `string` | Must be `"BANCOLOMBIA"` |
+| `currency` | `string` | Must be `"COP"` |
+| `bancolombia.customer.email` | `string` | Payer's email |
 
 ## Example
 

@@ -17,7 +17,7 @@ layout:
 
 # Currencies
 
-At **conomy\_hq**, we support both fiat and cryptocurrencies across different payment networks. Fiat currencies follow the ISO 4217 standard. Cryptocurrencies use the format `TOKEN_NETWORK` (e.g., `USDC_SOLANA`).
+At **conomy\_hq**, we support both fiat and cryptocurrencies across different payment networks. Fiat currencies follow the ISO 4217 standard. Cryptocurrencies are identified by token code; the network is specified in the payment node configuration.
 
 ---
 
@@ -29,6 +29,9 @@ At **conomy\_hq**, we support both fiat and cryptocurrencies across different pa
 | `MXN` | Mexican Peso          | Mexico           |
 | `COP` | Colombian Peso        | Colombia         |
 | `PEN` | Peruvian Sol          | Peru             |
+| `BOB` | Bolivian Boliviano    | Bolivia          |
+| `PYG` | Paraguayan Guaraní    | Paraguay         |
+| `AUD` | Australian Dollar     | Australia        |
 | `ARS` | Argentine Peso        | Argentina        |
 | `BRL` | Brazilian Real        | Brazil           |
 | `USD` | United States Dollar  | USA              |
@@ -38,11 +41,10 @@ At **conomy\_hq**, we support both fiat and cryptocurrencies across different pa
 
 ### Supported Crypto Currencies
 
-| Code           | Description                     |
-| -------------- | ------------------------------- |
-| `USDC_SOLANA`  | USD Coin on Solana              |
-| `USDC_ERC20`   | USD Coin on Ethereum (ERC20)    |
-| `USDC_MATIC`   | USD Coin on Polygon (MATIC)     |
+| Code    | Description                     |
+| ------- | ------------------------------- |
+| `USDC`  | USD Coin (network specified in payment node)  |
+| `USDT`  | Tether (network specified in payment node)    |
 
 ---
 
@@ -64,13 +66,19 @@ Each currency is processed through a specific payment rail. The rail determines 
 | `DAVIVIENDA`  | `COP`    | Colombia   | Davivienda direct payment                      |
 | `DAVIPLATA`   | `COP`    | Colombia   | Daviplata mobile wallet                        |
 | `NEQUI`       | `COP`    | Colombia   | Nequi digital wallet                           |
+| `BREB`        | `COP`    | Colombia   | Bank account transfer (payout)                 |
+| `LIGO`        | `PEN`    | Peru       | QR-based payment system                        |
+| `SIP`         | `PEN`    | Peru       | Interoperable payment system                   |
+| `SIP`         | `BOB`    | Bolivia    | Interoperable payment system                   |
+| `VITAWALLET`  | Multi    | Multi      | Vitawallet digital payment service             |
+| `KOYWE`       | Multi    | Multi      | Koywe payment network                          |
 | `ACH`         | `USD`    | USA        | Automated Clearing House bank transfers        |
+| `WIRE`        | `USD`    | USA        | Wire transfer via correspondent banks          |
+| `FEDNOW`      | `USD`    | USA        | FedNow instant payment service                 |
+| `RTP`         | `USD`    | USA        | Real-time payments network                     |
 | `SEPA`        | `EUR`    | Europe     | Single Euro Payments Area                      |
 | `FPE`         | `GBP`    | UK         | Faster Payments (near-instant bank transfers)  |
 | `SWIFT`       | Multi    | Global      | International bank wire transfers              |
-| `ERC20`       | `USDC`   | Global      | Ethereum network for stablecoins               |
-| `MATIC`       | `USDC`   | Global      | Polygon network for stablecoins                |
-| `SOLANA`      | `USDC`   | Global      | Solana network for stablecoins                 |
 
 ---
 
@@ -81,16 +89,18 @@ Each currency is processed through a specific payment rail. The rail determines 
 | `CLP`          |        | CHL   |
 | `MXN`          |        | MEX   |
 | `COP`          |        | COL   |
-| `ARS`          |        |        |
-| `BRL`          |        |        |
-| `PEN`          |        |        |
+| `PEN`          |        | PER   |
+| `BOB`          |        | BOL   |
+| `PYG`          |        | PRY   |
+| `AUD`          |        | AUS   |
+| `ARS`          |        | ARG   |
+| `BRL`          |        | BRA   |
 | `USD`          |        | USA   |
-| `CAD`          |        |        |
-| `EUR`          |        |        |
-| `GBP`          |        |        |
-| `USDC_SOLANA`  |        |        |
-| `USDC_ERC20`   |        |        |
-| `USDC_MATIC`   |        |        |
+| `CAD`          |        | CAN   |
+| `EUR`          |        | FRA   |
+| `GBP`          |        | GBR   |
+| `USDC`         |        |        |
+| `USDT`         |        |        |
 
 ---
 

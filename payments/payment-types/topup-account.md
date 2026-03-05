@@ -19,7 +19,7 @@ Used to fund an account within `conomy_hq`.
 This payment type enables users to add funds to their internal balance for future use, such as payout or transfers. The action is initiated by the account owner.
 
 | Field          | Value                                                              |
-| -------------- | ------------------------------------------------------------------ |
+| --------------: | ------------------------------------------------------------------: |
 | `type`         | `TOPUP_ACCOUNT`                                                                                  |
 | `origins`      | One pay-in rail node (for example: `CARD`, `PIX`, `ETPAY`, `PSE`, `WOMPI`, `ACH`, `FEDNOW`)   |
 | `destinations` | One or more internal `ACCOUNT` nodes                                                             |
@@ -77,7 +77,7 @@ Bulk payments are **not supported** for `TOPUP_ACCOUNT`.
 ### Available Origins by Region
 
 | Region        | Rail          | Type          |
-| ------------- | ------------- | ------------- |
+| -------------: | -------------: | -------------: |
 | Chile      | Open banking  | `ETPAY`       |
 | Chile      | Open banking  | `FINTOC`      |
 | Chile      | Card          | `WEBPAY`      |
@@ -101,5 +101,5 @@ Bulk payments are **not supported** for `TOPUP_ACCOUNT`.
 `TOPUP_ACCOUNT` credits internal balances only:
 
 | Destination | Type |
-| ----------- | ---- |
+| -----------: | ----: |
 | Internal account | `ACCOUNT` |

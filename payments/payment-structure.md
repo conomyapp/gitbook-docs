@@ -30,13 +30,13 @@ Think of a payment as: `origins` + `destinations` + `type` + `product`.
 {% columns fullWidth="true" %}
 {% column %}
 {% content-ref url="payment-types/README.md" %}
-[Payment types](payment-types/README.md)
+[🧩 Payment types](payment-types/README.md)
 {% endcontent-ref %}
 {% endcolumn %}
 
 {% column %}
 {% content-ref url="origins-and-destinations/nodes/README.md" %}
-[Nodes reference](origins-and-destinations/nodes/README.md)
+[🧭 Nodes reference](origins-and-destinations/nodes/README.md)
 {% endcontent-ref %}
 {% endcolumn %}
 {% endcolumns %}
@@ -48,7 +48,7 @@ Think of a payment as: `origins` + `destinations` + `type` + `product`.
 Below are the key fields used in the Payment object:
 
 | Field              | Description                                                                                                                                                                                 |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ------------------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | `accountNumber`    | The internal account number receiving or executing the payment.                                                                                                                             |
 | `identityId`       | The entity (e.g., `USER` or `ORGANIZATION`) initiating the payment. This may be a user selling on behalf of an organization, topping up their own balance, or authorized to withdraw funds. |
 | `totalAmount`      | The final transaction amount after all fees and currency conversions have been applied.                                                                                                     |
@@ -88,7 +88,7 @@ Provide either `purchaseAmount` or `totalAmount` (not both) and ensure `product`
 The step of a payment evolves through the following lifecycle stages. For more information check the [payment status page](transaction-status.md).
 
 | Status       | Description                                                                                                          |
-| ------------ | -------------------------------------------------------------------------------------------------------------------- |
+| ------------: | --------------------------------------------------------------------------------------------------------------------: |
 | `CREATED`    | Transaction created. For rail-based pay-ins, the QR code or redirect URL is generated at this stage.                |
 | `AUTHORIZED` | Funds reserved. Applies to flows where pre-authorization is required before capture.                                 |
 | `CAPTURED`   | Funds captured from the origin. Call `POST /payments/{id}/captured` to trigger this step.                           |

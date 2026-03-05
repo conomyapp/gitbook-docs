@@ -68,13 +68,13 @@ Recommended execution flow: `payment-origins/payment-destinations` → `payment-
 {% columns fullWidth="true" %}
 {% column %}
 {% content-ref url="banks.md" %}
-[Banks](banks.md)
+[🏦 Banks](banks.md)
 {% endcontent-ref %}
 {% endcolumn %}
 
 {% column %}
 {% content-ref url="products.md" %}
-[Products](products.md)
+[🧩 Products](products.md)
 {% endcontent-ref %}
 {% endcolumn %}
 {% endcolumns %}
@@ -82,13 +82,13 @@ Recommended execution flow: `payment-origins/payment-destinations` → `payment-
 {% columns fullWidth="true" %}
 {% column %}
 {% content-ref url="origins-and-destinations.md" %}
-[Origins and destinations](origins-and-destinations.md)
+[🧭 Origins and destinations](origins-and-destinations.md)
 {% endcontent-ref %}
 {% endcolumn %}
 
 {% column %}
 {% content-ref url="payment-attempts.md" %}
-[Payment-attempts](payment-attempts.md)
+[🧪 Payment attempts](payment-attempts.md)
 {% endcontent-ref %}
 {% endcolumn %}
 {% endcolumns %}
@@ -96,13 +96,13 @@ Recommended execution flow: `payment-origins/payment-destinations` → `payment-
 {% columns fullWidth="true" %}
 {% column %}
 {% content-ref url="payments.md" %}
-[Payments](payments.md)
+[💸 Payments](payments.md)
 {% endcontent-ref %}
 {% endcolumn %}
 
 {% column %}
 {% content-ref url="payment-links.md" %}
-[Payment-links](payment-links.md)
+[🔗 Payment links](payment-links.md)
 {% endcontent-ref %}
 {% endcolumn %}
 {% endcolumns %}
@@ -110,13 +110,13 @@ Recommended execution flow: `payment-origins/payment-destinations` → `payment-
 {% columns fullWidth="true" %}
 {% column %}
 {% content-ref url="checkout-session.md" %}
-[Checkout session](checkout-session.md)
+[🛒 Checkout session](checkout-session.md)
 {% endcontent-ref %}
 {% endcolumn %}
 
 {% column %}
 {% content-ref url="webhooks.md" %}
-[Webhooks](webhooks.md)
+[🪝 Webhooks](webhooks.md)
 {% endcontent-ref %}
 {% endcolumn %}
 {% endcolumns %}

@@ -25,13 +25,13 @@ Only the owner of an account can initiate or authorize payments from that accoun
 {% columns fullWidth="true" %}
 {% column %}
 {% content-ref url="topup-account.md" %}
-[TOPUP\_ACCOUNT](topup-account.md)
+[⬇️ TOPUP\_ACCOUNT](topup-account.md)
 {% endcontent-ref %}
 {% endcolumn %}
 
 {% column %}
 {% content-ref url="withdrawal-account.md" %}
-[WITHDRAWAL\_ACCOUNT](withdrawal-account.md)
+[⬆️ WITHDRAWAL\_ACCOUNT](withdrawal-account.md)
 {% endcontent-ref %}
 {% endcolumn %}
 {% endcolumns %}
@@ -39,13 +39,13 @@ Only the owner of an account can initiate or authorize payments from that accoun
 {% columns fullWidth="true" %}
 {% column %}
 {% content-ref url="purchase.md" %}
-[PURCHASE](purchase.md)
+[🧾 PURCHASE](purchase.md)
 {% endcontent-ref %}
 {% endcolumn %}
 
 {% column %}
 {% content-ref url="remittance.md" %}
-[REMITTANCE](remittance.md)
+[🌐 REMITTANCE](remittance.md)
 {% endcontent-ref %}
 {% endcolumn %}
 {% endcolumns %}
@@ -53,25 +53,25 @@ Only the owner of an account can initiate or authorize payments from that accoun
 {% columns fullWidth="true" %}
 {% column %}
 {% content-ref url="p2p.md" %}
-[P2P](p2p.md)
+[🔁 P2P](p2p.md)
 {% endcontent-ref %}
 {% endcolumn %}
 
 {% column %}
 {% content-ref url="collect.md" %}
-[COLLECT](collect.md)
+[📥 COLLECT](collect.md)
 {% endcontent-ref %}
 {% endcolumn %}
 {% endcolumns %}
 
 {% content-ref url="fee.md" %}
-[FEE](fee.md)
+[🧮 FEE](fee.md)
 {% endcontent-ref %}
 
 ## Selection Guide
 
 | Use case | Recommended type |
-| --- | --- |
+| ---: | ---: |
 | Add funds to an internal balance | `TOPUP_ACCOUNT` |
 | Send funds to external rails/banks | `WITHDRAWAL_ACCOUNT` |
 | Charge customers for goods/services | `PURCHASE` |

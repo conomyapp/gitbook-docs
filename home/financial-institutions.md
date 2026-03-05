@@ -43,13 +43,13 @@ If you need us to support an additional bank or institution, reach out at [hola@
 {% columns %}
 {% column %}
 {% content-ref url="countries.md" %}
-[Countries](countries.md)
+[🌍 Countries](countries.md)
 {% endcontent-ref %}
 {% endcolumn %}
 
 {% column %}
 {% content-ref url="currencies.md" %}
-[Currencies](currencies.md)
+[💱 Currencies](currencies.md)
 {% endcontent-ref %}
 {% endcolumn %}
 {% endcolumns %}

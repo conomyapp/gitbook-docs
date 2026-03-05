@@ -28,7 +28,7 @@ A currency can be available in multiple rails with different capabilities (`pay-
 ### Supported Fiat Currencies
 
 | Code  | Currency              | Region                |
-| -----: | ---------------------: | ---------------------: |
+| ----- | --------------------- | --------------------- |
 | `CLP` | Chilean Peso          | Chile            |
 | `MXN` | Mexican Peso          | Mexico           |
 | `COP` | Colombian Peso        | Colombia         |
@@ -46,7 +46,7 @@ A currency can be available in multiple rails with different capabilities (`pay-
 ### Supported Crypto Currencies
 
 | Code    | Description                     |
-| -------: | -------------------------------: |
+| ------- | ------------------------------- |
 | `USDC`  | USD Coin (network specified in payment node)  |
 | `USDT`  | Tether (network specified in payment node)    |
 
@@ -57,7 +57,7 @@ A currency can be available in multiple rails with different capabilities (`pay-
 Each currency is processed through a specific payment rail. The rail determines the transfer speed and requirements.
 
 | Rail          | Currency | Region          | Description                                    |
-| -------------: | --------: | ---------------: | ----------------------------------------------: |
+| ------------- | -------- | --------------- | ---------------------------------------------- |
 | `PIX`         | `BRL`    | Brazil     | Brazilian instant payment system               |
 | `PCT`         | `ARS`    | Argentina  | BCRA interoperable QR transfer standard        |
 | `CVU`         | `ARS`    | Argentina  | Virtual account / CBU bank transfers           |
@@ -87,7 +87,7 @@ Each currency is processed through a specific payment rail. The rail determines 
 ### Products by Currency
 
 | Code           | Payments | Accounts |
-| --------------: | --------: | --------: |
+| -------------- | -------- | -------- |
 | `CLP`          | `ETPAY`, `FINTOC`, `WEBPAY`                     | `CHL` |
 | `MXN`          | `SPEI`                                           | `MEX` |
 | `COP`          | `PSE`, `BANCOLOMBIA`, `DAVIVIENDA`, `DAVIPLATA`, `NEQUI`, `BREB` | `COL` |

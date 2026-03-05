@@ -71,7 +71,7 @@ Only the owner of an account can initiate or authorize payments from that accoun
 ## Selection Guide
 
 | Use case | Recommended type |
-| ---: | ---: |
+| --- | --- |
 | Add funds to an internal balance | `TOPUP_ACCOUNT` |
 | Send funds to external rails/banks | `WITHDRAWAL_ACCOUNT` |
 | Charge customers for goods/services | `PURCHASE` |

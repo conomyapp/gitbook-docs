@@ -19,7 +19,7 @@ Represents a payment for goods or services provided by a client using `conomy_hq
 Typically initiated via a payment link or external checkout method, this transaction allows third-party customers to send funds to a client's internal account.
 
 | Field          | Value                                                                                                       |
-| --------------: | -----------------------------------------------------------------------------------------------------------: |
+| -------------- | ----------------------------------------------------------------------------------------------------------- |
 | `type`         | `PURCHASE`                                                                                                  |
 | `origins`      | One external pay-in rail node (for example: `CARD`, `PIX`, `ETPAY`, `PSE`, `WOMPI`, `ACH`, `FEDNOW`)     |
 | `destinations` | One or more internal `ACCOUNT` destinations (single merchant destination or split across multiple accounts) |
@@ -39,7 +39,7 @@ Bulk payments are **not supported** for `PURCHASE`.
 ### Available Origins by Region
 
 | Region        | Rail          | Type          |
-| -------------: | -------------: | -------------: |
+| ------------- | ------------- | ------------- |
 | Global     | Card          | `CARD`        |
 | Chile      | Open banking  | `ETPAY`       |
 | Chile      | Open banking  | `FINTOC`      |
@@ -64,5 +64,5 @@ Bulk payments are **not supported** for `PURCHASE`.
 `PURCHASE` settles funds into internal balances:
 
 | Destination | Type |
-| -----------: | ----: |
+| ----------- | ---- |
 | Internal account | `ACCOUNT` |

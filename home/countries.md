@@ -26,7 +26,7 @@ Country support can vary by `rail`, `currency`, and compliance configuration. Us
 ### Where We Operate
 
 | Region         | Code                        | Payments     | Accounts     |
-| --------------: | ---------------------------: | ------------: | ------------: |
+| -------------- | --------------------------- | ------------ | ------------ |
 | Chile          | `CHL`                       | `available` | `available` |
 | Mexico         | `MEX`                       | `available` | `available` |
 | Colombia       | `COL`                       | `available` | `available` |
@@ -54,7 +54,7 @@ Country support can vary by `rail`, `currency`, and compliance configuration. Us
 Each country supports specific payment rails for moving funds in and out of the platform.
 
 | Country        | Pay-in Rails                                        | Payout Rails                      |
-| --------------: | ---------------------------------------------------: | ---------------------------------: |
+| -------------- | --------------------------------------------------- | --------------------------------- |
 | Chile      | `ETPAY`, `FINTOC`, `WEBPAY`                         | `BANK_ACCOUNT`                    |
 | Mexico     | —                                                   | `SPEI`                            |
 | Colombia   | `PSE`, `BANCOLOMBIA`, `DAVIVIENDA`, `DAVIPLATA`, `NEQUI` | `BREB`, `BANK_ACCOUNT`               |

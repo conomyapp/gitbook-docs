@@ -19,7 +19,7 @@ Used to withdraw funds from an internal `conomy_hq` account to an external desti
 The transaction is initiated by the account owner when they decide to move money out of the platform.
 
 | Field          | Value                                                                                                             |
-| --------------: | -----------------------------------------------------------------------------------------------------------------: |
+| -------------- | ----------------------------------------------------------------------------------------------------------------- |
 | `type`         | `WITHDRAWAL_ACCOUNT`                                                                                              |
 | `origins`      | One internal `ACCOUNT` node                                                                                       |
 | `destinations` | One or more payout rail nodes (for example: `BANK_ACCOUNT`, `CVU`, `SPEI`, `PIX`, `ACH`, `WIRE`, `SEPA`, `SWIFT`) |
@@ -85,7 +85,7 @@ Bulk disbursements are **supported**: one origin, multiple destinations.
 ### Available Destinations by Region
 
 | Region        | Rail          | Type           |
-| -------------: | -------------: | --------------: |
+| ------------- | ------------- | -------------- |
 | Argentina  | Bank transfer | `BANK_ACCOUNT` |
 | Argentina  | CVU/CBU       | `CVU`          |
 | Mexico     | CLABE         | `SPEI`         |

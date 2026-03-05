@@ -41,8 +41,8 @@ Below are the key fields used in the Payment object:
 | `status`           | The current status of the transaction, [see lifecycle below](payment-structure.md#transaction-lifecycle).                                                                                   |
 | `type`             | The payment type (e.g., `PURCHASE`, `TOPUP_ACCOUNT`, etc.). Check the [payment type page](payment-types/) for more info.                                                                    |
 | `fees`             | An array containing all fee transactions applied to this payment.                                                                                                                           |
-| `origins`          | Array of origin sources (internal or external) involved in the transaction.                                                                                                                 |
-| `destinations`     | Array of destinations receiving the funds.                                                                                                                                                  |
+| `origins`          | Array of origin nodes — either an internal `ACCOUNT` or an external payment rail (e.g., `ETPAY`, `PIX`, `PCT`). See [Nodes](origins-and-destinations/nodes.md).                            |
+| `destinations`     | Array of destination nodes — either an internal `ACCOUNT` or a payout rail (e.g., `BANK_ACCOUNT`, `SPEI`, `ACH`). See [Nodes](origins-and-destinations/nodes.md).                         |
 
 ***
 
@@ -65,15 +65,16 @@ For **bulk payments**, the `amount` field must also be defined at the origin or 
 
 The step of a payment evolves through the following lifecycle stages. For more information check the [payment status page](transaction-status.md).
 
-| Status       | Description                                                                                       |
-| ------------ | ------------------------------------------------------------------------------------------------- |
-| `CREATED`    | Transaction is created. If an external payment link is needed, it is generated at this stage.     |
-| `AUTHORIZED` | Applies to flows where funds can be reserved before final capture.                                |
-| `CAPTURED`   | Confirms that funds have been captured from the source of money.                                  |
-| `RECEIVED`   | Notification received from the payment provider confirming the transaction was successfully paid. |
-| `SETTLED`    | The transaction amount was validated as correctly paid.                                           |
-| `DISPUTED`   | A dispute has been opened before the transaction is settled.                                      |
-| `REVERSED`   | The transaction was cancelled before settlement was completed.                                    |
+| Status       | Description                                                                                                          |
+| ------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `CREATED`    | Transaction created. For rail-based pay-ins, the QR code or redirect URL is generated at this stage.                |
+| `AUTHORIZED` | Funds reserved. Applies to flows where pre-authorization is required before capture.                                 |
+| `CAPTURED`   | Funds captured from the origin. Call `POST /payments/{id}/captured` to trigger this step.                           |
+| `RECEIVED`   | Payment provider confirms the fund transfer. Triggered via webhook or sandbox simulation.                            |
+| `SETTLED`    | The transaction amount is fully validated and available in the destination account.                                  |
+| `DISPUTED`   | A dispute has been opened before settlement.                                                                         |
+| `REVERSED`   | The transaction was cancelled before settlement.                                                                     |
+| `FAILED`     | The transaction failed — the provider rejected the payment or an error occurred.                                     |
 
 ***
 

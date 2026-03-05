@@ -25,31 +25,40 @@ Below are the key fields used in `origins` and `destinations`:
 
 ***
 
-### Payment-node types&#x20;
+### Payment-node types
 
-The following table outlines the supported type values for a `payment-node`, along with the expected structure of the corresponding `node` field. Each type unlocks a specific node schema, which must be provided when constructing the origin or destination of a payment:
+Each node `type` maps to a sub-object with the same name in camelCase. The table below shows the core types. For the full list of payment rails (PIX, SPEI, ETPAY, ACH, etc.), see the [Nodes page](nodes.md).
 
-| Type                 | Description                                                     | Node field          |
-| -------------------- | --------------------------------------------------------------- | ------------------- |
-| `ACCOUNT`            | Internal **conomy\_hq** account (used for most platform flows). | `account`           |
-| `BANK_ACCOUNT`       | External bank account.                                          | `bank`              |
-| `CARD`               | Card-based payments (debit, credit).                            | `card`              |
-| `CRYPTO`             | Crypto wallet for sending or receiving crypto.                  | `wallet`            |
-| `PAYMENT_INITIATION` | A payment initiated through a  open banking flow.               | `paymentInitiation` |
-| `PAYMENT_LINK`       | A reusable or one-time payment link shared with a payer.        | `paymentLink`       |
+| Type           | Description                                               | Sub-object     |
+| -------------- | --------------------------------------------------------- | -------------- |
+| `ACCOUNT`      | Internal conomy\_hq account (origin or destination)       | `account`      |
+| `BANK_ACCOUNT` | External bank account (for payouts)                       | `bank`         |
+| `CRYPTO`       | Crypto wallet                                             | `wallet`       |
+| `PIX`          | Brazil instant payment (pay-in / payout)                  | `pix`          |
+| `PCT`          | Argentina QR transfer (pay-in)                            | `pct`          |
+| `CVU`          | Argentina CVU/CBU bank transfer (payout)                  | `cvu`          |
+| `SPEI`         | Mexico CLABE transfer (payout)                            | `spei`         |
+| `ETPAY`        | Chile open banking (pay-in)                               | `etpay`        |
+| `FINTOC`       | Chile open banking via Fintoc (pay-in)                    | `fintoc`       |
+| `WEBPAY`       | Chile card payments via Transbank (pay-in)                | `webpay`       |
+| `PSE`          | Colombia bank transfer (pay-in)                           | `pse`          |
+| `BANCOLOMBIA`  | Colombia Bancolombia direct (pay-in)                      | `bancolombia`  |
+| `DAVIPLATA`    | Colombia Daviplata wallet (pay-in)                        | `daviplata`    |
+| `NEQUI`        | Colombia Nequi wallet (pay-in)                            | `nequi`        |
+| `ACH`          | USA bank transfer (payout)                                | `ach`          |
+| `SEPA`         | Europe IBAN transfer (payout)                             | `sepa`         |
+| `FPE`          | UK Faster Payments (payout)                               | `fpe`          |
 
 ### Valid Origin and Destination Combinations
 
-The table below defines the valid combinations of `origin` and `destination` types that are supported. These combinations reflect the permitted flows for transferring funds, whether between internal accounts, external instruments, or across borders.
-
-| Payment Type         | Valid Origin Types                                                                 | Valid Destination Types |
-| -------------------- | ---------------------------------------------------------------------------------- | ----------------------- |
-| `P2P`                | `ACCOUNT`                                                                          | `ACCOUNT`               |
-| `TOPUP_ACCOUNT`      | `PAYMENT_LINK`, `WALLET`, `CARD`, `PAYMENT_INITIATION`, `BANK_ACCOUNT`             | `ACCOUNT`               |
-| `REMITTANCE`         | `ACCOUNT`, `WALLET`, `PAYMENT_LINK`, `CARD`, `PAYMENT_INITIATION`, `BANK_ACCOUNT`  | `BANK_ACCOUNT`          |
-| `WITHDRAWAL_ACCOUNT` | `ACCOUNT`                                                                          | `BANK_ACCOUNT`          |
-| `PURCHASE`           | `PAYMENT_LINK`, `CARD`, `PAYMENT_INITIATION`, `BANK_ACCOUNT`                       | `ACCOUNT`               |
-| `COLLECT`            | `ACCOUNT`                                                                          | `ACCOUNT`               |
+| Payment Type         | Valid Origins                                               | Valid Destinations              |
+| -------------------- | ----------------------------------------------------------- | ------------------------------- |
+| `P2P`                | `ACCOUNT`                                                   | `ACCOUNT`                       |
+| `TOPUP_ACCOUNT`      | Any pay-in rail (`ETPAY`, `PIX`, `PCT`, `PSE`, etc.)        | `ACCOUNT`                       |
+| `WITHDRAWAL_ACCOUNT` | `ACCOUNT`                                                   | Any payout rail (`BANK_ACCOUNT`, `SPEI`, `PIX`, `ACH`, etc.) |
+| `REMITTANCE`         | `ACCOUNT` or any pay-in rail                                | Any payout rail                 |
+| `PURCHASE`           | Any pay-in rail                                             | `ACCOUNT`                       |
+| `COLLECT`            | `ACCOUNT`                                                   | `ACCOUNT`                       |
 
 ***
 

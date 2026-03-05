@@ -18,9 +18,9 @@ layout:
 You can use `payment-attempts` or create the payment directly.
 {% endhint %}
 
-A **WITHDRAWAL\_ACCOUNT** transaction allows a user to **withdraw funds from their conomy\_hq account** and transfer them to an **external destination**, such as a **bank account**. This is typically used when users want to move money out of the platform.
+A **WITHDRAWAL\_ACCOUNT** transaction moves funds from an internal conomy\_hq account to an external destination such as a bank account or payment rail. The origin is always an internal `ACCOUNT`.
 
-***
+---
 
 #### Payment flow
 
@@ -28,10 +28,12 @@ A **WITHDRAWAL\_ACCOUNT** transaction allows a user to **withdraw funds from the
 
 <summary>Create payment</summary>
 
-Creates a withdrawal request using an internal conomy\_hq account as the origin and a bank account as the destination.
+Creates a withdrawal from an internal account to an external bank account.
+
+The example below uses **BANK\_ACCOUNT** as the destination (Argentina). For other rails — such as `SPEI` (Mexico), `CVU` (Argentina), `PIX` (Brazil), or `ACH` (USA) — replace the `destinations` node accordingly. See the [Nodes page](../payments/origins-and-destinations/nodes.md) for all available rails.
 
 {% code overflow="wrap" %}
-```
+```sh
 curl --location 'https://api.conomyhq.com/sandbox/payments' \
 --header 'x-api-key: <YOUR_API_KEY>' \
 --header 'User-Agent: <YOUR_APPLICATION_NAME>' \
@@ -39,36 +41,44 @@ curl --location 'https://api.conomyhq.com/sandbox/payments' \
 --header 'Content-Type: application/json' \
 --header 'Accept: application/json' \
 --data '{
-  "identityId": "67a0307eaddea901a60144ec",
-  "accountNumber": "174127721505166050317",
-  "externalId": "1234-ext",
-  "product": "COP:COP",
+  "identityId": "<IDENTITY_ID>",
+  "accountNumber": "<ACCOUNT_NUMBER>",
+  "product": "ARS:ARS",
   "type": "WITHDRAWAL_ACCOUNT",
   "purchaseAmount": "5000",
-  "purchaseCurrency": "COP",
-  "currency": "COP",
+  "purchaseCurrency": "ARS",
+  "currency": "ARS",
   "origins": [
     {
       "type": "ACCOUNT",
-      "currency": "COP",
+      "currency": "ARS",
       "identity": {
-        "identityId": "67a0307eaddea901a60144ec"
+        "identityId": "<IDENTITY_ID>"
       },
       "account": {
-        "accountNumber": "174127721505166050317"
+        "accountNumber": "<ACCOUNT_NUMBER>"
       }
     }
   ],
   "destinations": [
     {
       "type": "BANK_ACCOUNT",
+      "currency": "ARS",
       "bank": {
-        "accountNumber": "173853177805176050114",
-        "bank": "SANTANDER",
-        "currency": "COP",
-        "accountHolder": "Jorgito Cabane",
-        "accountHolderDni": "18782721-3",
-        "nickname": "santander"
+        "accountNumber": "0000267900000001588730",
+        "bank": "BANCO_CMF",
+        "currency": "ARS",
+        "typeAccount": "CHECKING",
+        "accountHolder": "Fernando Domínguez",
+        "accountHolderDni": "20219636890",
+        "country": "AR"
+      },
+      "customer": {
+        "firstName": "Fernando",
+        "lastName": "Domínguez",
+        "documentNumber": "20219636890",
+        "country": "ARG",
+        "email": "fernando@example.com"
       }
     }
   ]
@@ -102,7 +112,7 @@ curl --location --request POST 'https://api.conomyhq.com/sandbox/payments/<PAYME
 
 <summary>Webhook simulation</summary>
 
-Use this webhook simulation to test your system’s handling of withdrawal confirmations.
+Simulate a webhook to test your system's handling of withdrawal confirmations.
 
 {% code overflow="wrap" %}
 ```sh
@@ -112,8 +122,6 @@ curl --location --request POST 'https://api.conomyhq.com/sandboxwebhook/payments
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer <ACCESS_TOKEN>' \
 --header 'Accept: */*' \
---header 'Host: api.conomyhq.com' \
---header 'Connection: keep-alive' \
 --data-raw '{
   "id": "<PAYMENT_ID>"
 }'
@@ -124,20 +132,34 @@ curl --location --request POST 'https://api.conomyhq.com/sandboxwebhook/payments
 
 <details>
 
-<summary>Check account information</summary>
+<summary>Check account balance</summary>
 
-Check the internal account before or after the withdrawal to confirm the balance or ownership.
+Verify the updated balance after the withdrawal.
 
 {% code overflow="wrap" %}
 ```sh
-curl --location 'https://api.conomyhq.com/sandbox/accounts?accountNumber=174127721505166050317' \
+curl --location 'https://api.conomyhq.com/sandbox/accounts?accountNumber=<ACCOUNT_NUMBER>' \
 --header 'x-api-key: <YOUR_API_KEY>' \
 --header 'User-Agent: <YOUR_APPLICATION_NAME>' \
 --header 'Authorization: Bearer <ACCESS_TOKEN>' \
---header 'Content-Type: application/json' \
---header 'Accept: application/json' \
---data ''
+--header 'Accept: application/json'
 ```
 {% endcode %}
 
 </details>
+
+---
+
+### Withdrawal by region
+
+| Region        | Destination type | Rail          |
+| ------------- | ---------------- | ------------- |
+| Argentina  | `BANK_ACCOUNT`   | Bank transfer |
+| Argentina  | `CVU`            | CBU/CVU       |
+| Mexico     | `SPEI`           | CLABE         |
+| Brazil     | `PIX`            | PIX key       |
+| USA        | `ACH`            | Bank transfer |
+| UK         | `FPE`            | Faster Pay    |
+| Europe     | `SEPA`           | IBAN          |
+| Chile      | `BANK_ACCOUNT`   | Bank transfer |
+| Colombia   | `BANK_ACCOUNT`   | Bank transfer |

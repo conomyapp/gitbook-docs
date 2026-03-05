@@ -24,7 +24,7 @@ Let us help you bring your ideas to life in the simplest and most efficient way 
 
 ## Got any questions?
 
-If you have any questions or need assistance, don't hesitate to reach out to us at [hola@conomyhq.com](mailto:hola@conomyhq.com)—we’re here to help! 🤖
+If you have any questions or need assistance, don’t hesitate to reach out to us at [hola@conomyhq.com](mailto:hola@conomyhq.com)—we’re here to help! 🤖
 
 
 

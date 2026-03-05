@@ -18,35 +18,17 @@ layout:
 You can use `payment-attempts` or create the payment directly.
 {% endhint %}
 
-A **TOPUP\_ACCOUNT** transaction is used to fund an accoun**t** within **conomy\_hq**. This type allows users to add money to their balance for future transactions, such as payments, purchases, or transfers.
+A **TOPUP\_ACCOUNT** transaction funds an internal conomy\_hq account. The origin is a payment rail (e.g., ETPAY in Chile, PIX in Brazil) and the destination is an internal `ACCOUNT`.
 
 #### Payment flow
 
 <details>
 
-<summary><strong>Retrieve Payment Origins</strong></summary>
-
-Before creating a top-up, you must retrieve the available **payment origins** (e.g., ETPAY, WOMPI, etc.) linked to the client.
-
-{% code overflow="wrap" %}
-```sh
-curl --location --request GET 'https://api.conomyhq.com/sandbox/payment-origins?accountId=<ACCOUNT_ID>' \
---header 'x-api-key: <YOUR_API_KEY>' \
---header 'User-Agent: <YOUR_APPLICATION_NAME>' \
---header 'Authorization: Bearer <ACCESS_TOKEN>' \
---header 'Accept: */*' \
---header 'Host: api.conomyhq.com' \
---header 'Connection: keep-alive'
-```
-{% endcode %}
-
-</details>
-
-<details>
-
 <summary><strong>Create Payment</strong></summary>
 
-Creates a top-up request using a selected origin and specifying the destination account to be funded.
+Creates a top-up using a payment rail as the origin and an internal account as the destination.
+
+The example below uses **ETPAY** (open banking, Chile). Replace the `origins` node type and sub-object to use a different rail — see the [Nodes page](../payments/origins-and-destinations/nodes.md) for all available rails.
 
 {% code overflow="wrap" %}
 ```sh
@@ -57,9 +39,8 @@ curl --location 'https://api.conomyhq.com/sandbox/payments' \
 --header 'Content-Type: application/json' \
 --header 'Accept: application/json' \
 --data '{
-  "identityId": "679fd871addea901a60144e3",
-  "accountNumber": "173854531105176050117",
-  "externalId": "ext-1",
+  "identityId": "<IDENTITY_ID>",
+  "accountNumber": "<ACCOUNT_NUMBER>",
   "product": "CLP:CLP",
   "type": "TOPUP_ACCOUNT",
   "purchaseAmount": "700000",
@@ -67,10 +48,15 @@ curl --location 'https://api.conomyhq.com/sandbox/payments' \
   "currency": "CLP",
   "origins": [
     {
-      "name": "ETPAY",
-      "type": "PAYMENT_INITATION",
-      "paymentInitiation": {
-        "origin": "ETPAY"
+      "type": "ETPAY",
+      "currency": "CLP",
+      "etpay": {
+        "successUrl": "https://yourapp.com/success",
+        "failedUrl": "https://yourapp.com/failed",
+        "customer": {
+          "firstName": "John",
+          "email": "john@example.com"
+        }
       }
     }
   ],
@@ -79,10 +65,10 @@ curl --location 'https://api.conomyhq.com/sandbox/payments' \
       "type": "ACCOUNT",
       "currency": "CLP",
       "identity": {
-        "identityId": "679c482ee4420cb5b0966c9a"
+        "identityId": "<IDENTITY_ID>"
       },
       "account": {
-        "accountNumber": "173854531105176050117"
+        "accountNumber": "<ACCOUNT_NUMBER>"
       }
     }
   ]
@@ -90,13 +76,17 @@ curl --location 'https://api.conomyhq.com/sandbox/payments' \
 ```
 {% endcode %}
 
+{% hint style="info" %}
+The response will include `origins[0].etpay.url` — redirect the customer to that URL to authorize the payment at their bank.
+{% endhint %}
+
 </details>
 
 <details>
 
 <summary><strong>Capture Payment</strong></summary>
 
-After confirming the top-up (via the payment provider), capture the funds to reflect them in the user’s account.
+After the customer completes the bank authorization, capture the funds to reflect them in the account.
 
 {% code overflow="wrap" %}
 ```sh
@@ -126,8 +116,6 @@ curl --location --request POST 'https://api.conomyhq.com/sandboxwebhook/payments
 --header 'Content-Type: application/json' \
 --header 'Authorization: Bearer <ACCESS_TOKEN>' \
 --header 'Accept: */*' \
---header 'Host: api.conomyhq.com' \
---header 'Connection: keep-alive' \
 --data-raw '{
   "id": "<PAYMENT_ID>"
 }'
@@ -138,20 +126,31 @@ curl --location --request POST 'https://api.conomyhq.com/sandboxwebhook/payments
 
 <details>
 
-<summary><strong>Check account info</strong></summary>
+<summary><strong>Check account balance</strong></summary>
 
-Use this request to verify that the funds were deposited correctly into the account.
+Verify that the funds were deposited correctly into the account.
 
 {% code overflow="wrap" %}
 ```sh
-curl --location 'https://api.conomyhq.com/sandbox/accounts?accountNumber=173854531105176050117' \
+curl --location 'https://api.conomyhq.com/sandbox/accounts?accountNumber=<ACCOUNT_NUMBER>' \
 --header 'x-api-key: <YOUR_API_KEY>' \
 --header 'User-Agent: <YOUR_APPLICATION_NAME>' \
 --header 'Authorization: Bearer <ACCESS_TOKEN>' \
---header 'Content-Type: application/json' \
---header 'Accept: application/json' \
---data ''
+--header 'Accept: application/json'
 ```
 {% endcode %}
 
 </details>
+
+---
+
+### Top-up by region
+
+| Region     | Origin type | Example rail  |
+| ---------- | ----------- | ------------- |
+| Chile   | `ETPAY`     | Open banking  |
+| Chile   | `FINTOC`    | Open banking  |
+| Brazil  | `PIX`       | Instant QR    |
+| Argentina | `PCT`     | QR Transfer   |
+| Colombia | `PSE`      | Bank transfer |
+| Colombia | `NEQUI`    | Wallet        |

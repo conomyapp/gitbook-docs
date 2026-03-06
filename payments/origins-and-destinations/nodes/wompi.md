@@ -50,7 +50,3 @@ Wompi is a Colombian payment gateway that supports multiple payment methods incl
 
 Redirect the user to `wompi.url` to complete their payment.
 
-## OpenAPI reference
-- Spec: `conomyhq-api`
-- Component: `wompi`
-- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

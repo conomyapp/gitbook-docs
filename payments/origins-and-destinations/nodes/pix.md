@@ -58,7 +58,3 @@ After the payment is created, the `pix` object in the response includes:
 
 Show the `qrCode` or `data` to your user so they can complete the payment in their banking app.
 
-## OpenAPI reference
-- Spec: `conomyhq-api`
-- Component: `pix`
-- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

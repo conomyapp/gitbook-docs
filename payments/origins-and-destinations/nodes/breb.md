@@ -40,7 +40,3 @@ BREB (Banco de la Republica Electronic Bridge) is Colombia's interbank settlemen
 }
 ```
 
-## OpenAPI reference
-- Spec: `conomyhq-api`
-- Component: `breb`
-- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

@@ -43,7 +43,3 @@ Davivienda's payment button lets Davivienda account holders authorize a payment 
 | `url` | Redirect URL to Davivienda's authorization page |
 
 
-## OpenAPI reference
-- Spec: `conomyhq-api`
-- Component: `davivienda`
-- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

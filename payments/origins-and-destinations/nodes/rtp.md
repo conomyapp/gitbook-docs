@@ -48,7 +48,3 @@ RTP (Real-Time Payments) is The Clearing House's instant payment network, operat
 }
 ```
 
-## OpenAPI reference
-- Spec: `conomyhq-api`
-- Component: `rtp`
-- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

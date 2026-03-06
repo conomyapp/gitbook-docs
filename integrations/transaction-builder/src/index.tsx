@@ -34,7 +34,8 @@ const BUILDER_HTML = `<!doctype html>
         background: var(--bg);
         color: var(--fg);
         font-family: Geist, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        overflow: hidden;
+        overflow-y: auto;
+        overflow-x: hidden;
       }
       .wrap {
         width: 100%;

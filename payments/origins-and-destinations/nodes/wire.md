@@ -51,6 +51,6 @@ Wire transfers are same-day domestic bank transfers in the USA. They are typical
 
 ## Schema
 
-{% openapi-schemas spec="conomyhq-api" schemas="wire-wrapper" grouped="false" %}
-[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
+{% openapi-schemas spec="conomyhq-api" schemas="wire" grouped="false" %}
+Schema from the conomyhq-api OpenAPI specification.
 {% endopenapi-schemas %}

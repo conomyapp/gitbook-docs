@@ -71,6 +71,6 @@ Share the `spei.clabe` with your user so they can complete the transfer from the
 
 ## Schema
 
-{% openapi-schemas spec="conomyhq-api" schemas="spei-wrapper" grouped="false" %}
-[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
+{% openapi-schemas spec="conomyhq-api" schemas="spei" grouped="false" %}
+Schema from the conomyhq-api OpenAPI specification.
 {% endopenapi-schemas %}

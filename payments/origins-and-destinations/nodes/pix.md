@@ -60,6 +60,6 @@ Show the `qrCode` or `data` to your user so they can complete the payment in the
 
 ## Schema
 
-{% openapi-schemas spec="conomyhq-api" schemas="pix-wrapper" grouped="false" %}
-[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
+{% openapi-schemas spec="conomyhq-api" schemas="pix" grouped="false" %}
+Schema from the conomyhq-api OpenAPI specification.
 {% endopenapi-schemas %}

@@ -51,6 +51,6 @@ Redirect your user to `webpay.url` to complete the payment on the Transbank page
 
 ## Schema
 
-{% openapi-schemas spec="conomyhq-api" schemas="webpay-wrapper" grouped="false" %}
-[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
+{% openapi-schemas spec="conomyhq-api" schemas="webpay" grouped="false" %}
+Schema from the conomyhq-api OpenAPI specification.
 {% endopenapi-schemas %}

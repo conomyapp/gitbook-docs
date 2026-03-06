@@ -17,7 +17,10 @@ const BUILDER_HTML = `<!doctype html>
         --muted: #6b7280;
         --line: #e5e7eb;
         --card: #fafafa;
+        --soft: #f3f4f6;
         --brand: #111111;
+        --code-bg: #0a0a0a;
+        --code-fg: #e5e7eb;
       }
       * { box-sizing: border-box; }
       body {
@@ -28,7 +31,7 @@ const BUILDER_HTML = `<!doctype html>
         font-family: Geist, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
       .wrap {
-        max-width: 1100px;
+        max-width: 1120px;
         margin: 0 auto;
         display: grid;
         grid-template-columns: 1fr;
@@ -54,7 +57,7 @@ const BUILDER_HTML = `<!doctype html>
         margin-top: 14px;
         display: grid;
         gap: 12px;
-        grid-template-columns: repeat(2, minmax(220px, 1fr));
+        grid-template-columns: repeat(2, minmax(240px, 1fr));
       }
       .field {
         display: flex;
@@ -64,7 +67,11 @@ const BUILDER_HTML = `<!doctype html>
       .field label {
         font-size: 12px;
         color: #374151;
-        font-weight: 500;
+        font-weight: 600;
+      }
+      .hint {
+        font-size: 11px;
+        color: var(--muted);
       }
       select, input, textarea, button {
         width: 100%;
@@ -76,6 +83,7 @@ const BUILDER_HTML = `<!doctype html>
         font: inherit;
       }
       select, input, textarea { font-size: 13px; }
+      input[type="number"] { appearance: textfield; }
       textarea { min-height: 160px; resize: vertical; }
       .row {
         display: grid;
@@ -83,7 +91,7 @@ const BUILDER_HTML = `<!doctype html>
         gap: 12px;
       }
       .actions {
-        margin-top: 12px;
+        margin-top: 14px;
         display: flex;
         gap: 10px;
         flex-wrap: wrap;
@@ -94,15 +102,37 @@ const BUILDER_HTML = `<!doctype html>
         font-size: 12px;
         font-weight: 600;
         background: #fff;
+        transition: all .15s ease;
       }
+      button:hover { border-color: #d1d5db; background: var(--soft); }
       button.primary {
         background: var(--brand);
         color: #fff;
         border-color: var(--brand);
       }
+      button.primary:hover { opacity: .92; background: #000; }
       .route {
-        margin-top: 10px;
+        margin-top: 12px;
         font-size: 12px;
+        color: #111827;
+        padding: 10px 12px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #fff;
+      }
+      .chips {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .chip {
+        font-size: 11px;
+        line-height: 1;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 8px 10px;
+        background: #fff;
         color: #374151;
       }
       .hidden { display: none; }
@@ -111,6 +141,55 @@ const BUILDER_HTML = `<!doctype html>
         color: #b42318;
         font-size: 12px;
         white-space: pre-wrap;
+      }
+      .output {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .output-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .output-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: #374151;
+      }
+      .copy-btn {
+        width: auto;
+        font-size: 11px;
+        padding: 7px 10px;
+      }
+      .code {
+        margin: 0;
+        min-height: 250px;
+        max-height: 460px;
+        overflow: auto;
+        border-radius: 10px;
+        border: 1px solid #111827;
+        background: var(--code-bg);
+        color: var(--code-fg);
+        padding: 12px;
+        font-size: 12px;
+        line-height: 1.55;
+      }
+      .code code {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        white-space: pre;
+      }
+      .toast {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        background: #111827;
+        color: #fff;
+        border-radius: 8px;
+        padding: 10px 12px;
+        font-size: 12px;
+        border: 1px solid #111827;
       }
       @media (max-width: 900px) {
         .grid, .row { grid-template-columns: 1fr; }
@@ -141,36 +220,40 @@ const BUILDER_HTML = `<!doctype html>
           <div class="field">
             <label>Origin rail</label>
             <select id="originType"></select>
+            <span class="hint">Filtered by selected source currency.</span>
           </div>
+          <div class="field">
+            <label>Source currency</label>
+            <select id="purchaseCurrency"></select>
+            <span class="hint">Filtered by selected origin rail.</span>
+          </div>
+
           <div class="field">
             <label>Destination rail</label>
             <select id="destinationType"></select>
+            <span class="hint">Filtered by settlement currency.</span>
+          </div>
+          <div class="field">
+            <label>Settlement currency</label>
+            <select id="currency"></select>
+            <span class="hint">Filtered by selected destination rail.</span>
           </div>
 
           <div class="field">
             <label>Amount</label>
-            <input id="purchaseAmount" value="100" />
-          </div>
-          <div class="field row">
-            <div class="field">
-              <label>Source currency</label>
-              <input id="purchaseCurrency" value="ARS" />
-            </div>
-            <div class="field">
-              <label>Settlement currency</label>
-              <input id="currency" value="ARS" />
-            </div>
+            <input id="purchaseAmount" type="number" min="0" step="0.01" value="100" />
           </div>
         </div>
 
         <div class="actions">
           <button id="applyPreset">Apply preset</button>
-          <button id="defaults">Use defaults for selected rails</button>
+          <button id="defaults">Reset node examples</button>
           <button id="toggleAdvanced">Show advanced</button>
           <button class="primary" id="generate">Generate JSON and cURL</button>
         </div>
 
         <div id="route" class="route"></div>
+        <div id="compatibility" class="chips"></div>
         <div id="error" class="error"></div>
       </div>
 
@@ -203,16 +286,24 @@ const BUILDER_HTML = `<!doctype html>
       </div>
 
       <div class="row">
-        <div class="card field">
-          <label>Generated JSON</label>
-          <textarea id="generatedJson" readonly>{}</textarea>
+        <div class="card output">
+          <div class="output-head">
+            <span class="output-title">Generated JSON payload</span>
+            <button class="copy-btn" id="copyJson">Copy JSON</button>
+          </div>
+          <pre class="code"><code id="generatedJsonCode">{}</code></pre>
         </div>
-        <div class="card field">
-          <label>Generated cURL</label>
-          <textarea id="generatedCurl" readonly># Generate first</textarea>
+        <div class="card output">
+          <div class="output-head">
+            <span class="output-title">Generated cURL</span>
+            <button class="copy-btn" id="copyCurl">Copy cURL</button>
+          </div>
+          <pre class="code"><code id="generatedCurlCode"># Generate first</code></pre>
         </div>
       </div>
     </div>
+
+    <div id="toast" class="toast hidden">Copied to clipboard</div>
 
     <script src="${PUBLIC_ENDPOINT}/builder.js"></script>
   </body>
@@ -256,6 +347,92 @@ const BUILDER_JS = String.raw`(function () {
     "PSE"
   ];
 
+  const ORIGIN_CURRENCIES_BY_RAIL = {
+    CVU: ["ARS"],
+    PCT: ["ARS"],
+    PIX: ["BRL"],
+    WEBPAY: ["CLP"],
+    PSE: ["COP"],
+    SPEI: ["MXN"],
+    ACH: ["USD"],
+    WIRE: ["USD"],
+    SWIFT: ["USD", "EUR", "GBP"],
+    CRYPTO: ["USDT", "USDC", "BTC", "ETH"],
+    ACCOUNT: ["ARS", "BRL", "CLP", "COP", "MXN", "PEN", "UYU", "USD", "EUR", "GBP"]
+  };
+
+  const DESTINATION_CURRENCIES_BY_RAIL = {
+    ACCOUNT: ["ARS", "BRL", "CLP", "COP", "MXN", "PEN", "UYU", "USD", "EUR", "GBP"],
+    BANK_ACCOUNT: ["ARS", "BRL", "CLP", "COP", "MXN", "PEN", "UYU", "USD", "EUR", "GBP"],
+    CVU: ["ARS"],
+    PIX: ["BRL"],
+    SPEI: ["MXN"],
+    ACH: ["USD"],
+    WIRE: ["USD"],
+    SWIFT: ["USD", "EUR", "GBP"],
+    CRYPTO: ["USDT", "USDC", "BTC", "ETH"],
+    PSE: ["COP"]
+  };
+
+  const TYPE_RULES = {
+    TOPUP_ACCOUNT: {
+      origin: ["CVU", "PCT", "PIX", "WEBPAY", "PSE", "SPEI", "ACH", "WIRE", "SWIFT", "CRYPTO"],
+      destination: ["ACCOUNT"]
+    },
+    WITHDRAWAL_ACCOUNT: {
+      origin: ["ACCOUNT"],
+      destination: ["BANK_ACCOUNT", "CVU", "PIX", "SPEI", "ACH", "WIRE", "SWIFT", "CRYPTO", "PSE", "ACCOUNT"]
+    },
+    REMITTANCE: {
+      origin: ["ACCOUNT", "CVU", "PCT", "PIX", "WEBPAY", "PSE", "SPEI", "ACH", "WIRE", "SWIFT", "CRYPTO"],
+      destination: destinationRailOptions
+    },
+    PURCHASE: {
+      origin: ["CVU", "PCT", "PIX", "WEBPAY", "PSE", "SPEI", "ACH", "WIRE", "SWIFT", "CRYPTO"],
+      destination: ["ACCOUNT"]
+    },
+    P2P: {
+      origin: ["ACCOUNT"],
+      destination: ["ACCOUNT"]
+    },
+    COLLECT: {
+      origin: ["CVU", "PCT", "PIX", "WEBPAY", "PSE", "SPEI", "ACH", "WIRE", "SWIFT", "CRYPTO"],
+      destination: ["ACCOUNT"]
+    },
+    FEE: {
+      origin: ["ACCOUNT"],
+      destination: ["ACCOUNT"]
+    },
+    DEFAULT: {
+      origin: originRailOptions,
+      destination: destinationRailOptions
+    }
+  };
+
+  const PRESETS = {
+    "ars-cvu-topup": {
+      type: "TOPUP_ACCOUNT",
+      purchaseCurrency: "ARS",
+      currency: "ARS",
+      originType: "CVU",
+      destinationType: "ACCOUNT"
+    },
+    "ars-pct-topup": {
+      type: "TOPUP_ACCOUNT",
+      purchaseCurrency: "ARS",
+      currency: "ARS",
+      originType: "PCT",
+      destinationType: "ACCOUNT"
+    },
+    "pix-brl-to-clp": {
+      type: "TOPUP_ACCOUNT",
+      purchaseCurrency: "BRL",
+      currency: "CLP",
+      originType: "PIX",
+      destinationType: "ACCOUNT"
+    }
+  };
+
   const nodeKeyByType = {
     ACCOUNT: "account",
     BANK_ACCOUNT: "bank",
@@ -285,18 +462,60 @@ const BUILDER_JS = String.raw`(function () {
   };
 
   const $ = (id) => document.getElementById(id);
-  const state = { showAdvanced: false };
+  const state = { showAdvanced: false, toastTimer: null };
 
-  function fillSelect(el, options) {
+  const allOriginCurrencies = unique(Object.values(ORIGIN_CURRENCIES_BY_RAIL).flat());
+  const allDestinationCurrencies = unique(Object.values(DESTINATION_CURRENCIES_BY_RAIL).flat());
+
+  function unique(values) {
+    return Array.from(new Set(values));
+  }
+
+  function toUpper(value) {
+    return String(value || "").trim().toUpperCase();
+  }
+
+  function normalizeOption(entry) {
+    if (Array.isArray(entry)) {
+      return { value: String(entry[0]), label: String(entry[1]) };
+    }
+    const value = String(entry);
+    return { value, label: value };
+  }
+
+  function setSelectOptions(el, options, preferredValue) {
+    const normalized = options.map(normalizeOption);
     el.innerHTML = "";
-    options.forEach((entry) => {
-      const value = Array.isArray(entry) ? entry[0] : entry;
-      const label = Array.isArray(entry) ? entry[1] : entry;
+
+    if (!normalized.length) {
+      const fallbackOption = document.createElement("option");
+      fallbackOption.value = "";
+      fallbackOption.textContent = "No options";
+      el.appendChild(fallbackOption);
+      el.value = "";
+      return "";
+    }
+
+    normalized.forEach((entry) => {
       const option = document.createElement("option");
-      option.value = value;
-      option.textContent = label;
+      option.value = entry.value;
+      option.textContent = entry.label;
       el.appendChild(option);
     });
+
+    const preferredUpper = toUpper(preferredValue);
+    const matched = normalized.find((entry) => toUpper(entry.value) === preferredUpper);
+    el.value = matched ? matched.value : normalized[0].value;
+    return el.value;
+  }
+
+  function getTypeRules() {
+    const selectedType = toUpper($("type").value);
+    return TYPE_RULES[selectedType] || TYPE_RULES.DEFAULT;
+  }
+
+  function currenciesForRail(map, rail, fallback) {
+    return map[rail] || fallback;
   }
 
   function defaultNodeJson(type, direction) {
@@ -309,16 +528,49 @@ const BUILDER_JS = String.raw`(function () {
     }
 
     if (type === "CVU") {
-      return JSON.stringify({ customer: { firstName: "Juan", lastName: "Perez", email: "juan@example.com" } }, null, 2);
+      return JSON.stringify(
+        {
+          customer: {
+            firstName: "Juan",
+            lastName: "Perez",
+            email: "juan@example.com"
+          }
+        },
+        null,
+        2
+      );
     }
 
     if (type === "PCT") {
-      return JSON.stringify({ customer: { email: "juan@example.com", phoneNumber: "1123456789", phoneNumberPrefix: "+54" } }, null, 2);
+      return JSON.stringify(
+        {
+          customer: {
+            email: "juan@example.com",
+            phoneNumber: "1123456789",
+            phoneNumberPrefix: "+54"
+          }
+        },
+        null,
+        2
+      );
     }
 
     if (type === "PIX") {
       if (direction === "origin") {
-        return JSON.stringify({ successUrl: "https://yourapp.com/success", failedUrl: "https://yourapp.com/failed", customer: { firstName: "Maria", lastName: "Silva", email: "maria@example.com", documentNumber: "12345678901" } }, null, 2);
+        return JSON.stringify(
+          {
+            successUrl: "https://yourapp.com/success",
+            failedUrl: "https://yourapp.com/failed",
+            customer: {
+              firstName: "Maria",
+              lastName: "Silva",
+              email: "maria@example.com",
+              documentNumber: "12345678901"
+            }
+          },
+          null,
+          2
+        );
       }
       return JSON.stringify({ keyType: "email", key: "maria@example.com" }, null, 2);
     }
@@ -334,54 +586,169 @@ const BUILDER_JS = String.raw`(function () {
     return "{}";
   }
 
-  function normalizeRails() {
-    const originType = ($("originType").value || "").toUpperCase();
-    const destinationType = ($("destinationType").value || "").toUpperCase();
+  function syncOrigin(driver) {
+    const rules = getTypeRules();
+    const allowedRails = rules.origin.slice();
+    const currentRail = toUpper($("originType").value);
+    const currentCurrency = toUpper($("purchaseCurrency").value);
+    const railCurrencies = (rail) => currenciesForRail(ORIGIN_CURRENCIES_BY_RAIL, rail, allOriginCurrencies);
+
+    let selectedRail = currentRail;
+    let selectedCurrency = currentCurrency;
+
+    if (driver === "currency") {
+      let railsForCurrency = allowedRails.filter((rail) => railCurrencies(rail).includes(currentCurrency));
+      if (!railsForCurrency.length) railsForCurrency = allowedRails;
+      selectedRail = setSelectOptions($("originType"), railsForCurrency, currentRail);
+      selectedCurrency = setSelectOptions($("purchaseCurrency"), railCurrencies(selectedRail), currentCurrency);
+
+      railsForCurrency = allowedRails.filter((rail) => railCurrencies(rail).includes(selectedCurrency));
+      if (railsForCurrency.length) {
+        selectedRail = setSelectOptions($("originType"), railsForCurrency, selectedRail);
+      }
+    } else {
+      selectedRail = setSelectOptions($("originType"), allowedRails, currentRail);
+      selectedCurrency = setSelectOptions($("purchaseCurrency"), railCurrencies(selectedRail), currentCurrency);
+
+      const railsForCurrency = allowedRails.filter((rail) => railCurrencies(rail).includes(selectedCurrency));
+      if (railsForCurrency.length) {
+        selectedRail = setSelectOptions($("originType"), railsForCurrency, selectedRail);
+      }
+    }
+
+    return {
+      rail: selectedRail,
+      currency: selectedCurrency,
+      allowedRails,
+      allowedCurrencies: railCurrencies(selectedRail)
+    };
+  }
+
+  function syncDestination(driver) {
+    const rules = getTypeRules();
+    const allowedRails = rules.destination.slice();
+    const currentRail = toUpper($("destinationType").value);
+    const currentCurrency = toUpper($("currency").value);
+    const railCurrencies = (rail) => currenciesForRail(DESTINATION_CURRENCIES_BY_RAIL, rail, allDestinationCurrencies);
+
+    let selectedRail = currentRail;
+    let selectedCurrency = currentCurrency;
+
+    if (driver === "currency") {
+      let railsForCurrency = allowedRails.filter((rail) => railCurrencies(rail).includes(currentCurrency));
+      if (!railsForCurrency.length) railsForCurrency = allowedRails;
+      selectedRail = setSelectOptions($("destinationType"), railsForCurrency, currentRail);
+      selectedCurrency = setSelectOptions($("currency"), railCurrencies(selectedRail), currentCurrency);
+
+      railsForCurrency = allowedRails.filter((rail) => railCurrencies(rail).includes(selectedCurrency));
+      if (railsForCurrency.length) {
+        selectedRail = setSelectOptions($("destinationType"), railsForCurrency, selectedRail);
+      }
+    } else {
+      selectedRail = setSelectOptions($("destinationType"), allowedRails, currentRail);
+      selectedCurrency = setSelectOptions($("currency"), railCurrencies(selectedRail), currentCurrency);
+
+      const railsForCurrency = allowedRails.filter((rail) => railCurrencies(rail).includes(selectedCurrency));
+      if (railsForCurrency.length) {
+        selectedRail = setSelectOptions($("destinationType"), railsForCurrency, selectedRail);
+      }
+    }
+
+    return {
+      rail: selectedRail,
+      currency: selectedCurrency,
+      allowedRails,
+      allowedCurrencies: railCurrencies(selectedRail)
+    };
+  }
+
+  function parseNodeJson(raw, fallback, label) {
+    const value = String(raw || "").trim();
+    const source = value || fallback;
+
+    try {
+      return JSON.parse(source);
+    } catch (error) {
+      throw new Error(label + " must be valid JSON.");
+    }
+  }
+
+  function setNodeDefaults() {
+    const originType = toUpper($("originType").value);
+    const destinationType = toUpper($("destinationType").value);
     $("originNodeJson").value = defaultNodeJson(originType, "origin");
     $("destinationNodeJson").value = defaultNodeJson(destinationType, "destination");
-    renderRoute();
+  }
+
+  function renderRoute(originState, destinationState) {
+    const source = toUpper($("purchaseCurrency").value);
+    const target = toUpper($("currency").value);
+    const origin = toUpper($("originType").value);
+    const destination = toUpper($("destinationType").value);
+    const type = toUpper($("type").value);
+
+    $("route").textContent =
+      "Route preview: " + source + " " + origin + " -> " + destination + " -> " + target + " (" + type + ")";
+
+    const chips = [
+      "Origin " + origin + ": " + originState.allowedCurrencies.join(", "),
+      "Destination " + destination + ": " + destinationState.allowedCurrencies.join(", "),
+      "Type " + type + ": origins " + originState.allowedRails.join(", "),
+      "Type " + type + ": destinations " + destinationState.allowedRails.join(", ")
+    ];
+
+    const container = $("compatibility");
+    container.innerHTML = "";
+    chips.forEach((chipText) => {
+      const chip = document.createElement("span");
+      chip.className = "chip";
+      chip.textContent = chipText;
+      container.appendChild(chip);
+    });
+  }
+
+  function syncForm(driver) {
+    const originDriver = driver === "purchaseCurrency" ? "currency" : "rail";
+    const destinationDriver = driver === "currency" ? "currency" : "rail";
+
+    const originState = syncOrigin(originDriver);
+    const destinationState = syncDestination(destinationDriver);
+
+    if (
+      driver === "init" ||
+      driver === "preset" ||
+      driver === "type" ||
+      driver === "defaults" ||
+      driver === "originType" ||
+      driver === "destinationType"
+    ) {
+      setNodeDefaults();
+    }
+
+    renderRoute(originState, destinationState);
   }
 
   function applyPreset() {
     const preset = $("preset").value;
+    const config = PRESETS[preset];
 
-    if (preset === "ars-cvu-topup") {
-      $("type").value = "TOPUP_ACCOUNT";
-      $("purchaseCurrency").value = "ARS";
-      $("currency").value = "ARS";
-      $("originType").value = "CVU";
-      $("destinationType").value = "ACCOUNT";
-    } else if (preset === "ars-pct-topup") {
-      $("type").value = "TOPUP_ACCOUNT";
-      $("purchaseCurrency").value = "ARS";
-      $("currency").value = "ARS";
-      $("originType").value = "PCT";
-      $("destinationType").value = "ACCOUNT";
-    } else if (preset === "pix-brl-to-clp") {
-      $("type").value = "TOPUP_ACCOUNT";
-      $("purchaseCurrency").value = "BRL";
-      $("currency").value = "CLP";
-      $("originType").value = "PIX";
-      $("destinationType").value = "ACCOUNT";
+    if (config) {
+      $("type").value = config.type;
+      $("purchaseCurrency").value = config.purchaseCurrency;
+      $("currency").value = config.currency;
+      $("originType").value = config.originType;
+      $("destinationType").value = config.destinationType;
     }
 
-    normalizeRails();
-  }
-
-  function renderRoute() {
-    const source = ($("purchaseCurrency").value || "").toUpperCase();
-    const target = ($("currency").value || "").toUpperCase();
-    const origin = $("originType").value;
-    const destination = $("destinationType").value;
-    $("route").textContent = "Route preview: " + source + " " + origin + " -> " + destination + " -> " + target;
+    syncForm("preset");
   }
 
   function buildPayload() {
-    const type = ($("type").value || "").trim().toUpperCase();
-    const purchaseCurrency = ($("purchaseCurrency").value || "").trim().toUpperCase();
-    const currency = ($("currency").value || "").trim().toUpperCase();
-    const originType = ($("originType").value || "").trim().toUpperCase();
-    const destinationType = ($("destinationType").value || "").trim().toUpperCase();
+    const type = toUpper($("type").value);
+    const purchaseCurrency = toUpper($("purchaseCurrency").value);
+    const currency = toUpper($("currency").value);
+    const originType = toUpper($("originType").value);
+    const destinationType = toUpper($("destinationType").value);
 
     const originNodeKey = nodeKeyByType[originType];
     const destinationNodeKey = nodeKeyByType[destinationType];
@@ -389,18 +756,26 @@ const BUILDER_JS = String.raw`(function () {
     if (!originNodeKey) throw new Error("Unsupported origin type: " + originType);
     if (!destinationNodeKey) throw new Error("Unsupported destination type: " + destinationType);
 
-    const originNode = JSON.parse(($("originNodeJson").value || defaultNodeJson(originType, "origin")).trim() || "{}");
-    const destinationNode = JSON.parse(($("destinationNodeJson").value || defaultNodeJson(destinationType, "destination")).trim() || "{}");
+    const originNode = parseNodeJson(
+      $("originNodeJson").value,
+      defaultNodeJson(originType, "origin"),
+      "Origin node JSON"
+    );
+    const destinationNode = parseNodeJson(
+      $("destinationNodeJson").value,
+      defaultNodeJson(destinationType, "destination"),
+      "Destination node JSON"
+    );
 
     const origin = {
       type: originType,
-      currency: (($("originCurrency").value || purchaseCurrency).trim() || purchaseCurrency).toUpperCase(),
+      currency: toUpper($("originCurrency").value) || purchaseCurrency,
       [originNodeKey]: originNode
     };
 
     const destination = {
       type: destinationType,
-      currency: (($("destinationCurrency").value || currency).trim() || currency).toUpperCase(),
+      currency: toUpper($("destinationCurrency").value) || currency,
       [destinationNodeKey]: destinationNode
     };
 
@@ -421,7 +796,11 @@ const BUILDER_JS = String.raw`(function () {
   }
 
   function buildCurl(payload) {
-    const base = (($("baseUrl").value || "https://api.conomyhq.com/sandbox").trim() || "https://api.conomyhq.com/sandbox").replace(/\/+$/, "");
+    const base =
+      (($("baseUrl").value || "https://api.conomyhq.com/sandbox").trim() ||
+        "https://api.conomyhq.com/sandbox")
+        .replace(/\/+$/, "");
+
     const body = JSON.stringify(payload).replace(/'/g, "'\\''");
 
     return [
@@ -434,10 +813,59 @@ const BUILDER_JS = String.raw`(function () {
     ].join("\n");
   }
 
+  function setOutputCode(id, value) {
+    $(id).textContent = value;
+  }
+
+  async function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+      return;
+    }
+
+    const temp = document.createElement("textarea");
+    temp.value = text;
+    temp.style.position = "fixed";
+    temp.style.opacity = "0";
+    document.body.appendChild(temp);
+    temp.focus();
+    temp.select();
+    document.execCommand("copy");
+    document.body.removeChild(temp);
+  }
+
+  function showToast(message) {
+    const toast = $("toast");
+    toast.textContent = message;
+    toast.classList.remove("hidden");
+
+    if (state.toastTimer) {
+      clearTimeout(state.toastTimer);
+    }
+
+    state.toastTimer = setTimeout(() => {
+      toast.classList.add("hidden");
+    }, 1400);
+  }
+
+  function setupCopy(buttonId, sourceId) {
+    const button = $(buttonId);
+    button.addEventListener("click", async () => {
+      try {
+        await copyText($(sourceId).textContent || "");
+        showToast("Copied to clipboard");
+      } catch (error) {
+        showToast("Unable to copy");
+      }
+    });
+  }
+
   function init() {
-    fillSelect($("type"), paymentTypeOptions);
-    fillSelect($("originType"), originRailOptions);
-    fillSelect($("destinationType"), destinationRailOptions);
+    setSelectOptions($("type"), paymentTypeOptions, "TOPUP_ACCOUNT");
+    setSelectOptions($("originType"), originRailOptions, "CVU");
+    setSelectOptions($("destinationType"), destinationRailOptions, "ACCOUNT");
+    setSelectOptions($("purchaseCurrency"), allOriginCurrencies, "ARS");
+    setSelectOptions($("currency"), allDestinationCurrencies, "ARS");
 
     $("toggleAdvanced").addEventListener("click", () => {
       state.showAdvanced = !state.showAdvanced;
@@ -446,25 +874,30 @@ const BUILDER_JS = String.raw`(function () {
     });
 
     $("applyPreset").addEventListener("click", applyPreset);
-    $("defaults").addEventListener("click", normalizeRails);
-    $("purchaseCurrency").addEventListener("input", renderRoute);
-    $("currency").addEventListener("input", renderRoute);
-    $("originType").addEventListener("change", renderRoute);
-    $("destinationType").addEventListener("change", renderRoute);
+    $("defaults").addEventListener("click", () => syncForm("defaults"));
+
+    $("type").addEventListener("change", () => syncForm("type"));
+    $("originType").addEventListener("change", () => syncForm("originType"));
+    $("purchaseCurrency").addEventListener("change", () => syncForm("purchaseCurrency"));
+    $("destinationType").addEventListener("change", () => syncForm("destinationType"));
+    $("currency").addEventListener("change", () => syncForm("currency"));
+
+    setupCopy("copyJson", "generatedJsonCode");
+    setupCopy("copyCurl", "generatedCurlCode");
 
     $("generate").addEventListener("click", () => {
       try {
         $("error").textContent = "";
         const payload = buildPayload();
-        $("generatedJson").value = JSON.stringify(payload, null, 2);
-        $("generatedCurl").value = buildCurl(payload);
+        setOutputCode("generatedJsonCode", JSON.stringify(payload, null, 2));
+        setOutputCode("generatedCurlCode", buildCurl(payload));
       } catch (error) {
         $("error").textContent = error instanceof Error ? error.message : "Unable to generate payload.";
       }
     });
 
     applyPreset();
-    renderRoute();
+    syncForm("init");
   }
 
   if (document.readyState === "loading") {

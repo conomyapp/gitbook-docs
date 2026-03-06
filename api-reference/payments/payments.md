@@ -26,25 +26,25 @@ POST /payments/:id/received
 {% endcolumns %}
 
 {% openapi-operation spec="conomyhq-api" path="/payments" method="get" %}
-[OpenAPI conomyhq-api](https://4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/gitbook-x-prod-openapi/raw/0f36260480fad24a158a2231ac8e0c854b771df811ae7a383a743dd61f484742.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20260305%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260305T190040Z&X-Amz-Expires=172800&X-Amz-Signature=db382ff7722ba523ca38291c370cf80ab3c90a0d25ccf4c2850d023dbdf1372c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-operation %}
 
 {% openapi-operation spec="conomyhq-api" path="/payments/{id}" method="get" %}
-[OpenAPI conomyhq-api](https://4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/gitbook-x-prod-openapi/raw/0f36260480fad24a158a2231ac8e0c854b771df811ae7a383a743dd61f484742.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20260305%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260305T190040Z&X-Amz-Expires=172800&X-Amz-Signature=db382ff7722ba523ca38291c370cf80ab3c90a0d25ccf4c2850d023dbdf1372c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-operation %}
 
 {% openapi-operation spec="conomyhq-api" path="/payments" method="post" %}
-[OpenAPI conomyhq-api](https://4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/gitbook-x-prod-openapi/raw/0f36260480fad24a158a2231ac8e0c854b771df811ae7a383a743dd61f484742.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20260305%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260305T190040Z&X-Amz-Expires=172800&X-Amz-Signature=db382ff7722ba523ca38291c370cf80ab3c90a0d25ccf4c2850d023dbdf1372c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-operation %}
 
 {% openapi-operation spec="conomyhq-api" path="/payments/{id}/authorized" method="post" %}
-[OpenAPI conomyhq-api](https://4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/gitbook-x-prod-openapi/raw/0f36260480fad24a158a2231ac8e0c854b771df811ae7a383a743dd61f484742.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20260305%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260305T190040Z&X-Amz-Expires=172800&X-Amz-Signature=db382ff7722ba523ca38291c370cf80ab3c90a0d25ccf4c2850d023dbdf1372c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-operation %}
 
 {% openapi-operation spec="conomyhq-api" path="/payments/{id}/captured" method="post" %}
-[OpenAPI conomyhq-api](https://4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/gitbook-x-prod-openapi/raw/0f36260480fad24a158a2231ac8e0c854b771df811ae7a383a743dd61f484742.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20260305%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260305T190040Z&X-Amz-Expires=172800&X-Amz-Signature=db382ff7722ba523ca38291c370cf80ab3c90a0d25ccf4c2850d023dbdf1372c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-operation %}
 
 {% openapi-operation spec="conomyhq-api" path="/payments/received" method="post" %}
-[OpenAPI conomyhq-api](https://4401d86825a13bf607936cc3a9f3897a.r2.cloudflarestorage.com/gitbook-x-prod-openapi/raw/0f36260480fad24a158a2231ac8e0c854b771df811ae7a383a743dd61f484742.yaml?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=dce48141f43c0191a2ad043a6888781c%2F20260305%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20260305T190040Z&X-Amz-Expires=172800&X-Amz-Signature=db382ff7722ba523ca38291c370cf80ab3c90a0d25ccf4c2850d023dbdf1372c&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject)
+[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-operation %}

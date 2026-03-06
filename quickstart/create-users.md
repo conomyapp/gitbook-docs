@@ -90,7 +90,7 @@ curl --location --request POST 'https://api.conomyhq.com/sandbox/identities' \
 
 ### Create the Second User
 
-Make the following `POST` request ([Create Identity](broken-reference)) to create the second user.
+Make the following `POST` request ([Create Identity](../api-reference/identities.md#post-identities)) to create the second user.
 
 #### **Request**
 
@@ -149,7 +149,7 @@ curl --location --request POST 'https://api.conomyhq.com/sandbox/identities' \
 
 Once both users have been created, they need to be linked to the **organization**. This is done by updating the organization entity with the user IDs.
 
-Run the following `PATCH` request to add the users as **children** of the organization, or use [add children request](broken-reference).
+Run the following `PATCH` request to add the users as **children** of the organization, or use [add children request](../api-reference/identities.md#patch-identities-id).
 
 #### **Request**
 

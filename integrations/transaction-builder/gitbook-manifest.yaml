@@ -3,6 +3,7 @@ title: ConomyHQ Transaction Builder
 description: Generate payment JSON and cURL for POST /payments from interactive inputs.
 organization: w9xZeAeVKntkFCGMHbQ5
 visibility: private
+target: space
 scopes:
   - space:content:read
   - space:content:write
@@ -13,4 +14,4 @@ blocks:
     description: Generate payment payloads and cURL snippets from selected rails.
     markdown:
       codeblock: conomy-transaction-builder
-      body: notes
+      body: content

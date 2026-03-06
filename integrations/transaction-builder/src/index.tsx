@@ -340,5 +340,9 @@ const transactionBuilderBlock = createComponent({
 });
 
 export default createIntegration({
+  events: {
+    installation_setup: async () => {},
+    space_installation_setup: async () => {}
+  },
   components: [transactionBuilderBlock]
 });

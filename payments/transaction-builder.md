@@ -33,7 +33,7 @@ Goal of this page: users can assemble a payment request and copy **JSON** or **c
 
 If the `ConomyHQ Transaction Builder` integration is installed in your space, use this block to select values and generate payloads.
 
-```conomy-transaction-builder
+```conomy-transaction-builder variant="generate-only"
 generate-only
 ```
 

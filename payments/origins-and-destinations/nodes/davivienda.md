@@ -12,37 +12,14 @@ Davivienda's payment button lets Davivienda account holders authorize a payment 
 
 ## Required fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>type</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;DAVIVIENDA&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>currency</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;COP&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>davivienda.customer.email</code></td>
-      <td><code>string</code></td>
-      <td>Payer&#x27;s email</td>
-    </tr>
-    <tr>
-      <td><code>davivienda.bankId</code></td>
-      <td><code>string</code></td>
-      <td>Bank identifier</td>
-    </tr>
-  </tbody>
-</table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `type` | `string` | Must be `"DAVIVIENDA"` |
+| `currency` | `string` | Must be `"COP"` |
+| `davivienda.customer.email` | `string` | Payer's email |
+| `davivienda.bankId` | `string` | Bank identifier |
+
 
 ## Example
 
@@ -60,20 +37,11 @@ Davivienda's payment button lets Davivienda account holders authorize a payment 
 
 ## Response fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>url</code></td>
-      <td>Redirect URL to Davivienda&#x27;s authorization page</td>
-    </tr>
-  </tbody>
-</table>
+
+| Field | Description |
+| --- | --- |
+| `url` | Redirect URL to Davivienda's authorization page |
+
 
 ## Schema
 

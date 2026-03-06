@@ -12,62 +12,19 @@ FedNow is the Federal Reserve's instant payment service, enabling real-time 24/7
 
 ## Required fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>type</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;FEDNOW&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>currency</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;USD&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>fedNow.bank.accountNumber</code></td>
-      <td><code>string</code></td>
-      <td>Bank account number</td>
-    </tr>
-    <tr>
-      <td><code>fedNow.routingNumber</code></td>
-      <td><code>string</code></td>
-      <td>9-digit ABA routing number</td>
-    </tr>
-    <tr>
-      <td><code>fedNow.customer.firstName</code></td>
-      <td><code>string</code></td>
-      <td>Account holder&#x27;s first name</td>
-    </tr>
-    <tr>
-      <td><code>fedNow.customer.lastName</code></td>
-      <td><code>string</code></td>
-      <td>Account holder&#x27;s last name</td>
-    </tr>
-    <tr>
-      <td><code>fedNow.customer.email</code></td>
-      <td><code>string</code></td>
-      <td>Account holder&#x27;s email</td>
-    </tr>
-    <tr>
-      <td><code>fedNow.customer.documentNumber</code></td>
-      <td><code>string</code></td>
-      <td>SSN or ITIN</td>
-    </tr>
-    <tr>
-      <td><code>fedNow.customer.documentType</code></td>
-      <td><code>string</code></td>
-      <td>Document type</td>
-    </tr>
-  </tbody>
-</table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `type` | `string` | Must be `"FEDNOW"` |
+| `currency` | `string` | Must be `"USD"` |
+| `fedNow.bank.accountNumber` | `string` | Bank account number |
+| `fedNow.routingNumber` | `string` | 9-digit ABA routing number |
+| `fedNow.customer.firstName` | `string` | Account holder's first name |
+| `fedNow.customer.lastName` | `string` | Account holder's last name |
+| `fedNow.customer.email` | `string` | Account holder's email |
+| `fedNow.customer.documentNumber` | `string` | SSN or ITIN |
+| `fedNow.customer.documentType` | `string` | Document type |
+
 
 ## Example
 

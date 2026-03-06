@@ -12,52 +12,17 @@ BANK_ACCOUNT is a generic destination node for payouts to external bank accounts
 
 ## Required fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>type</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;BANK_ACCOUNT&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>currency</code></td>
-      <td><code>string</code></td>
-      <td>Currency of the transfer</td>
-    </tr>
-    <tr>
-      <td><code>bank.accountNumber</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s bank account number</td>
-    </tr>
-    <tr>
-      <td><code>bank.bank</code></td>
-      <td><code>string</code></td>
-      <td>Bank name or identifier</td>
-    </tr>
-    <tr>
-      <td><code>bank.typeAccount</code></td>
-      <td><code>string</code></td>
-      <td>Account type: <code>&quot;CHECKING&quot;</code> or <code>&quot;SAVINGS&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>bank.country</code></td>
-      <td><code>string</code></td>
-      <td>2-letter ISO country code (e.g., <code>&quot;AR&quot;</code>, <code>&quot;CA&quot;</code>)</td>
-    </tr>
-    <tr>
-      <td><code>customer</code></td>
-      <td><code>object</code></td>
-      <td>Recipient&#x27;s identity information</td>
-    </tr>
-  </tbody>
-</table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `type` | `string` | Must be `"BANK_ACCOUNT"` |
+| `currency` | `string` | Currency of the transfer |
+| `bank.accountNumber` | `string` | Recipient's bank account number |
+| `bank.bank` | `string` | Bank name or identifier |
+| `bank.typeAccount` | `string` | Account type: `"CHECKING"` or `"SAVINGS"` |
+| `bank.country` | `string` | 2-letter ISO country code (e.g., `"AR"`, `"CA"`) |
+| `customer` | `object` | Recipient's identity information |
+
 
 ## Example
 

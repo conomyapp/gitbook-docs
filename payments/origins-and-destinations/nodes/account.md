@@ -12,37 +12,14 @@ The ACCOUNT node references an internal account on the conomy_hq platform. It's 
 
 ## Fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>type</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;ACCOUNT&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>currency</code></td>
-      <td><code>string</code></td>
-      <td>Currency of the account</td>
-    </tr>
-    <tr>
-      <td><code>account.accountNumber</code></td>
-      <td><code>string</code></td>
-      <td>Platform account number</td>
-    </tr>
-    <tr>
-      <td><code>account.identityId</code></td>
-      <td><code>string</code></td>
-      <td>Identity ID linked to the account</td>
-    </tr>
-  </tbody>
-</table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `type` | `string` | Must be `"ACCOUNT"` |
+| `currency` | `string` | Currency of the account |
+| `account.accountNumber` | `string` | Platform account number |
+| `account.identityId` | `string` | Identity ID linked to the account |
+
 
 ## Example — as origin (payout flow)
 

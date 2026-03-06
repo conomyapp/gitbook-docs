@@ -2,4 +2,20 @@
 title: company
 ---
 
-<table><thead><tr><th width="171">Field</th><th width="201">Type</th><th>Description</th></tr></thead><tbody><tr><td>name</td><td><code>string</code></td><td>Full legal name of the company.</td></tr><tr><td>nickname</td><td><code>string</code></td><td>Optional alias or short name for the company.</td></tr><tr><td>taxCondition</td><td><code>string</code></td><td>Company's tax classification.</td></tr><tr><td>registrationNumber</td><td><code>string</code></td><td>Official registration number of the company.</td></tr><tr><td>companyLegalStructure</td><td><code>string</code></td><td>Tax status influencing tax calculations and compliance.</td></tr><tr><td>email</td><td><code>string</code></td><td>Official email address of the company.</td></tr><tr><td>country</td><td><code>string</code></td><td>Country where the company is registered.</td></tr><tr><td>activity</td><td><code>string</code></td><td>Industry or sector of the company (e.g., Finance).</td></tr><tr><td>legalRepresentative</td><td><a href="broken-reference"><code>legalRepresentative</code></a></td><td>Information about the company's legal representative.</td></tr><tr><td>beneficialOwners</td><td><code>array[</code><a href="broken-reference"><code>beneficialOwner</code></a><code>]</code></td><td>List of direct shareholders and/or beneficial owners.</td></tr><tr><td>individualShareholders</td><td><code>array[</code><a href="broken-reference"><code>individualShareholder</code></a><code>]</code></td><td>List of individual shareholders owning 10% or more.</td></tr><tr><td>AML</td><td><a href="broken-reference"><code>AML</code></a></td><td>Anti-Money Laundering (AML) compliance information.</td></tr><tr><td>documents</td><td><a href="broken-reference"><code>documents</code></a></td><td>Uploaded documents for verification or compliance.</td></tr></tbody></table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| name | `string` | Full legal name of the company. |
+| nickname | `string` | Optional alias or short name for the company. |
+| taxCondition | `string` | Company's tax classification. |
+| registrationNumber | `string` | Official registration number of the company. |
+| companyLegalStructure | `string` | Tax status influencing tax calculations and compliance. |
+| email | `string` | Official email address of the company. |
+| country | `string` | Country where the company is registered. |
+| activity | `string` | Industry or sector of the company (e.g., Finance). |
+| legalRepresentative | [`legalRepresentative`](broken-reference) | Information about the company's legal representative. |
+| beneficialOwners | `array[`[`beneficialOwner`](broken-reference)`]` | List of direct shareholders and/or beneficial owners. |
+| individualShareholders | `array[`[`individualShareholder`](broken-reference)`]` | List of individual shareholders owning 10% or more. |
+| AML | [`AML`](broken-reference) | Anti-Money Laundering (AML) compliance information. |
+| documents | [`documents`](broken-reference) | Uploaded documents for verification or compliance. |
+

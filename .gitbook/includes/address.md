@@ -2,4 +2,14 @@
 title: Address
 ---
 
-<table><thead><tr><th width="237">Field</th><th width="119">Type</th><th>Description</th></tr></thead><tbody><tr><td>country</td><td><code>string</code></td><td>Country where the merchant is located (ISO 3166 code).</td></tr><tr><td>administrativeAreaLevel1</td><td><code>string</code></td><td>Largest subnational administrative unit (e.g., state, province).</td></tr><tr><td>administrativeAreaLevel2</td><td><code>string</code></td><td>This field represents the second subnational administrative unit of a country.</td></tr><tr><td>administrativeAreaLevel3</td><td><code>string</code></td><td>This field represents the third subnational administrative unit of a country.</td></tr><tr><td>zipcode</td><td><code>string</code></td><td>The zipcode of address.</td></tr><tr><td>street</td><td><code>string</code></td><td>Street name where the merchant is located.</td></tr><tr><td>optionalAddress</td><td><code>string</code></td><td>Extra address detail (optional).</td></tr></tbody></table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| country | `string` | Country where the merchant is located (ISO 3166 code). |
+| administrativeAreaLevel1 | `string` | Largest subnational administrative unit (e.g., state, province). |
+| administrativeAreaLevel2 | `string` | This field represents the second subnational administrative unit of a country. |
+| administrativeAreaLevel3 | `string` | This field represents the third subnational administrative unit of a country. |
+| zipcode | `string` | The zipcode of address. |
+| street | `string` | Street name where the merchant is located. |
+| optionalAddress | `string` | Extra address detail (optional). |
+

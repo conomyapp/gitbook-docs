@@ -12,52 +12,17 @@ Pago Móvil is Venezuela's interbank mobile payment system, allowing users to tr
 
 ## Required fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>type</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;PAGO_MOVIL&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>currency</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;VES&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>pagoMovil.customer.firstName</code></td>
-      <td><code>string</code></td>
-      <td>Payer&#x27;s first name</td>
-    </tr>
-    <tr>
-      <td><code>pagoMovil.customer.lastName</code></td>
-      <td><code>string</code></td>
-      <td>Payer&#x27;s last name</td>
-    </tr>
-    <tr>
-      <td><code>pagoMovil.customer.email</code></td>
-      <td><code>string</code></td>
-      <td>Payer&#x27;s email</td>
-    </tr>
-    <tr>
-      <td><code>pagoMovil.customer.phoneNumber</code></td>
-      <td><code>string</code></td>
-      <td>Payer&#x27;s registered Pago Móvil phone number</td>
-    </tr>
-    <tr>
-      <td><code>pagoMovil.bankId</code></td>
-      <td><code>string</code></td>
-      <td>Bank code</td>
-    </tr>
-  </tbody>
-</table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `type` | `string` | Must be `"PAGO_MOVIL"` |
+| `currency` | `string` | Must be `"VES"` |
+| `pagoMovil.customer.firstName` | `string` | Payer's first name |
+| `pagoMovil.customer.lastName` | `string` | Payer's last name |
+| `pagoMovil.customer.email` | `string` | Payer's email |
+| `pagoMovil.customer.phoneNumber` | `string` | Payer's registered Pago Móvil phone number |
+| `pagoMovil.bankId` | `string` | Bank code |
+
 
 ## Example
 

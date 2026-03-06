@@ -28,7 +28,12 @@ Before you begin, make sure you have:
 
 We offer two main approaches to handling payments. Choose the one that best fits your needs:
 
-<table data-card-size="large" data-view="cards"><thead><tr><th></th><th></th></tr></thead><tbody><tr><td><strong>Step-by-step with payment attempts</strong></td><td><p></p><p>This flow gives you maximum flexibility and control over the payment process. It's perfect when you want to:</p><ul><li>Let users explore different payment methods.</li><li>Handle complex payment scenarios.</li><li>Build your own payment interface.</li></ul></td></tr><tr><td><strong>Direct payment creation</strong></td><td><p></p><p>This simplified flow is ideal when you:</p><ul><li>Already know all payment details.</li><li>Want to create and process payments quickly.</li><li>Need a straightforward payment process.</li></ul></td></tr></tbody></table>
+
+| Column1 | Column2 |
+| --- | --- |
+| **Step-by-step with payment attempts** | This flow gives you maximum flexibility and control over the payment process. It's perfect when you want to:<br>- Let users explore different payment methods.<br>- Handle complex payment scenarios.<br>- Build your own payment interface. |
+| **Direct payment creation** | This simplified flow is ideal when you:<br>- Already know all payment details.<br>- Want to create and process payments quickly.<br>- Need a straightforward payment process. |
+
 
 ### Payment Components
 

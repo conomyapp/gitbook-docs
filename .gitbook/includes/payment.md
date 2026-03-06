@@ -2,4 +2,14 @@
 title: Payment
 ---
 
-<table><thead><tr><th width="157">Field</th><th width="147">Type</th><th>Description</th></tr></thead><tbody><tr><td>name</td><td><code>string</code></td><td>Unique identifier of the payment method.</td></tr><tr><td>type</td><td><code>string</code></td><td>Payment method type (e.g., WIRE, CARD, CRYPTO).</td></tr><tr><td>currency</td><td><code>string</code></td><td>Currency associated with the payment method.</td></tr><tr><td>processing</td><td><code>string</code></td><td>Processing time of the payment method. <code>INSTANT_PAYMENT</code> applies to methods processed immediately. Other methods have delays of 1 to 3 business days.</td></tr><tr><td>fee</td><td><a href="broken-reference"><code>feeInfo</code></a></td><td>Fees applied to the payment method, as defined in the <code>feeInfo</code>.</td></tr><tr><td>limits</td><td><a href="broken-reference"><code>limits</code></a></td><td>Transaction limits for the payment method, including min and max amounts.</td></tr><tr><td>metaData</td><td><a href="broken-reference"><code>metaData</code></a></td><td>Metadata about the payment method, including title, image, and description.</td></tr></tbody></table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| name | `string` | Unique identifier of the payment method. |
+| type | `string` | Payment method type (e.g., WIRE, CARD, CRYPTO). |
+| currency | `string` | Currency associated with the payment method. |
+| processing | `string` | Processing time of the payment method. `INSTANT_PAYMENT` applies to methods processed immediately. Other methods have delays of 1 to 3 business days. |
+| fee | [`feeInfo`](broken-reference) | Fees applied to the payment method, as defined in the `feeInfo`. |
+| limits | [`limits`](broken-reference) | Transaction limits for the payment method, including min and max amounts. |
+| metaData | [`metaData`](broken-reference) | Metadata about the payment method, including title, image, and description. |
+

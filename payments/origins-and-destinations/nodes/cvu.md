@@ -12,51 +12,21 @@ CVU (Clave Virtual Uniforme) is the virtual account identifier used in Argentina
 
 ## Required fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>type</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;CVU&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>currency</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;ARS&quot;</code></td>
-    </tr>
-  </tbody>
-</table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `type` | `string` | Must be `"CVU"` |
+| `currency` | `string` | Must be `"ARS"` |
+
 
 ## Optional fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>cvu.code</code></td>
-      <td><code>string</code></td>
-      <td>Optional CVU/CBU code when your flow provides a pre-assigned identifier.</td>
-    </tr>
-    <tr>
-      <td><code>cvu.customer.*</code></td>
-      <td><code>object</code></td>
-      <td>Optional customer data for downstream reconciliation.</td>
-    </tr>
-  </tbody>
-</table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `cvu.code` | `string` | Optional CVU/CBU code when your flow provides a pre-assigned identifier. |
+| `cvu.customer.*` | `object` | Optional customer data for downstream reconciliation. |
+
 
 ## Example
 
@@ -72,20 +42,11 @@ CVU (Clave Virtual Uniforme) is the virtual account identifier used in Argentina
 
 When CVU is used as origin, the valid destinations are:
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Node</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>ACCOUNT</code></td>
-      <td>Internal platform account</td>
-    </tr>
-  </tbody>
-</table>
+
+| Node | Description |
+| --- | --- |
+| `ACCOUNT` | Internal platform account |
+
 
 ## Schema
 

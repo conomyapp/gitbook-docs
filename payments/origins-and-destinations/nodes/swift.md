@@ -12,86 +12,28 @@ SWIFT transfers are the standard for international cross-border payments. They r
 
 ## Required fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>type</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;SWIFT&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>currency</code></td>
-      <td><code>string</code></td>
-      <td>Currency of the transfer (e.g., <code>&quot;USD&quot;</code>, <code>&quot;EUR&quot;</code>)</td>
-    </tr>
-    <tr>
-      <td><code>swift.bank.accountNumber</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s bank account number</td>
-    </tr>
-    <tr>
-      <td><code>swift.swiftCode</code></td>
-      <td><code>string</code></td>
-      <td>SWIFT/BIC code of the recipient&#x27;s bank</td>
-    </tr>
-    <tr>
-      <td><code>swift.customer.firstName</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s first name</td>
-    </tr>
-    <tr>
-      <td><code>swift.customer.lastName</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s last name</td>
-    </tr>
-    <tr>
-      <td><code>swift.customer.email</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s email</td>
-    </tr>
-    <tr>
-      <td><code>swift.customer.documentNumber</code></td>
-      <td><code>string</code></td>
-      <td>ID or tax number</td>
-    </tr>
-    <tr>
-      <td><code>swift.customer.documentType</code></td>
-      <td><code>string</code></td>
-      <td>Document type</td>
-    </tr>
-  </tbody>
-</table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `type` | `string` | Must be `"SWIFT"` |
+| `currency` | `string` | Currency of the transfer (e.g., `"USD"`, `"EUR"`) |
+| `swift.bank.accountNumber` | `string` | Recipient's bank account number |
+| `swift.swiftCode` | `string` | SWIFT/BIC code of the recipient's bank |
+| `swift.customer.firstName` | `string` | Recipient's first name |
+| `swift.customer.lastName` | `string` | Recipient's last name |
+| `swift.customer.email` | `string` | Recipient's email |
+| `swift.customer.documentNumber` | `string` | ID or tax number |
+| `swift.customer.documentType` | `string` | Document type |
+
 
 ## Optional fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>swift.bank.name</code></td>
-      <td><code>string</code></td>
-      <td>Recipient bank name.</td>
-    </tr>
-    <tr>
-      <td><code>swift.iban</code></td>
-      <td><code>string</code></td>
-      <td>IBAN (required only for destinations that enforce IBAN format, such as SEPA-zone recipients).</td>
-    </tr>
-  </tbody>
-</table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `swift.bank.name` | `string` | Recipient bank name. |
+| `swift.iban` | `string` | IBAN (required only for destinations that enforce IBAN format, such as SEPA-zone recipients). |
+
 
 ## Example
 

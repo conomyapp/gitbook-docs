@@ -12,42 +12,15 @@ Daviplata is Davivienda's mobile wallet, widely used for transfers among unbanke
 
 ## Required fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>type</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;DAVIPLATA&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>currency</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;COP&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>daviplata.customer.documentType</code></td>
-      <td><code>string</code></td>
-      <td>Document type (e.g., <code>&quot;CC&quot;</code>)</td>
-    </tr>
-    <tr>
-      <td><code>daviplata.customer.documentNumber</code></td>
-      <td><code>string</code></td>
-      <td>Colombian ID number</td>
-    </tr>
-    <tr>
-      <td><code>daviplata.customer.email</code></td>
-      <td><code>string</code></td>
-      <td>Customer&#x27;s email</td>
-    </tr>
-  </tbody>
-</table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `type` | `string` | Must be `"DAVIPLATA"` |
+| `currency` | `string` | Must be `"COP"` |
+| `daviplata.customer.documentType` | `string` | Document type (e.g., `"CC"`) |
+| `daviplata.customer.documentNumber` | `string` | Colombian ID number |
+| `daviplata.customer.email` | `string` | Customer's email |
+
 
 ## Example
 

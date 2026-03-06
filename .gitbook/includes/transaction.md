@@ -2,4 +2,22 @@
 title: Transaction
 ---
 
-<table><thead><tr><th width="207">Field</th><th width="179">Type</th><th>Description</th></tr></thead><tbody><tr><td>id</td><td><code>string</code></td><td>Unique identifier for the transaction.</td></tr><tr><td>externalId</td><td><code>string</code></td><td>External reference ID linking the transaction to an external system.</td></tr><tr><td>identityId</td><td><code>string</code></td><td>Unique identifier for the user or entity performing the transaction.</td></tr><tr><td>origins</td><td><code>array[</code><a href="broken-reference"><code>payment</code></a><code>]</code></td><td>Source of funds.</td></tr><tr><td>originAmount</td><td><a href="broken-reference"><code>amount</code></a></td><td>The amount and currency at the transaction's origin.</td></tr><tr><td>destinations</td><td><code>array[</code><a href="broken-reference"><code>payment</code></a><code>]</code></td><td>Destination of funds.</td></tr><tr><td>destinationAmount</td><td><a href="broken-reference"><code>amount</code></a></td><td>The amount and currency at the transaction's destination.</td></tr><tr><td>type</td><td><code>string</code></td><td>Type of transaction (e.g., <code>PAY_IN</code>, <code>PAY_OUT</code>).</td></tr><tr><td>status</td><td><code>string</code></td><td>Current status of the transaction (e.g., <code>PENDING</code>, <code>CAPTURED</code>, <code>FAILED</code>).</td></tr><tr><td>settlement</td><td><code>string</code></td><td>Specifies how often settlements occur for this transaction.</td></tr><tr><td>fees</td><td><code>array</code></td><td>Array of fees applied to the transaction.</td></tr><tr><td>exchange</td><td><a href="broken-reference"><code>quote</code></a></td><td>Details of any currency exchange related to the transaction.</td></tr><tr><td>metaData</td><td><a href="broken-reference"><code>object</code></a></td><td>Additional metadata, such as transaction description and category.</td></tr><tr><td>createdAt</td><td><code>string</code></td><td>Timestamp when the transaction was created.</td></tr><tr><td>updatedAt</td><td><code>string</code></td><td>Timestamp when the transaction was last updated.</td></tr></tbody></table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| id | `string` | Unique identifier for the transaction. |
+| externalId | `string` | External reference ID linking the transaction to an external system. |
+| identityId | `string` | Unique identifier for the user or entity performing the transaction. |
+| origins | `array[`[`payment`](broken-reference)`]` | Source of funds. |
+| originAmount | [`amount`](broken-reference) | The amount and currency at the transaction's origin. |
+| destinations | `array[`[`payment`](broken-reference)`]` | Destination of funds. |
+| destinationAmount | [`amount`](broken-reference) | The amount and currency at the transaction's destination. |
+| type | `string` | Type of transaction (e.g., `PAY_IN`, `PAY_OUT`). |
+| status | `string` | Current status of the transaction (e.g., `PENDING`, `CAPTURED`, `FAILED`). |
+| settlement | `string` | Specifies how often settlements occur for this transaction. |
+| fees | `array` | Array of fees applied to the transaction. |
+| exchange | [`quote`](broken-reference) | Details of any currency exchange related to the transaction. |
+| metaData | [`object`](broken-reference) | Additional metadata, such as transaction description and category. |
+| createdAt | `string` | Timestamp when the transaction was created. |
+| updatedAt | `string` | Timestamp when the transaction was last updated. |
+

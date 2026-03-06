@@ -12,67 +12,20 @@ Wire transfers are same-day domestic bank transfers in the USA. They are typical
 
 ## Required fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>type</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;WIRE&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>currency</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;USD&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>wire.bank.accountNumber</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s bank account number</td>
-    </tr>
-    <tr>
-      <td><code>wire.swiftCode</code></td>
-      <td><code>string</code></td>
-      <td>SWIFT/BIC code of the recipient&#x27;s bank</td>
-    </tr>
-    <tr>
-      <td><code>wire.customer.firstName</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s first name</td>
-    </tr>
-    <tr>
-      <td><code>wire.customer.lastName</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s last name</td>
-    </tr>
-    <tr>
-      <td><code>wire.customer.email</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s email</td>
-    </tr>
-    <tr>
-      <td><code>wire.customer.documentNumber</code></td>
-      <td><code>string</code></td>
-      <td>SSN or other ID</td>
-    </tr>
-    <tr>
-      <td><code>wire.customer.documentType</code></td>
-      <td><code>string</code></td>
-      <td>Document type</td>
-    </tr>
-    <tr>
-      <td><code>wire.iban</code></td>
-      <td><code>string</code></td>
-      <td>IBAN (for international wires)</td>
-    </tr>
-  </tbody>
-</table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `type` | `string` | Must be `"WIRE"` |
+| `currency` | `string` | Must be `"USD"` |
+| `wire.bank.accountNumber` | `string` | Recipient's bank account number |
+| `wire.swiftCode` | `string` | SWIFT/BIC code of the recipient's bank |
+| `wire.customer.firstName` | `string` | Recipient's first name |
+| `wire.customer.lastName` | `string` | Recipient's last name |
+| `wire.customer.email` | `string` | Recipient's email |
+| `wire.customer.documentNumber` | `string` | SSN or other ID |
+| `wire.customer.documentType` | `string` | Document type |
+| `wire.iban` | `string` | IBAN (for international wires) |
+
 
 ## Example
 

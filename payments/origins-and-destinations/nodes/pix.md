@@ -12,57 +12,18 @@ PIX is Brazil's instant payment rail operated by the Banco Central do Brasil. Wh
 
 ## Required fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>type</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;PIX&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>currency</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;BRL&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>pix.customer.firstName</code></td>
-      <td><code>string</code></td>
-      <td>Payer&#x27;s first name</td>
-    </tr>
-    <tr>
-      <td><code>pix.customer.lastName</code></td>
-      <td><code>string</code></td>
-      <td>Payer&#x27;s last name</td>
-    </tr>
-    <tr>
-      <td><code>pix.customer.email</code></td>
-      <td><code>string</code></td>
-      <td>Payer&#x27;s email</td>
-    </tr>
-    <tr>
-      <td><code>pix.customer.documentNumber</code></td>
-      <td><code>string</code></td>
-      <td>Brazilian CPF (11 digits)</td>
-    </tr>
-    <tr>
-      <td><code>pix.successUrl</code></td>
-      <td><code>string</code></td>
-      <td>Redirect URL on success</td>
-    </tr>
-    <tr>
-      <td><code>pix.failedUrl</code></td>
-      <td><code>string</code></td>
-      <td>Redirect URL on failure</td>
-    </tr>
-  </tbody>
-</table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `type` | `string` | Must be `"PIX"` |
+| `currency` | `string` | Must be `"BRL"` |
+| `pix.customer.firstName` | `string` | Payer's first name |
+| `pix.customer.lastName` | `string` | Payer's last name |
+| `pix.customer.email` | `string` | Payer's email |
+| `pix.customer.documentNumber` | `string` | Brazilian CPF (11 digits) |
+| `pix.successUrl` | `string` | Redirect URL on success |
+| `pix.failedUrl` | `string` | Redirect URL on failure |
+
 
 ## Example
 
@@ -87,28 +48,13 @@ PIX is Brazil's instant payment rail operated by the Banco Central do Brasil. Wh
 
 After the payment is created, the `pix` object in the response includes:
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>qrCode</code></td>
-      <td>Base64-encoded QR code image</td>
-    </tr>
-    <tr>
-      <td><code>data</code></td>
-      <td>PIX copy-paste code (EMV string)</td>
-    </tr>
-    <tr>
-      <td><code>expiredAt</code></td>
-      <td>Expiration timestamp (UTC)</td>
-    </tr>
-  </tbody>
-</table>
+
+| Field | Description |
+| --- | --- |
+| `qrCode` | Base64-encoded QR code image |
+| `data` | PIX copy-paste code (EMV string) |
+| `expiredAt` | Expiration timestamp (UTC) |
+
 
 Show the `qrCode` or `data` to your user so they can complete the payment in their banking app.
 

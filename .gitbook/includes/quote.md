@@ -2,4 +2,16 @@
 title: Quote
 ---
 
-<table><thead><tr><th width="160">Field</th><th width="130">Type</th><th>Description</th></tr></thead><tbody><tr><td>id</td><td><code>string</code></td><td>Unique identifier for the exchange quote.</td></tr><tr><td>product</td><td><code>string</code></td><td>Currency pair being exchanged (e.g., <code>USD:EUR</code>).</td></tr><tr><td>status</td><td><code>string</code></td><td>Status of the quote (e.g., <code>CREATED</code>, <code>PENDING</code>, <code>COMPLETED</code>).</td></tr><tr><td>exchangeRate</td><td><code>string</code></td><td>Exchange rate provided for the transaction.</td></tr><tr><td>fee</td><td><code>string</code></td><td>Fee charged by the provider for executing the quote.</td></tr><tr><td>executable</td><td><code>boolean</code></td><td>Whether the quote is executable (i.e., ready for the transaction to proceed).</td></tr><tr><td>provider</td><td><code>string</code></td><td>Provider responsible for offering the exchange quote.</td></tr><tr><td>createdAt</td><td><code>string</code></td><td>Timestamp when the quote was created.</td></tr><tr><td>updatedAt</td><td><code>string</code></td><td>Timestamp when the quote was last updated.</td></tr></tbody></table>
+
+| Field | Type | Description |
+| --- | --- | --- |
+| id | `string` | Unique identifier for the exchange quote. |
+| product | `string` | Currency pair being exchanged (e.g., `USD:EUR`). |
+| status | `string` | Status of the quote (e.g., `CREATED`, `PENDING`, `COMPLETED`). |
+| exchangeRate | `string` | Exchange rate provided for the transaction. |
+| fee | `string` | Fee charged by the provider for executing the quote. |
+| executable | `boolean` | Whether the quote is executable (i.e., ready for the transaction to proceed). |
+| provider | `string` | Provider responsible for offering the exchange quote. |
+| createdAt | `string` | Timestamp when the quote was created. |
+| updatedAt | `string` | Timestamp when the quote was last updated. |
+

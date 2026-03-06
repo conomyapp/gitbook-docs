@@ -510,7 +510,7 @@ const BUILDER_JS = String.raw`(function () {
   };
 
   const $ = (id) => document.getElementById(id);
-  const state = { showAdvanced: false, toastTimer: null };
+  const state = { showAdvanced: false, toastTimer: null, baseWidth: 1120 };
 
   const allOriginCurrencies = unique(Object.values(ORIGIN_CURRENCIES_BY_RAIL).flat());
   const allDestinationCurrencies = unique(Object.values(DESTINATION_CURRENCIES_BY_RAIL).flat());
@@ -752,11 +752,20 @@ const BUILDER_JS = String.raw`(function () {
       if (!viewport || !stage || !fitTarget) return;
 
       fitTarget.style.transform = "scale(1)";
+      fitTarget.style.width = state.baseWidth + "px";
 
-      const naturalWidth = fitTarget.scrollWidth || 1120;
-      const naturalHeight = fitTarget.scrollHeight || 760;
-      const availableWidth = Math.max(viewport.clientWidth, 320);
-      const availableHeight = Math.max(viewport.clientHeight, 320);
+      const viewportStyles = window.getComputedStyle(viewport);
+      const padX =
+        (parseFloat(viewportStyles.paddingLeft || "0") || 0) +
+        (parseFloat(viewportStyles.paddingRight || "0") || 0);
+      const padY =
+        (parseFloat(viewportStyles.paddingTop || "0") || 0) +
+        (parseFloat(viewportStyles.paddingBottom || "0") || 0);
+
+      const naturalWidth = state.baseWidth;
+      const naturalHeight = Math.max(fitTarget.scrollHeight || 0, 640);
+      const availableWidth = Math.max(viewport.clientWidth - padX, 320);
+      const availableHeight = Math.max(viewport.clientHeight - padY, 320);
 
       const scale = Math.min(
         availableWidth / naturalWidth,
@@ -765,10 +774,10 @@ const BUILDER_JS = String.raw`(function () {
       );
 
       fitTarget.style.transform = "scale(" + scale.toFixed(4) + ")";
-      const scaledHeight = Math.ceil(naturalHeight * scale);
-      stage.style.height = scaledHeight + "px";
+      stage.style.width = availableWidth + "px";
+      stage.style.height = availableHeight + "px";
 
-      postResizeMessage(Math.max(scaledHeight + 16, 520));
+      postResizeMessage(Math.max(Math.ceil(availableHeight + padY), 560));
     };
 
     if (typeof window.requestAnimationFrame === "function") {

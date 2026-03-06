@@ -19,8 +19,9 @@ const BUILDER_HTML = `<!doctype html>
         --card: #fafafa;
         --soft: #f3f4f6;
         --brand: #111111;
-        --code-bg: #0a0a0a;
-        --code-fg: #e5e7eb;
+        --code-bg: #f5f5f5;
+        --code-fg: #111827;
+        --code-border: #e5e7eb;
       }
       html, body {
         width: 100%;
@@ -29,36 +30,19 @@ const BUILDER_HTML = `<!doctype html>
       * { box-sizing: border-box; }
       body {
         margin: 0;
-        padding: 0;
+        padding: 16px;
         background: var(--bg);
         color: var(--fg);
         font-family: Geist, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         overflow: hidden;
       }
-      .viewport {
-        width: 100vw;
-        height: 100vh;
-        overflow: hidden;
-        padding: 12px;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-      }
-      .stage {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        overflow: hidden;
-      }
       .wrap {
-        width: 1120px;
+        width: 100%;
         max-width: 1120px;
-        margin: 0;
+        margin: 0 auto;
         display: grid;
         grid-template-columns: 1fr;
         gap: 12px;
-        transform-origin: top center;
       }
       .card {
         border: 1px solid var(--line);
@@ -206,10 +190,10 @@ const BUILDER_HTML = `<!doctype html>
       }
       .code {
         margin: 0;
-        min-height: 220px;
+        min-height: 190px;
         overflow: hidden;
         border-radius: 10px;
-        border: 1px solid #111827;
+        border: 1px solid var(--code-border);
         background: var(--code-bg);
         color: var(--code-fg);
         padding: 12px;
@@ -238,9 +222,7 @@ const BUILDER_HTML = `<!doctype html>
     </style>
   </head>
   <body>
-    <div class="viewport" id="viewport">
-      <div class="stage" id="stage">
-        <div class="wrap" id="fitTarget">
+    <div class="wrap" id="wrap">
       <div class="card">
         <h3 class="title">Transaction Builder</h3>
         <p class="sub">Generate JSON and cURL for <code>POST /payments</code>. No execution. <a href="${PUBLIC_ENDPOINT}/builder" target="_blank" rel="noreferrer">Open standalone</a>.</p>
@@ -345,8 +327,6 @@ const BUILDER_HTML = `<!doctype html>
             <button class="copy-btn" id="copyCurl">Copy cURL</button>
           </div>
           <pre class="code"><code id="generatedCurlCode"># Generate first</code></pre>
-        </div>
-      </div>
         </div>
       </div>
     </div>
@@ -510,7 +490,7 @@ const BUILDER_JS = String.raw`(function () {
   };
 
   const $ = (id) => document.getElementById(id);
-  const state = { showAdvanced: false, toastTimer: null, baseWidth: 1120 };
+  const state = { showAdvanced: false, toastTimer: null };
 
   const allOriginCurrencies = unique(Object.values(ORIGIN_CURRENCIES_BY_RAIL).flat());
   const allDestinationCurrencies = unique(Object.values(DESTINATION_CURRENCIES_BY_RAIL).flat());
@@ -746,38 +726,13 @@ const BUILDER_JS = String.raw`(function () {
 
   function scheduleResize() {
     const run = () => {
-      const viewport = $("viewport");
-      const stage = $("stage");
-      const fitTarget = $("fitTarget");
-      if (!viewport || !stage || !fitTarget) return;
+      const wrap = $("wrap") || document.querySelector(".wrap");
+      const bodyHeight = document.body ? document.body.scrollHeight : 0;
+      const docHeight = document.documentElement ? document.documentElement.scrollHeight : 0;
+      const wrapHeight = wrap && wrap.scrollHeight ? wrap.scrollHeight : 0;
+      const height = Math.max(bodyHeight, docHeight, wrapHeight, 1020);
 
-      fitTarget.style.transform = "scale(1)";
-      fitTarget.style.width = state.baseWidth + "px";
-
-      const viewportStyles = window.getComputedStyle(viewport);
-      const padX =
-        (parseFloat(viewportStyles.paddingLeft || "0") || 0) +
-        (parseFloat(viewportStyles.paddingRight || "0") || 0);
-      const padY =
-        (parseFloat(viewportStyles.paddingTop || "0") || 0) +
-        (parseFloat(viewportStyles.paddingBottom || "0") || 0);
-
-      const naturalWidth = state.baseWidth;
-      const naturalHeight = Math.max(fitTarget.scrollHeight || 0, 640);
-      const availableWidth = Math.max(viewport.clientWidth - padX, 320);
-      const availableHeight = Math.max(viewport.clientHeight - padY, 320);
-
-      const scale = Math.min(
-        availableWidth / naturalWidth,
-        availableHeight / naturalHeight,
-        1
-      );
-
-      fitTarget.style.transform = "scale(" + scale.toFixed(4) + ")";
-      stage.style.width = availableWidth + "px";
-      stage.style.height = availableHeight + "px";
-
-      postResizeMessage(Math.max(Math.ceil(availableHeight + padY), 560));
+      postResizeMessage(height + 16);
     };
 
     if (typeof window.requestAnimationFrame === "function") {
@@ -1037,7 +992,7 @@ const transactionBuilderBlock = createComponent({
       <vstack>
         <markdown content="### Transaction Builder" />
         <markdown content="Build and validate `POST /payments` payloads, then copy generated `JSON` or `cURL` (no execution)." />
-        <webframe aspectRatio={0.78} source={{ url: `${PUBLIC_ENDPOINT}/builder` }} />
+        <webframe aspectRatio={0.6} source={{ url: `${PUBLIC_ENDPOINT}/builder` }} />
       </vstack>
     </block>
   )

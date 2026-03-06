@@ -1,7 +1,21 @@
 ---
-description: Brazilian instant payment system. Used for pay-in and pay-out in Brazil.
 layout:
-  width: full
+  width: default
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+description: Brazilian instant payment system. Used for pay-in and pay-out in Brazil.
 ---
 
 # PIX

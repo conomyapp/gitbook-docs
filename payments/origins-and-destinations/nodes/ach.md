@@ -1,7 +1,21 @@
 ---
-description: US Automated Clearing House network. Used for pay-in and pay-out in the USA.
 layout:
-  width: full
+  width: default
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+description: US Automated Clearing House network. Used for pay-in and pay-out in the USA.
 ---
 
 # ACH

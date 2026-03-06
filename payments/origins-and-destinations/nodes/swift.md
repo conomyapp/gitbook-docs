@@ -1,7 +1,21 @@
 ---
-description: International wire transfer via the SWIFT network. Used for cross-border pay-out.
 layout:
-  width: full
+  width: default
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+description: International wire transfer via the SWIFT network. Used for cross-border pay-out.
 ---
 
 # SWIFT

@@ -1,7 +1,21 @@
 ---
-description: UK's Faster Payments scheme. Used for pay-out in the United Kingdom.
 layout:
-  width: full
+  width: default
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+description: UK's Faster Payments scheme. Used for pay-out in the United Kingdom.
 ---
 
 # FPE

@@ -1,7 +1,21 @@
 ---
-description: Generic bank account node for payouts. Used across multiple countries.
 layout:
-  width: full
+  width: default
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+description: Generic bank account node for payouts. Used across multiple countries.
 ---
 
 # BANK_ACCOUNT

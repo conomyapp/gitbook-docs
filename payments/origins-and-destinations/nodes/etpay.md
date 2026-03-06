@@ -1,7 +1,21 @@
 ---
-description: Chilean open banking pay-in via redirect. Used for pay-in in Chile.
 layout:
-  width: full
+  width: default
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+description: Chilean open banking pay-in via redirect. Used for pay-in in Chile.
 ---
 
 # ETPAY

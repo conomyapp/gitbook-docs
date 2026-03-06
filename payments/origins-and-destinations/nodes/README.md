@@ -1,7 +1,21 @@
 ---
-description: Payment nodes define origins and destinations for each payment rail.
 layout:
-  width: full
+  width: default
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+description: Payment nodes define origins and destinations for each payment rail.
 ---
 
 # Nodes

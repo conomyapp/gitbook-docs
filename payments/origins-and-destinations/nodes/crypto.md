@@ -1,7 +1,21 @@
 ---
-description: Crypto wallet rail for global pay-in and pay-out.
 layout:
-  width: full
+  width: default
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+description: Crypto wallet rail for global pay-in and pay-out.
 ---
 
 # CRYPTO

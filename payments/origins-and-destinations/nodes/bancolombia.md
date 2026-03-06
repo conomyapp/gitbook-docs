@@ -1,7 +1,21 @@
 ---
-description: Bancolombia's direct pay-in button. Used for pay-in in Colombia.
 layout:
-  width: full
+  width: default
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+description: Bancolombia's direct pay-in button. Used for pay-in in Colombia.
 ---
 
 # BANCOLOMBIA

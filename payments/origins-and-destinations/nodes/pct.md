@@ -1,7 +1,21 @@
 ---
-description: Argentina's interoperable QR transfer standard. Used for pay-in in Argentina.
 layout:
-  width: full
+  width: default
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+description: Argentina's interoperable QR transfer standard. Used for pay-in in Argentina.
 ---
 
 # PCT

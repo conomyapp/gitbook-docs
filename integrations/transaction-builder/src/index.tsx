@@ -1,577 +1,454 @@
 import { createComponent, createIntegration } from "@gitbook/runtime";
 
-type MenuKey = "showPresetMenu" | "showTypeMenu" | "showOriginMenu" | "showDestinationMenu";
+const PUBLIC_ENDPOINT =
+  "https://integrations.gitbook.com/v1/integrations/conomyhq-transaction-builder/integration";
 
-type BuilderState = {
-  preset: string;
-  baseUrl: string;
-  type: string;
-  identityId: string;
-  accountNumber: string;
-  purchaseAmount: string;
-  purchaseCurrency: string;
-  currency: string;
-  originType: string;
-  originCurrency: string;
-  originAmount: string;
-  originNodeJson: string;
-  destinationType: string;
-  destinationCurrency: string;
-  destinationAmount: string;
-  destinationNodeJson: string;
-  showPresetMenu: boolean;
-  showTypeMenu: boolean;
-  showOriginMenu: boolean;
-  showDestinationMenu: boolean;
-  showAdvanced: boolean;
-  generatedJson: string;
-  generatedCurl: string;
-  error: string;
-};
+const BUILDER_HTML = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conomy Transaction Builder</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #ffffff;
+        --fg: #111111;
+        --muted: #6b7280;
+        --line: #e5e7eb;
+        --card: #fafafa;
+        --brand: #111111;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        padding: 20px;
+        background: var(--bg);
+        color: var(--fg);
+        font-family: Geist, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 16px;
+        background: var(--card);
+      }
+      .title {
+        margin: 0 0 6px 0;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .sub {
+        margin: 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+      .grid {
+        margin-top: 14px;
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .field label {
+        font-size: 12px;
+        color: #374151;
+        font-weight: 500;
+      }
+      select, input, textarea, button {
+        width: 100%;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #fff;
+        color: var(--fg);
+        padding: 10px 12px;
+        font: inherit;
+      }
+      select, input, textarea { font-size: 13px; }
+      textarea { min-height: 160px; resize: vertical; }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .actions {
+        margin-top: 12px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      button {
+        width: auto;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        background: #fff;
+      }
+      button.primary {
+        background: var(--brand);
+        color: #fff;
+        border-color: var(--brand);
+      }
+      .route {
+        margin-top: 10px;
+        font-size: 12px;
+        color: #374151;
+      }
+      .hidden { display: none; }
+      .error {
+        margin-top: 10px;
+        color: #b42318;
+        font-size: 12px;
+        white-space: pre-wrap;
+      }
+      @media (max-width: 900px) {
+        .grid, .row { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <h3 class="title">Transaction Builder</h3>
+        <p class="sub">Generate JSON and cURL for <code>POST /payments</code>. No execution.</p>
 
-const presetOptions = [
-  { id: "ars-cvu-topup", label: "ARS top-up with CVU" },
-  { id: "ars-pct-topup", label: "ARS top-up with PCT" },
-  { id: "pix-brl-to-clp", label: "PIX BRL to CLP account" },
-  { id: "custom", label: "Custom" }
-];
+        <div class="grid">
+          <div class="field">
+            <label>Preset</label>
+            <select id="preset">
+              <option value="ars-cvu-topup">ARS top-up with CVU</option>
+              <option value="ars-pct-topup">ARS top-up with PCT</option>
+              <option value="pix-brl-to-clp">PIX BRL to CLP account</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Transaction type</label>
+            <select id="type"></select>
+          </div>
 
-const paymentTypeOptions = [
-  { id: "TOPUP_ACCOUNT", label: "Top up account" },
-  { id: "WITHDRAWAL_ACCOUNT", label: "Withdrawal account" },
-  { id: "REMITTANCE", label: "Remittance" },
-  { id: "PURCHASE", label: "Purchase" },
-  { id: "P2P", label: "P2P" },
-  { id: "COLLECT", label: "Collect" },
-  { id: "FEE", label: "Fee" }
-];
+          <div class="field">
+            <label>Origin rail</label>
+            <select id="originType"></select>
+          </div>
+          <div class="field">
+            <label>Destination rail</label>
+            <select id="destinationType"></select>
+          </div>
 
-const originRailOptions = [
-  "CVU",
-  "PCT",
-  "PIX",
-  "WEBPAY",
-  "PSE",
-  "SPEI",
-  "ACH",
-  "WIRE",
-  "SWIFT",
-  "CRYPTO",
-  "ACCOUNT"
-];
+          <div class="field">
+            <label>Amount</label>
+            <input id="purchaseAmount" value="100" />
+          </div>
+          <div class="field row">
+            <div class="field">
+              <label>Source currency</label>
+              <input id="purchaseCurrency" value="ARS" />
+            </div>
+            <div class="field">
+              <label>Settlement currency</label>
+              <input id="currency" value="ARS" />
+            </div>
+          </div>
+        </div>
 
-const destinationRailOptions = [
-  "ACCOUNT",
-  "BANK_ACCOUNT",
-  "CVU",
-  "PIX",
-  "SPEI",
-  "ACH",
-  "WIRE",
-  "SWIFT",
-  "CRYPTO",
-  "PSE"
-];
+        <div class="actions">
+          <button id="applyPreset">Apply preset</button>
+          <button id="defaults">Use defaults for selected rails</button>
+          <button id="toggleAdvanced">Show advanced</button>
+          <button class="primary" id="generate">Generate JSON and cURL</button>
+        </div>
 
-const nodeKeyByType: Record<string, string> = {
-  ACCOUNT: "account",
-  BANK_ACCOUNT: "bank",
-  CRYPTO: "wallet",
-  PIX: "pix",
-  PCT: "pct",
-  CVU: "cvu",
-  ETPAY: "etpay",
-  FINTOC: "fintoc",
-  WEBPAY: "webpay",
-  WOMPI: "wompi",
-  PSE: "pse",
-  BANCOLOMBIA: "bancolombia",
-  DAVIVIENDA: "davivienda",
-  DAVIPLATA: "daviplata",
-  NEQUI: "nequi",
-  BREB: "breb",
-  SPEI: "spei",
-  ACH: "ach",
-  WIRE: "wire",
-  FEDNOW: "fednow",
-  RTP: "rtp",
-  SEPA: "sepa",
-  FPE: "fpe",
-  SWIFT: "swift",
-  PAGO_MOVIL: "pagoMovil"
-};
+        <div id="route" class="route"></div>
+        <div id="error" class="error"></div>
+      </div>
 
-const supportedPaymentTypes = paymentTypeOptions.map((option) => option.id);
-const supportedNodeTypes = Object.keys(nodeKeyByType);
+      <div id="advanced" class="card hidden">
+        <h3 class="title">Advanced (optional)</h3>
+        <div class="grid">
+          <div class="field"><label>Identity ID</label><input id="identityId" /></div>
+          <div class="field"><label>Account number</label><input id="accountNumber" /></div>
+          <div class="field"><label>Base URL</label><input id="baseUrl" value="https://api.conomyhq.com/sandbox" /></div>
+          <div class="field row">
+            <div class="field"><label>Origin currency override</label><input id="originCurrency" /></div>
+            <div class="field"><label>Destination currency override</label><input id="destinationCurrency" /></div>
+          </div>
+          <div class="field row">
+            <div class="field"><label>Origin amount override</label><input id="originAmount" /></div>
+            <div class="field"><label>Destination amount override</label><input id="destinationAmount" /></div>
+          </div>
+        </div>
 
-const baseState: BuilderState = {
-  preset: "ars-cvu-topup",
-  baseUrl: "https://api.conomyhq.com/sandbox",
-  type: "TOPUP_ACCOUNT",
-  identityId: "",
-  accountNumber: "",
-  purchaseAmount: "100",
-  purchaseCurrency: "ARS",
-  currency: "ARS",
-  originType: "CVU",
-  originCurrency: "ARS",
-  originAmount: "",
-  originNodeJson:
-    '{\n  "customer": {\n    "firstName": "Juan",\n    "lastName": "Perez",\n    "email": "juan@example.com"\n  }\n}',
-  destinationType: "ACCOUNT",
-  destinationCurrency: "ARS",
-  destinationAmount: "",
-  destinationNodeJson: '{\n  "accountNumber": "<ACCOUNT_NUMBER>"\n}',
-  showPresetMenu: false,
-  showTypeMenu: false,
-  showOriginMenu: false,
-  showDestinationMenu: false,
-  showAdvanced: false,
-  generatedJson: "",
-  generatedCurl: "",
-  error: ""
-};
+        <div class="row" style="margin-top:12px;">
+          <div class="field">
+            <label>Origin node JSON</label>
+            <textarea id="originNodeJson"></textarea>
+          </div>
+          <div class="field">
+            <label>Destination node JSON</label>
+            <textarea id="destinationNodeJson"></textarea>
+          </div>
+        </div>
+      </div>
 
-function getPresetLabel(preset: string): string {
-  return presetOptions.find((option) => option.id === preset)?.label || preset;
-}
+      <div class="row">
+        <div class="card field">
+          <label>Generated JSON</label>
+          <textarea id="generatedJson" readonly>{}</textarea>
+        </div>
+        <div class="card field">
+          <label>Generated cURL</label>
+          <textarea id="generatedCurl" readonly># Generate first</textarea>
+        </div>
+      </div>
+    </div>
 
-function getPaymentTypeLabel(type: string): string {
-  return paymentTypeOptions.find((option) => option.id === type)?.label || type;
-}
+    <script>
+      const paymentTypeOptions = [
+        ["TOPUP_ACCOUNT", "Top up account"],
+        ["WITHDRAWAL_ACCOUNT", "Withdrawal account"],
+        ["REMITTANCE", "Remittance"],
+        ["PURCHASE", "Purchase"],
+        ["P2P", "P2P"],
+        ["COLLECT", "Collect"],
+        ["FEE", "Fee"]
+      ];
 
-function resetMenus(state: BuilderState): BuilderState {
-  return {
-    ...state,
-    showPresetMenu: false,
-    showTypeMenu: false,
-    showOriginMenu: false,
-    showDestinationMenu: false
-  };
-}
+      const originRailOptions = ["CVU", "PCT", "PIX", "WEBPAY", "PSE", "SPEI", "ACH", "WIRE", "SWIFT", "CRYPTO", "ACCOUNT"];
+      const destinationRailOptions = ["ACCOUNT", "BANK_ACCOUNT", "CVU", "PIX", "SPEI", "ACH", "WIRE", "SWIFT", "CRYPTO", "PSE"];
 
-function defaultNodeJson(type: string, direction: "origin" | "destination"): string {
-  switch (type) {
-    case "ACCOUNT":
-      return '{\n  "accountNumber": "<ACCOUNT_NUMBER>"\n}';
-    case "BANK_ACCOUNT":
-      return '{\n  "accountNumber": "<ACCOUNT_NUMBER>",\n  "bankCode": "<BANK_CODE>"\n}';
-    case "CVU":
-      return '{\n  "customer": {\n    "firstName": "Juan",\n    "lastName": "Perez",\n    "email": "juan@example.com"\n  }\n}';
-    case "PCT":
-      return '{\n  "customer": {\n    "email": "juan@example.com",\n    "phoneNumber": "1123456789",\n    "phoneNumberPrefix": "+54"\n  }\n}';
-    case "PIX":
-      return direction === "origin"
-        ? '{\n  "successUrl": "https://yourapp.com/success",\n  "failedUrl": "https://yourapp.com/failed",\n  "customer": {\n    "firstName": "Maria",\n    "lastName": "Silva",\n    "email": "maria@example.com",\n    "documentNumber": "12345678901"\n  }\n}'
-        : '{\n  "keyType": "email",\n  "key": "maria@example.com"\n}';
-    case "CRYPTO":
-      return '{\n  "address": "<WALLET_ADDRESS>",\n  "network": "<NETWORK>",\n  "asset": "<ASSET>"\n}';
-    case "WEBPAY":
-      return '{\n  "successUrl": "https://yourapp.com/success",\n  "failedUrl": "https://yourapp.com/failed"\n}';
-    default:
-      return "{}";
-  }
-}
-
-function withPreset(previous: BuilderState, preset: string): BuilderState {
-  switch (preset) {
-    case "ars-cvu-topup":
-      return {
-        ...previous,
-        preset,
-        type: "TOPUP_ACCOUNT",
-        purchaseCurrency: "ARS",
-        currency: "ARS",
-        originType: "CVU",
-        originCurrency: "ARS",
-        destinationType: "ACCOUNT",
-        destinationCurrency: "ARS",
-        originNodeJson: defaultNodeJson("CVU", "origin"),
-        destinationNodeJson: defaultNodeJson("ACCOUNT", "destination"),
-        error: "",
-        generatedJson: "",
-        generatedCurl: ""
+      const nodeKeyByType = {
+        ACCOUNT: "account",
+        BANK_ACCOUNT: "bank",
+        CRYPTO: "wallet",
+        PIX: "pix",
+        PCT: "pct",
+        CVU: "cvu",
+        ETPAY: "etpay",
+        FINTOC: "fintoc",
+        WEBPAY: "webpay",
+        WOMPI: "wompi",
+        PSE: "pse",
+        BANCOLOMBIA: "bancolombia",
+        DAVIVIENDA: "davivienda",
+        DAVIPLATA: "daviplata",
+        NEQUI: "nequi",
+        BREB: "breb",
+        SPEI: "spei",
+        ACH: "ach",
+        WIRE: "wire",
+        FEDNOW: "fednow",
+        RTP: "rtp",
+        SEPA: "sepa",
+        FPE: "fpe",
+        SWIFT: "swift",
+        PAGO_MOVIL: "pagoMovil"
       };
-    case "ars-pct-topup":
-      return {
-        ...previous,
-        preset,
-        type: "TOPUP_ACCOUNT",
-        purchaseCurrency: "ARS",
-        currency: "ARS",
-        originType: "PCT",
-        originCurrency: "ARS",
-        destinationType: "ACCOUNT",
-        destinationCurrency: "ARS",
-        originNodeJson: defaultNodeJson("PCT", "origin"),
-        destinationNodeJson: defaultNodeJson("ACCOUNT", "destination"),
-        error: "",
-        generatedJson: "",
-        generatedCurl: ""
+
+      const $ = (id) => document.getElementById(id);
+      const state = {
+        showAdvanced: false
       };
-    case "pix-brl-to-clp":
-      return {
-        ...previous,
-        preset,
-        type: "TOPUP_ACCOUNT",
-        purchaseCurrency: "BRL",
-        currency: "CLP",
-        originType: "PIX",
-        originCurrency: "BRL",
-        destinationType: "ACCOUNT",
-        destinationCurrency: "CLP",
-        originNodeJson: defaultNodeJson("PIX", "origin"),
-        destinationNodeJson: '{\n  "accountNumber": "<ACCOUNT_NUMBER_CLP>"\n}',
-        error: "",
-        generatedJson: "",
-        generatedCurl: ""
-      };
-    default:
-      return {
-        ...previous,
-        preset,
-        error: "",
-        generatedJson: "",
-        generatedCurl: ""
-      };
-  }
-}
 
-function parseObjectJson(text: string, label: string): Record<string, unknown> {
-  const value = JSON.parse(text);
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    throw new Error(`${label} must be a valid JSON object.`);
-  }
-  return value as Record<string, unknown>;
-}
+      function fillSelect(select, options) {
+        select.innerHTML = "";
+        options.forEach((entry) => {
+          const value = Array.isArray(entry) ? entry[0] : entry;
+          const label = Array.isArray(entry) ? entry[1] : entry;
+          const option = document.createElement("option");
+          option.value = value;
+          option.textContent = label;
+          select.appendChild(option);
+        });
+      }
 
-function buildPayload(state: BuilderState): Record<string, unknown> {
-  const type = (state.type || "").trim().toUpperCase();
-  const purchaseCurrency = (state.purchaseCurrency || "").trim().toUpperCase();
-  const currency = (state.currency || "").trim().toUpperCase();
-  const originType = (state.originType || "").trim().toUpperCase();
-  const destinationType = (state.destinationType || "").trim().toUpperCase();
-  const originCurrency = (state.originCurrency || purchaseCurrency).trim().toUpperCase();
-  const destinationCurrency = (state.destinationCurrency || currency).trim().toUpperCase();
+      function defaultNodeJson(type, direction) {
+        if (type === "ACCOUNT") return JSON.stringify({ accountNumber: "<ACCOUNT_NUMBER>" }, null, 2);
+        if (type === "BANK_ACCOUNT") return JSON.stringify({ accountNumber: "<ACCOUNT_NUMBER>", bankCode: "<BANK_CODE>" }, null, 2);
+        if (type === "CVU") return JSON.stringify({ customer: { firstName: "Juan", lastName: "Perez", email: "juan@example.com" } }, null, 2);
+        if (type === "PCT") return JSON.stringify({ customer: { email: "juan@example.com", phoneNumber: "1123456789", phoneNumberPrefix: "+54" } }, null, 2);
+        if (type === "PIX") {
+          if (direction === "origin") {
+            return JSON.stringify({ successUrl: "https://yourapp.com/success", failedUrl: "https://yourapp.com/failed", customer: { firstName: "Maria", lastName: "Silva", email: "maria@example.com", documentNumber: "12345678901" } }, null, 2);
+          }
+          return JSON.stringify({ keyType: "email", key: "maria@example.com" }, null, 2);
+        }
+        if (type === "CRYPTO") return JSON.stringify({ address: "<WALLET_ADDRESS>", network: "<NETWORK>", asset: "<ASSET>" }, null, 2);
+        if (type === "WEBPAY") return JSON.stringify({ successUrl: "https://yourapp.com/success", failedUrl: "https://yourapp.com/failed" }, null, 2);
+        return "{}";
+      }
 
-  if (!supportedPaymentTypes.includes(type)) {
-    throw new Error(
-      `Unsupported payment type: ${type}. Use one of: ${supportedPaymentTypes.join(", ")}.`
-    );
-  }
+      function normalizeRails() {
+        const originType = $("originType").value.toUpperCase();
+        const destinationType = $("destinationType").value.toUpperCase();
+        $("originNodeJson").value = defaultNodeJson(originType, "origin");
+        $("destinationNodeJson").value = defaultNodeJson(destinationType, "destination");
+        renderRoute();
+      }
 
-  const originNodeKey = nodeKeyByType[originType];
-  const destinationNodeKey = nodeKeyByType[destinationType];
+      function applyPreset() {
+        const preset = $("preset").value;
+        if (preset === "ars-cvu-topup") {
+          $("type").value = "TOPUP_ACCOUNT";
+          $("purchaseCurrency").value = "ARS";
+          $("currency").value = "ARS";
+          $("originType").value = "CVU";
+          $("destinationType").value = "ACCOUNT";
+        } else if (preset === "ars-pct-topup") {
+          $("type").value = "TOPUP_ACCOUNT";
+          $("purchaseCurrency").value = "ARS";
+          $("currency").value = "ARS";
+          $("originType").value = "PCT";
+          $("destinationType").value = "ACCOUNT";
+        } else if (preset === "pix-brl-to-clp") {
+          $("type").value = "TOPUP_ACCOUNT";
+          $("purchaseCurrency").value = "BRL";
+          $("currency").value = "CLP";
+          $("originType").value = "PIX";
+          $("destinationType").value = "ACCOUNT";
+        }
+        normalizeRails();
+      }
 
-  if (!originNodeKey) {
-    throw new Error(
-      `Unsupported origin type: ${originType}. Use one of: ${supportedNodeTypes.join(", ")}.`
-    );
-  }
+      function renderRoute() {
+        const source = ($("purchaseCurrency").value || "").toUpperCase();
+        const target = ($("currency").value || "").toUpperCase();
+        const origin = $("originType").value;
+        const destination = $("destinationType").value;
+        $("route").textContent = "Route preview: " + source + " " + origin + " -> " + destination + " -> " + target;
+      }
 
-  if (!destinationNodeKey) {
-    throw new Error(
-      `Unsupported destination type: ${destinationType}. Use one of: ${supportedNodeTypes.join(", ")}.`
-    );
-  }
+      function buildPayload() {
+        const type = ($("type").value || "").trim().toUpperCase();
+        const purchaseCurrency = ($("purchaseCurrency").value || "").trim().toUpperCase();
+        const currency = ($("currency").value || "").trim().toUpperCase();
+        const originType = ($("originType").value || "").trim().toUpperCase();
+        const destinationType = ($("destinationType").value || "").trim().toUpperCase();
 
-  const originNode = parseObjectJson(state.originNodeJson, "Origin node");
-  const destinationNode = parseObjectJson(state.destinationNodeJson, "Destination node");
+        const originNodeKey = nodeKeyByType[originType];
+        const destinationNodeKey = nodeKeyByType[destinationType];
 
-  const origin: Record<string, unknown> = {
-    type: originType,
-    currency: originCurrency,
-    [originNodeKey]: originNode
-  };
+        if (!originNodeKey) throw new Error("Unsupported origin type: " + originType);
+        if (!destinationNodeKey) throw new Error("Unsupported destination type: " + destinationType);
 
-  const destination: Record<string, unknown> = {
-    type: destinationType,
-    currency: destinationCurrency,
-    [destinationNodeKey]: destinationNode
-  };
+        const originNode = JSON.parse(($("originNodeJson").value || defaultNodeJson(originType, "origin")).trim() || "{}");
+        const destinationNode = JSON.parse(($("destinationNodeJson").value || defaultNodeJson(destinationType, "destination")).trim() || "{}");
 
-  if (state.originAmount) {
-    origin.amount = state.originAmount;
-  }
+        const origin = {
+          type: originType,
+          currency: (($("originCurrency").value || purchaseCurrency).trim() || purchaseCurrency).toUpperCase(),
+          [originNodeKey]: originNode
+        };
 
-  if (state.destinationAmount) {
-    destination.amount = state.destinationAmount;
-  }
+        const destination = {
+          type: destinationType,
+          currency: (($("destinationCurrency").value || currency).trim() || currency).toUpperCase(),
+          [destinationNodeKey]: destinationNode
+        };
 
-  return {
-    identityId: state.identityId || "<IDENTITY_ID>",
-    accountNumber: state.accountNumber || "<ACCOUNT_NUMBER>",
-    type,
-    product: `${purchaseCurrency}:${currency}`,
-    purchaseAmount: state.purchaseAmount,
-    purchaseCurrency,
-    currency,
-    origins: [origin],
-    destinations: [destination]
-  };
-}
+        if ($("originAmount").value) origin.amount = $("originAmount").value;
+        if ($("destinationAmount").value) destination.amount = $("destinationAmount").value;
 
-function buildCurl(baseUrl: string, payload: Record<string, unknown>): string {
-  const normalizedBase = (baseUrl || "https://api.conomyhq.com/sandbox").replace(/\/+$/, "");
-  const body = JSON.stringify(payload);
-  const escapedBody = body.replace(/'/g, "'\\''");
+        return {
+          identityId: $("identityId").value || "<IDENTITY_ID>",
+          accountNumber: $("accountNumber").value || "<ACCOUNT_NUMBER>",
+          type,
+          product: purchaseCurrency + ":" + currency,
+          purchaseAmount: $("purchaseAmount").value,
+          purchaseCurrency,
+          currency,
+          origins: [origin],
+          destinations: [destination]
+        };
+      }
 
-  return [
-    "curl --request POST \\",
-    `  --url '${normalizedBase}/payments' \\`,
-    "  --header 'Authorization: Bearer <TOKEN>' \\",
-    "  --header 'x-api-key: <API_KEY>' \\",
-    "  --header 'Content-Type: application/json' \\",
-    `  --data '${escapedBody}'`
-  ].join("\n");
-}
+      function buildCurl(payload) {
+        const base = (($("baseUrl").value || "https://api.conomyhq.com/sandbox").trim() || "https://api.conomyhq.com/sandbox").replace(/\/+$/, "");
+        const body = JSON.stringify(payload).replace(/'/g, "'\\\\''");
+        return [
+          "curl --request POST \\",
+          "  --url '" + base + "/payments' \\",
+          "  --header 'Authorization: Bearer <TOKEN>' \\",
+          "  --header 'x-api-key: <API_KEY>' \\",
+          "  --header 'Content-Type: application/json' \\",
+          "  --data '" + body + "'"
+        ].join("\\n");
+      }
+
+      $("toggleAdvanced").addEventListener("click", () => {
+        state.showAdvanced = !state.showAdvanced;
+        $("advanced").classList.toggle("hidden", !state.showAdvanced);
+        $("toggleAdvanced").textContent = state.showAdvanced ? "Hide advanced" : "Show advanced";
+      });
+
+      $("applyPreset").addEventListener("click", applyPreset);
+      $("defaults").addEventListener("click", normalizeRails);
+      $("purchaseCurrency").addEventListener("input", renderRoute);
+      $("currency").addEventListener("input", renderRoute);
+      $("originType").addEventListener("change", renderRoute);
+      $("destinationType").addEventListener("change", renderRoute);
+
+      $("generate").addEventListener("click", () => {
+        try {
+          $("error").textContent = "";
+          const payload = buildPayload();
+          $("generatedJson").value = JSON.stringify(payload, null, 2);
+          $("generatedCurl").value = buildCurl(payload);
+        } catch (error) {
+          $("error").textContent = error instanceof Error ? error.message : "Unable to generate payload.";
+        }
+      });
+
+      fillSelect($("type"), paymentTypeOptions);
+      fillSelect($("originType"), originRailOptions);
+      fillSelect($("destinationType"), destinationRailOptions);
+      applyPreset();
+      renderRoute();
+    </script>
+  </body>
+</html>`;
 
 const transactionBuilderBlock = createComponent({
   componentId: "transaction-builder-block",
-  initialState: baseState,
-  action: async (previous: any, action: any) => {
-    const state = previous.state as BuilderState;
-
-    if (action.action === "toggle-menu") {
-      const menu = action.menu as MenuKey | undefined;
-      if (!menu) {
-        return { state };
-      }
-
-      const closed = resetMenus(state);
-      return {
-        state: {
-          ...closed,
-          [menu]: !state[menu]
-        }
-      };
-    }
-
-    if (action.action === "choose-option") {
-      const field = action.field as keyof BuilderState | undefined;
-      const value = String(action.value ?? "");
-
-      if (!field) {
-        return { state };
-      }
-
-      let nextState: BuilderState = {
-        ...resetMenus(state),
-        [field]: value,
-        error: "",
-        generatedJson: "",
-        generatedCurl: ""
-      } as BuilderState;
-
-      if (field === "preset") {
-        nextState = resetMenus(withPreset(nextState, value));
-      }
-
-      if (field === "type") {
-        nextState.preset = "custom";
-      }
-
-      if (field === "originType") {
-        const normalized = value.trim().toUpperCase();
-        nextState.preset = "custom";
-        nextState.originType = normalized;
-        nextState.originNodeJson = defaultNodeJson(normalized, "origin");
-      }
-
-      if (field === "destinationType") {
-        const normalized = value.trim().toUpperCase();
-        nextState.preset = "custom";
-        nextState.destinationType = normalized;
-        nextState.destinationNodeJson = defaultNodeJson(normalized, "destination");
-      }
-
-      return { state: nextState };
-    }
-
-    if (action.action === "toggle-advanced") {
-      return {
-        state: {
-          ...state,
-          showAdvanced: !state.showAdvanced
-        }
-      };
-    }
-
-    if (action.action === "set-field") {
-      const field = action.field as keyof BuilderState | undefined;
-      const value = String(action.value ?? "");
-      if (!field) return { state };
-
-      return {
-        state: {
-          ...state,
-          [field]: value,
-          preset: ["type", "originType", "destinationType"].includes(field) ? "custom" : state.preset,
-          error: "",
-          generatedJson: "",
-          generatedCurl: ""
-        }
-      };
-    }
-
-    if (action.action === "generate") {
-      try {
-        const payload = buildPayload(state);
-        const json = JSON.stringify(payload, null, 2);
-        const curl = buildCurl(state.baseUrl, payload);
-
-        return {
-          state: {
-            ...state,
-            generatedJson: json,
-            generatedCurl: curl,
-            error: ""
-          }
-        };
-      } catch (err) {
-        return {
-          state: {
-            ...state,
-            error: err instanceof Error ? err.message : "Unable to generate payload."
-          }
-        };
-      }
-    }
-
-    return {};
-  },
-  render: async ({ state }) => (
+  initialState: {},
+  action: async () => ({}),
+  render: async () => (
     <block>
       <vstack>
         <markdown content="### Transaction Builder" />
-        <markdown content="Simple builder to generate `JSON` + `cURL` for `POST /payments` (no execution)." />
-
-        <card title="1) Route setup">
-          <vstack>
-            <button
-              label={`Preset: ${getPresetLabel(state.preset)} v`}
-              onPress={{ action: "toggle-menu", menu: "showPresetMenu" }}
-            />
-            {state.showPresetMenu ? (
-              <vstack>
-                {presetOptions.map((option) => (
-                  <button
-                    label={option.label}
-                    onPress={{ action: "choose-option", field: "preset", value: option.id }}
-                  />
-                ))}
-              </vstack>
-            ) : null}
-
-            <button
-              label={`Payment type: ${getPaymentTypeLabel(state.type)} v`}
-              onPress={{ action: "toggle-menu", menu: "showTypeMenu" }}
-            />
-            {state.showTypeMenu ? (
-              <vstack>
-                {paymentTypeOptions.map((option) => (
-                  <button
-                    label={option.label}
-                    onPress={{ action: "choose-option", field: "type", value: option.id }}
-                  />
-                ))}
-              </vstack>
-            ) : null}
-
-            <textinput state="purchaseAmount" placeholder="Amount (purchaseAmount)" />
-            <textinput state="purchaseCurrency" placeholder="Source currency (e.g. ARS)" />
-            <textinput state="currency" placeholder="Settlement currency (e.g. CLP)" />
-          </vstack>
-        </card>
-
-        <card title="2) Rails">
-          <vstack>
-            <button
-              label={`Origin rail: ${state.originType} v`}
-              onPress={{ action: "toggle-menu", menu: "showOriginMenu" }}
-            />
-            {state.showOriginMenu ? (
-              <vstack>
-                {originRailOptions.map((option) => (
-                  <button
-                    label={option}
-                    onPress={{ action: "choose-option", field: "originType", value: option }}
-                  />
-                ))}
-              </vstack>
-            ) : null}
-
-            <button
-              label={`Destination rail: ${state.destinationType} v`}
-              onPress={{ action: "toggle-menu", menu: "showDestinationMenu" }}
-            />
-            {state.showDestinationMenu ? (
-              <vstack>
-                {destinationRailOptions.map((option) => (
-                  <button
-                    label={option}
-                    onPress={{ action: "choose-option", field: "destinationType", value: option }}
-                  />
-                ))}
-              </vstack>
-            ) : null}
-
-            <markdown
-              content={`Route preview: **${state.purchaseCurrency.toUpperCase()}** ${state.originType} -> ${state.destinationType} -> **${state.currency.toUpperCase()}**`}
-            />
-          </vstack>
-        </card>
-
-        <card title="3) Node payloads">
-          <vstack>
-            <markdown content={`**Origin node (${state.originType})**`} />
-            <codeblock content={state.originNodeJson} state="originNodeJson" syntax="json" />
-            <markdown content={`**Destination node (${state.destinationType})**`} />
-            <codeblock content={state.destinationNodeJson} state="destinationNodeJson" syntax="json" />
-          </vstack>
-        </card>
-
-        <button
-          label={state.showAdvanced ? "Hide advanced fields" : "Show advanced fields"}
-          onPress={{ action: "toggle-advanced" }}
-        />
-
-        {state.showAdvanced ? (
-          <card title="Advanced (optional)">
-            <vstack>
-              <textinput state="identityId" placeholder="Identity ID" />
-              <textinput state="accountNumber" placeholder="Internal account number" />
-              <textinput state="baseUrl" placeholder="API base URL" />
-              <textinput state="originCurrency" placeholder="Origin currency override" />
-              <textinput state="destinationCurrency" placeholder="Destination currency override" />
-              <textinput state="originAmount" placeholder="Origin amount override" />
-              <textinput state="destinationAmount" placeholder="Destination amount override" />
-              <textinput state="originType" placeholder="Origin type override (for rails not in menu)" />
-              <textinput
-                state="destinationType"
-                placeholder="Destination type override (for rails not in menu)"
-              />
-            </vstack>
-          </card>
-        ) : null}
-
-        <button label="Generate JSON and cURL" onPress={{ action: "generate" }} />
-
-        {state.error ? <markdown content={`**Validation error:** ${state.error}`} /> : null}
-
-        <card title="Generated JSON">
-          <codeblock content={state.generatedJson || "{}"} syntax="json" />
-        </card>
-
-        <card title="Generated cURL">
-          <codeblock content={state.generatedCurl || "# Generate first"} syntax="bash" />
-        </card>
+        <markdown content="Interactive builder with dropdown UX to generate `JSON` and `cURL` for `POST /payments` (no execution)." />
+        <webframe aspectRatio={1.45} source={{ url: `${PUBLIC_ENDPOINT}/builder` }} />
       </vstack>
     </block>
   )
 });
 
 export default createIntegration({
+  fetch: async (request) => {
+    const url = new URL(request.url);
+
+    if (url.pathname.endsWith("/builder")) {
+      return new Response(BUILDER_HTML, {
+        headers: {
+          "content-type": "text/html; charset=utf-8",
+          "cache-control": "public, max-age=300"
+        }
+      });
+    }
+
+    return new Response("Not found", { status: 404 });
+  },
   events: {
     installation_setup: async () => {},
     space_installation_setup: async () => {}

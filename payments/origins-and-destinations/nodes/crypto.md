@@ -8,70 +8,22 @@ layout:
 
 Use `CRYPTO` when funds move to or from an external blockchain wallet.
 
-**Countries:** Global | **Currency:** `USDC`, `USDT` (network-dependent) | **Direction:** Pay-in / Pay-out
+**Countries:** Global
+**Currency:** `USDC`, `USDT` (network-dependent)
+**Direction:** Pay-in / Pay-out
 
 ## Required fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>type</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>"CRYPTO"</code>.</td>
-    </tr>
-    <tr>
-      <td><code>currency</code></td>
-      <td><code>string</code></td>
-      <td>Settlement currency configured for the flow (for example, <code>"USDC"</code> or <code>"USDT"</code>).</td>
-    </tr>
-    <tr>
-      <td><code>wallet.address</code></td>
-      <td><code>string</code></td>
-      <td>Destination/source wallet address.</td>
-    </tr>
-  </tbody>
-</table>
+1. `type` (`string`): must be `"CRYPTO"`.
+2. `currency` (`string`): settlement currency configured for the flow (for example, `"USDC"` or `"USDT"`).
+3. `wallet.address` (`string`): source or destination wallet address.
 
 ## Optional fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>wallet.provider</code></td>
-      <td><code>string</code></td>
-      <td>Provider identifier used by your integration.</td>
-    </tr>
-    <tr>
-      <td><code>wallet.referenceId</code></td>
-      <td><code>string</code></td>
-      <td>External wallet identifier in the provider system.</td>
-    </tr>
-    <tr>
-      <td><code>wallet.token</code></td>
-      <td><code>string</code></td>
-      <td>Token symbol when you need to override/clarify the token in the node payload.</td>
-    </tr>
-    <tr>
-      <td><code>wallet.network</code></td>
-      <td><code>string</code></td>
-      <td>Blockchain network used by the wallet address (for example, <code>ETH</code>, <code>TRON</code>, <code>SOLANA</code>).</td>
-    </tr>
-  </tbody>
-</table>
+1. `wallet.provider` (`string`): provider identifier used by your integration.
+2. `wallet.referenceId` (`string`): external wallet identifier in the provider system.
+3. `wallet.token` (`string`): token symbol when you need to clarify or override the token in the payload.
+4. `wallet.network` (`string`): blockchain network (for example, `ETH`, `TRON`, `SOLANA`).
 
 ## Example
 
@@ -89,24 +41,8 @@ Use `CRYPTO` when funds move to or from an external blockchain wallet.
 
 ## Valid combinations
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>When CRYPTO is used as...</th>
-      <th>Valid counterpart node types</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Origin</td>
-      <td><code>ACCOUNT</code></td>
-    </tr>
-    <tr>
-      <td>Destination</td>
-      <td><code>ACCOUNT</code></td>
-    </tr>
-  </tbody>
-</table>
+- If `CRYPTO` is the origin, valid counterpart node type: `ACCOUNT`.
+- If `CRYPTO` is the destination, valid counterpart node type: `ACCOUNT`.
 
 ## Schema
 

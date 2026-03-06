@@ -30,10 +30,16 @@ const BUILDER_HTML = `<!doctype html>
       * { box-sizing: border-box; }
       body {
         margin: 0;
-        padding: 16px;
+        padding: 0;
         background: var(--bg);
         color: var(--fg);
         font-family: Geist, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        overflow: hidden;
+      }
+      .scroll-root {
+        width: 100%;
+        height: 100vh;
+        padding: 16px;
         overflow-y: auto;
         overflow-x: hidden;
       }
@@ -223,7 +229,8 @@ const BUILDER_HTML = `<!doctype html>
     </style>
   </head>
   <body>
-    <div class="wrap" id="wrap">
+    <div class="scroll-root" id="scrollRoot">
+      <div class="wrap" id="wrap">
       <div class="card">
         <h3 class="title">Transaction Builder</h3>
         <p class="sub">Generate JSON and cURL for <code>POST /payments</code>. No execution. <a href="${PUBLIC_ENDPOINT}/builder" target="_blank" rel="noreferrer">Open standalone</a>.</p>
@@ -329,6 +336,7 @@ const BUILDER_HTML = `<!doctype html>
           </div>
           <pre class="code"><code id="generatedCurlCode"># Generate first</code></pre>
         </div>
+      </div>
       </div>
     </div>
 
@@ -728,10 +736,12 @@ const BUILDER_JS = String.raw`(function () {
   function scheduleResize() {
     const run = () => {
       const wrap = $("wrap") || document.querySelector(".wrap");
+      const scrollRoot = $("scrollRoot");
       const bodyHeight = document.body ? document.body.scrollHeight : 0;
       const docHeight = document.documentElement ? document.documentElement.scrollHeight : 0;
       const wrapHeight = wrap && wrap.scrollHeight ? wrap.scrollHeight : 0;
-      const height = Math.max(bodyHeight, docHeight, wrapHeight, 1020);
+      const rootHeight = scrollRoot && scrollRoot.clientHeight ? scrollRoot.clientHeight : 0;
+      const height = Math.max(bodyHeight, docHeight, wrapHeight + 16, rootHeight, 1020);
 
       postResizeMessage(height + 16);
     };

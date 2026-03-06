@@ -45,6 +45,6 @@ Davivienda's payment button lets Davivienda account holders authorize a payment 
 
 ## Schema
 
-{% openapi-schemas spec="conomyhq-api" schemas="davivienda" grouped="false" %}
+{% openapi-schemas spec="conomyhq-api" schemas="davivienda-wrapper" grouped="false" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-schemas %}

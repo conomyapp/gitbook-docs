@@ -48,6 +48,6 @@ Send the user to `fintoc.url` to complete the bank connection and authorization.
 
 ## Schema
 
-{% openapi-schemas spec="conomyhq-api" schemas="fintoc" grouped="false" %}
+{% openapi-schemas spec="conomyhq-api" schemas="fintoc-wrapper" grouped="false" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-schemas %}

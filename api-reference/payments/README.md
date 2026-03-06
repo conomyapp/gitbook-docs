@@ -121,10 +121,10 @@ Recommended execution flow: `payment-origins/payment-destinations` → `payment-
 {% endcolumn %}
 {% endcolumns %}
 
-{% openapi-schemas Payment API schemas="payment" grouped="false" %}
+{% openapi-schemas spec="conomyhq-api" schemas="payment" grouped="false" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-schemas %}
 
-{% openapi-schemas Payment API schemas="fee" grouped="false" %}
+{% openapi-schemas spec="conomyhq-api" schemas="fee" grouped="false" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-schemas %}

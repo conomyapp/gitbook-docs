@@ -46,6 +46,6 @@ Redirect the user to `bancolombia.url` to complete authorization.
 
 ## Schema
 
-{% openapi-schemas spec="conomyhq-api" schemas="bancolombia" grouped="false" %}
+{% openapi-schemas spec="conomyhq-api" schemas="bancolombia-wrapper" grouped="false" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-schemas %}

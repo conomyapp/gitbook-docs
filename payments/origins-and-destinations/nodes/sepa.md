@@ -48,6 +48,6 @@ SEPA (Single Euro Payments Area) is the European standard for bank transfers in 
 
 ## Schema
 
-{% openapi-schemas spec="conomyhq-api" schemas="sepa" grouped="false" %}
+{% openapi-schemas spec="conomyhq-api" schemas="sepa-wrapper" grouped="false" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-schemas %}

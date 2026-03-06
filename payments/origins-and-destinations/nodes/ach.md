@@ -54,6 +54,6 @@ ACH (Automated Clearing House) is the standard US bank-to-bank transfer network.
 
 ## Schema
 
-{% openapi-schemas spec="conomyhq-api" schemas="ach" grouped="false" %}
+{% openapi-schemas spec="conomyhq-api" schemas="ach-wrapper" grouped="false" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-schemas %}

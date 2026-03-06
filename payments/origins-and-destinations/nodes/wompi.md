@@ -52,6 +52,6 @@ Redirect the user to `wompi.url` to complete their payment.
 
 ## Schema
 
-{% openapi-schemas spec="conomyhq-api" schemas="wompi" grouped="false" %}
+{% openapi-schemas spec="conomyhq-api" schemas="wompi-wappe" grouped="false" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-schemas %}

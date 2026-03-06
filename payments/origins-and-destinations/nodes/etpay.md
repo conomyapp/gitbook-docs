@@ -53,6 +53,6 @@ Redirect your user to `etpay.url` immediately after creating the payment.
 
 ## Schema
 
-{% openapi-schemas spec="conomyhq-api" schemas="etpay" grouped="false" %}
+{% openapi-schemas spec="conomyhq-api" schemas="etpay-wrapper" grouped="false" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-schemas %}

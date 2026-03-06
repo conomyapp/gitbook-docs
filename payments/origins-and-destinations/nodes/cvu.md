@@ -50,6 +50,6 @@ When CVU is used as origin, the valid destinations are:
 
 ## Schema
 
-{% openapi-schemas spec="conomyhq-api" schemas="cvu" grouped="false" %}
+{% openapi-schemas spec="conomyhq-api" schemas="cvu-wrapper" grouped="false" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-schemas %}

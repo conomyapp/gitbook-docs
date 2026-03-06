@@ -59,6 +59,6 @@ The `bankId` list can be retrieved from the [financial institutions](../../../ho
 
 ## Schema
 
-{% openapi-schemas spec="conomyhq-api" schemas="pse" grouped="false" %}
+{% openapi-schemas spec="conomyhq-api" schemas="pse-wrapper" grouped="false" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-schemas %}

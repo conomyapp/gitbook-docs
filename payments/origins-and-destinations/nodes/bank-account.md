@@ -51,6 +51,6 @@ Note: For Argentina, prefer [CVU](cvu.md). For Colombia, prefer [BREB](breb.md).
 
 ## Schema
 
-{% openapi-schemas spec="conomyhq-api" schemas="bank-account" grouped="false" %}
+{% openapi-schemas spec="conomyhq-api" schemas="bank-account-wrapper" grouped="false" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-schemas %}

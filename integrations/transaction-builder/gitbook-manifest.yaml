@@ -1,0 +1,16 @@
+name: conomyhq-transaction-builder
+title: ConomyHQ Transaction Builder
+description: Generate payment JSON and cURL for POST /payments from interactive inputs.
+organization: w9xZeAeVKntkFCGMHbQ5
+visibility: private
+scopes:
+  - space:content:read
+  - space:content:write
+script: ./src/index.tsx
+blocks:
+  - id: transaction-builder-block
+    title: Transaction Builder
+    description: Generate payment payloads and cURL snippets from selected rails.
+    markdown:
+      codeblock: conomy-transaction-builder
+      body: notes

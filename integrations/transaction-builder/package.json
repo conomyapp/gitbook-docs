@@ -1,0 +1,17 @@
+{
+  "name": "conomyhq-gitbook-transaction-builder",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "gitbook integration:dev",
+    "publish": "gitbook integration:publish"
+  },
+  "dependencies": {
+    "@gitbook/runtime": "latest"
+  },
+  "devDependencies": {
+    "@gitbook/cli": "latest",
+    "typescript": "^5.9.2"
+  }
+}

@@ -29,7 +29,15 @@ This builder is dynamic: it uses `GET /payments/available-products` to discover 
 Goal of this page: users can assemble a payment request and copy **JSON** or **cURL** from the GitBook API playground, without executing the transaction.
 {% endhint %}
 
-## 1. Builder inputs
+## 1. Interactive block (recommended)
+
+If the `ConomyHQ Transaction Builder` integration is installed in your space, use this block to select values and generate payloads.
+
+```conomy-transaction-builder
+generate-only
+```
+
+## 2. Builder inputs
 
 | Input | Description |
 | --- | --- |
@@ -39,7 +47,7 @@ Goal of this page: users can assemble a payment request and copy **JSON** or **c
 | Settlement currency | `currency` |
 | Identity | `identityId` |
 
-## 2. Resolve products and rails (dynamic step)
+## 3. Resolve products and rails (dynamic step)
 
 Use this endpoint first. It defines what the user can build for each currency.
 
@@ -54,7 +62,7 @@ Use:
 - `requiredFields` and `requiredFieldTypes` to build and validate node inputs.
 - `validOrigins` and `validDestinations` to enforce allowed combinations.
 
-## 3. Route rules by intent
+## 4. Route rules by intent
 
 | User intent | `type` | Origin rule | Destination rule |
 | --- | --- | --- | --- |
@@ -63,7 +71,7 @@ Use:
 | Cross-border transfer | `REMITTANCE` | `ACCOUNT` or pay-in rail | Any valid pay-out rail |
 | Checkout / customer charge | `PURCHASE` | Any pay-in rail | `ACCOUNT` |
 
-## 4. Request shape
+## 5. Request shape
 
 ```json
 {
@@ -101,7 +109,7 @@ Use:
 Use only one node object matching `type` in each origin/destination. Example: if `type` is `PIX`, send only `pix`.
 {% endhint %}
 
-## 5. Generate JSON/cURL in the API playground
+## 6. Generate JSON/cURL in the API playground
 
 Use the `POST /payments` block below to fill the request body and copy the generated request code.
 
@@ -114,7 +122,7 @@ Use the `POST /payments` block below to fill the request body and copy the gener
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-operation %}
 
-## 6. Common route presets
+## 7. Common route presets
 
 {% tabs %}
 {% tab title="Load ARS account with CVU" %}
@@ -142,7 +150,7 @@ Use the `POST /payments` block below to fill the request body and copy the gener
 {% endtab %}
 {% endtabs %}
 
-## 7. Builder validation rules
+## 8. Builder validation rules
 
 1. `type` controls which origin/destination families are valid.
 2. `product` must match `purchaseCurrency:currency`.
@@ -150,7 +158,7 @@ Use the `POST /payments` block below to fill the request body and copy the gener
 4. For split flows, each node must include `amount`, and all sums must match the payment amount.
 5. Keep only the node object that matches `origins[].type` or `destinations[].type`.
 
-## 8. Builder checklist
+## 9. Builder checklist
 
 - Confirm the user goal (`TOPUP_ACCOUNT`, `WITHDRAWAL_ACCOUNT`, `REMITTANCE`, `PURCHASE`).
 - Confirm source currency (`purchaseCurrency`) and settlement currency (`currency`).

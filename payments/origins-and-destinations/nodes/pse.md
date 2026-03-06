@@ -57,7 +57,4 @@ PSE (Pagos Seguros en Línea) is Colombia's primary online bank transfer system.
 
 The `bankId` list can be retrieved from the [financial institutions](../../../home/financial-institutions.md) page.
 
-## OpenAPI reference
-- Spec: `conomyhq-api`
-- Component: `pse`
-- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
+

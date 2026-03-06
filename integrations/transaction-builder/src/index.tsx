@@ -22,51 +22,6 @@ type BuilderState = {
   error: string;
 };
 
-const typeOptions = [
-  { id: "TOPUP_ACCOUNT", label: "TOPUP_ACCOUNT" },
-  { id: "WITHDRAWAL_ACCOUNT", label: "WITHDRAWAL_ACCOUNT" },
-  { id: "REMITTANCE", label: "REMITTANCE" },
-  { id: "PURCHASE", label: "PURCHASE" },
-  { id: "P2P", label: "P2P" },
-  { id: "COLLECT", label: "COLLECT" },
-  { id: "FEE", label: "FEE" }
-];
-
-const nodeTypeOptions = [
-  "ACCOUNT",
-  "BANK_ACCOUNT",
-  "CRYPTO",
-  "PIX",
-  "PCT",
-  "CVU",
-  "ETPAY",
-  "FINTOC",
-  "WEBPAY",
-  "WOMPI",
-  "PSE",
-  "BANCOLOMBIA",
-  "DAVIVIENDA",
-  "DAVIPLATA",
-  "NEQUI",
-  "BREB",
-  "SPEI",
-  "ACH",
-  "WIRE",
-  "FEDNOW",
-  "RTP",
-  "SEPA",
-  "FPE",
-  "SWIFT",
-  "PAGO_MOVIL"
-].map((value) => ({ id: value, label: value }));
-
-const presetOptions = [
-  { id: "custom", label: "Custom" },
-  { id: "ars-cvu-topup", label: "ARS top-up with CVU" },
-  { id: "ars-pct-topup", label: "ARS top-up with PCT" },
-  { id: "pix-brl-to-clp", label: "PIX BRL to CLP account" }
-];
-
 const nodeKeyByType: Record<string, string> = {
   ACCOUNT: "account",
   BANK_ACCOUNT: "bank",
@@ -94,6 +49,18 @@ const nodeKeyByType: Record<string, string> = {
   SWIFT: "swift",
   PAGO_MOVIL: "pagoMovil"
 };
+
+const supportedPaymentTypes = [
+  "TOPUP_ACCOUNT",
+  "WITHDRAWAL_ACCOUNT",
+  "REMITTANCE",
+  "PURCHASE",
+  "P2P",
+  "COLLECT",
+  "FEE"
+];
+
+const supportedNodeTypes = Object.keys(nodeKeyByType);
 
 const baseState: BuilderState = {
   preset: "custom",
@@ -190,27 +157,45 @@ function withPreset(previous: BuilderState): BuilderState {
 }
 
 function buildPayload(state: BuilderState): Record<string, unknown> {
-  const originNodeKey = nodeKeyByType[state.originType];
-  const destinationNodeKey = nodeKeyByType[state.destinationType];
+  const type = (state.type || "").trim().toUpperCase();
+  const purchaseCurrency = (state.purchaseCurrency || "").trim().toUpperCase();
+  const currency = (state.currency || "").trim().toUpperCase();
+  const originType = (state.originType || "").trim().toUpperCase();
+  const destinationType = (state.destinationType || "").trim().toUpperCase();
+  const originCurrency = (state.originCurrency || purchaseCurrency).trim().toUpperCase();
+  const destinationCurrency = (state.destinationCurrency || currency).trim().toUpperCase();
+
+  if (!supportedPaymentTypes.includes(type)) {
+    throw new Error(
+      `Unsupported payment type: ${type}. Use one of: ${supportedPaymentTypes.join(", ")}.`
+    );
+  }
+
+  const originNodeKey = nodeKeyByType[originType];
+  const destinationNodeKey = nodeKeyByType[destinationType];
 
   if (!originNodeKey) {
-    throw new Error(`Unsupported origin type: ${state.originType}`);
+    throw new Error(
+      `Unsupported origin type: ${originType}. Use one of: ${supportedNodeTypes.join(", ")}.`
+    );
   }
   if (!destinationNodeKey) {
-    throw new Error(`Unsupported destination type: ${state.destinationType}`);
+    throw new Error(
+      `Unsupported destination type: ${destinationType}. Use one of: ${supportedNodeTypes.join(", ")}.`
+    );
   }
 
   const originNode = parseObjectJson(state.originNodeJson, "Origin node");
   const destinationNode = parseObjectJson(state.destinationNodeJson, "Destination node");
 
   const origin: Record<string, unknown> = {
-    type: state.originType,
-    currency: state.originCurrency || state.purchaseCurrency,
+    type: originType,
+    currency: originCurrency,
     [originNodeKey]: originNode
   };
   const destination: Record<string, unknown> = {
-    type: state.destinationType,
-    currency: state.destinationCurrency || state.currency,
+    type: destinationType,
+    currency: destinationCurrency,
     [destinationNodeKey]: destinationNode
   };
 
@@ -220,11 +205,11 @@ function buildPayload(state: BuilderState): Record<string, unknown> {
   return {
     identityId: state.identityId || "<IDENTITY_ID>",
     accountNumber: state.accountNumber || "<ACCOUNT_NUMBER>",
-    type: state.type,
-    product: `${state.purchaseCurrency}:${state.currency}`,
+    type,
+    product: `${purchaseCurrency}:${currency}`,
     purchaseAmount: state.purchaseAmount,
-    purchaseCurrency: state.purchaseCurrency,
-    currency: state.currency,
+    purchaseCurrency,
+    currency,
     origins: [origin],
     destinations: [destination]
   };
@@ -255,6 +240,22 @@ const transactionBuilderBlock = createComponent({
       return { state: withPreset(state) };
     }
 
+    if (action.action === "set-field") {
+      const field = action.field as keyof BuilderState | undefined;
+      const value = String(action.value ?? "");
+      if (!field) return { state };
+
+      return {
+        state: {
+          ...state,
+          [field]: value,
+          error: "",
+          generatedJson: "",
+          generatedCurl: ""
+        }
+      };
+    }
+
     if (action.action === "generate") {
       try {
         const payload = buildPayload(state);
@@ -283,15 +284,49 @@ const transactionBuilderBlock = createComponent({
   render: async ({ state }) => (
     <block>
       <vstack>
-        <markdown content="### Conomy Transaction Builder (Generate only)" />
-        <markdown content="Select values, click **Generate JSON and cURL**, then copy the output. This block does not execute payments." />
+        <markdown content="### Conomy Transaction Builder" />
+        <markdown content="Generate-only block. Build request payloads and cURL for `POST /payments` without executing transactions." />
 
-        <card title="Flow">
+        <card title="Quick presets">
           <vstack>
-            <select state="preset" options={presetOptions} placeholder="Choose preset" />
-            <button label="Apply preset" onPress={{ action: "apply-preset" }} />
+            <markdown content="Use one click to preload common routes." />
+            <button
+              label="ARS top-up with CVU"
+              onPress={{ action: "set-field", field: "preset", value: "ars-cvu-topup" }}
+            />
+            <button
+              label="ARS top-up with PCT"
+              onPress={{ action: "set-field", field: "preset", value: "ars-pct-topup" }}
+            />
+            <button
+              label="PIX BRL to CLP account"
+              onPress={{ action: "set-field", field: "preset", value: "pix-brl-to-clp" }}
+            />
+            <button label="Apply selected preset" onPress={{ action: "apply-preset" }} />
+          </vstack>
+        </card>
+
+        <card title="Transaction setup">
+          <vstack>
+            <markdown content="**Payment type**" />
+            <button
+              label="TOPUP_ACCOUNT"
+              onPress={{ action: "set-field", field: "type", value: "TOPUP_ACCOUNT" }}
+            />
+            <button
+              label="WITHDRAWAL_ACCOUNT"
+              onPress={{ action: "set-field", field: "type", value: "WITHDRAWAL_ACCOUNT" }}
+            />
+            <button
+              label="REMITTANCE"
+              onPress={{ action: "set-field", field: "type", value: "REMITTANCE" }}
+            />
+            <button
+              label="PURCHASE"
+              onPress={{ action: "set-field", field: "type", value: "PURCHASE" }}
+            />
+            <textinput state="type" placeholder="Type (e.g. TOPUP_ACCOUNT)" />
             <divider />
-            <select state="type" options={typeOptions} placeholder="Payment type" />
             <textinput state="identityId" placeholder="Identity ID" />
             <textinput state="accountNumber" placeholder="Internal account number" />
             <textinput state="purchaseAmount" placeholder="Amount (purchaseAmount)" />
@@ -303,7 +338,22 @@ const transactionBuilderBlock = createComponent({
 
         <card title="Origin">
           <vstack>
-            <select state="originType" options={nodeTypeOptions} placeholder="Origin type" />
+            <markdown content="**Quick origin types**" />
+            <button label="CVU" onPress={{ action: "set-field", field: "originType", value: "CVU" }} />
+            <button label="PCT" onPress={{ action: "set-field", field: "originType", value: "PCT" }} />
+            <button label="PIX" onPress={{ action: "set-field", field: "originType", value: "PIX" }} />
+            <button
+              label="ACCOUNT"
+              onPress={{ action: "set-field", field: "originType", value: "ACCOUNT" }}
+            />
+            <button
+              label="CRYPTO"
+              onPress={{ action: "set-field", field: "originType", value: "CRYPTO" }}
+            />
+            <textinput
+              state="originType"
+              placeholder="Origin type (e.g. CVU, PIX, CRYPTO, ACCOUNT)"
+            />
             <textinput state="originCurrency" placeholder="Origin currency" />
             <textinput state="originAmount" placeholder="Origin amount (optional)" />
             <codeblock content={state.originNodeJson} state="originNodeJson" syntax="json" />
@@ -312,7 +362,27 @@ const transactionBuilderBlock = createComponent({
 
         <card title="Destination">
           <vstack>
-            <select state="destinationType" options={nodeTypeOptions} placeholder="Destination type" />
+            <markdown content="**Quick destination types**" />
+            <button
+              label="ACCOUNT"
+              onPress={{ action: "set-field", field: "destinationType", value: "ACCOUNT" }}
+            />
+            <button
+              label="BANK_ACCOUNT"
+              onPress={{ action: "set-field", field: "destinationType", value: "BANK_ACCOUNT" }}
+            />
+            <button
+              label="CRYPTO"
+              onPress={{ action: "set-field", field: "destinationType", value: "CRYPTO" }}
+            />
+            <button
+              label="PIX"
+              onPress={{ action: "set-field", field: "destinationType", value: "PIX" }}
+            />
+            <textinput
+              state="destinationType"
+              placeholder="Destination type (e.g. ACCOUNT, BANK_ACCOUNT, CRYPTO)"
+            />
             <textinput state="destinationCurrency" placeholder="Destination currency" />
             <textinput state="destinationAmount" placeholder="Destination amount (optional)" />
             <codeblock
@@ -326,6 +396,13 @@ const transactionBuilderBlock = createComponent({
         <button label="Generate JSON and cURL" onPress={{ action: "generate" }} />
 
         {state.error ? <markdown content={`**Validation error:** ${state.error}`} /> : null}
+
+        <card title="Supported values">
+          <vstack>
+            <markdown content={`**Payment types**: \`${supportedPaymentTypes.join("`, `")}\``} />
+            <markdown content={`**Node types**: \`${supportedNodeTypes.join("`, `")}\``} />
+          </vstack>
+        </card>
 
         <card title="Generated JSON">
           <codeblock content={state.generatedJson || "{}"} syntax="json" />

@@ -20,11 +20,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate required variables
+      - name: Check GitBook token
+        id: token
         run: |
-          test -n "$GITBOOK_TOKEN" || { echo "Missing secret GITBOOK_TOKEN"; exit 1; }
+          if [ -n "$GITBOOK_TOKEN" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip publish when token is missing
+        if: steps.token.outputs.present != 'true'
+        run: |
+          echo "GITBOOK_TOKEN is not configured. Skipping OpenAPI publish."
 
       - name: Publish Payment API spec to GitBook
+        if: steps.token.outputs.present == 'true'
         run: |
           npx -y @gitbook/cli@latest openapi publish \
             ".gitbook/assets/Payment API.yaml" \

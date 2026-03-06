@@ -50,8 +50,7 @@ layout:
 | `CRYPTO` | `ACCOUNT` |
 | `ACCOUNT` | `CRYPTO` |
 
-## Schema
-
-{% openapi-schemas spec="conomyhq-api" schemas="wallet" grouped="false" %}
-Schema from the conomyhq-api OpenAPI specification.
-{% endopenapi-schemas %}
+## OpenAPI reference
+- Spec: `conomyhq-api`
+- Component: `wallet`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

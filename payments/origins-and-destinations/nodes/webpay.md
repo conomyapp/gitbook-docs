@@ -49,8 +49,7 @@ Webpay is the Transbank gateway, widely used in Chile for both debit and credit 
 
 Redirect your user to `webpay.url` to complete the payment on the Transbank page.
 
-## Schema
-
-{% openapi-schemas spec="conomyhq-api" schemas="webpay" grouped="false" %}
-Schema from the conomyhq-api OpenAPI specification.
-{% endopenapi-schemas %}
+## OpenAPI reference
+- Spec: `conomyhq-api`
+- Component: `webpay`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

@@ -69,8 +69,7 @@ For pay-out, provide the recipient's CLABE:
 
 Share the `spei.clabe` with your user so they can complete the transfer from their banking app.
 
-## Schema
-
-{% openapi-schemas spec="conomyhq-api" schemas="spei" grouped="false" %}
-Schema from the conomyhq-api OpenAPI specification.
-{% endopenapi-schemas %}
+## OpenAPI reference
+- Spec: `conomyhq-api`
+- Component: `spei`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

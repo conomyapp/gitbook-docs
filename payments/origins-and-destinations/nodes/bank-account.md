@@ -49,8 +49,7 @@ BANK_ACCOUNT is a generic destination node for payouts to external bank accounts
 
 Note: For Argentina, prefer [CVU](cvu.md). For Colombia, prefer [BREB](breb.md). BANK_ACCOUNT is typically used when no country-specific rail is available.
 
-## Schema
-
-{% openapi-schemas spec="conomyhq-api" schemas="bank-account" grouped="false" %}
-Schema from the conomyhq-api OpenAPI specification.
-{% endopenapi-schemas %}
+## OpenAPI reference
+- Spec: `conomyhq-api`
+- Component: `bank-account`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

@@ -48,8 +48,7 @@ FedNow is the Federal Reserve's instant payment service, enabling real-time 24/7
 }
 ```
 
-## Schema
-
-{% openapi-schemas spec="conomyhq-api" schemas="fednow" grouped="false" %}
-Schema from the conomyhq-api OpenAPI specification.
-{% endopenapi-schemas %}
+## OpenAPI reference
+- Spec: `conomyhq-api`
+- Component: `fednow`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

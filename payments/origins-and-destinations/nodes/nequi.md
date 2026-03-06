@@ -36,8 +36,7 @@ Nequi is Bancolombia's digital wallet with over 20 million users in Colombia. It
 }
 ```
 
-## Schema
-
-{% openapi-schemas spec="conomyhq-api" schemas="nequi" grouped="false" %}
-Schema from the conomyhq-api OpenAPI specification.
-{% endopenapi-schemas %}
+## OpenAPI reference
+- Spec: `conomyhq-api`
+- Component: `nequi`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

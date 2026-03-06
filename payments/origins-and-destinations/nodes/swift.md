@@ -57,8 +57,7 @@ SWIFT transfers are the standard for international cross-border payments. They r
 }
 ```
 
-## Schema
-
-{% openapi-schemas spec="conomyhq-api" schemas="swift" grouped="false" %}
-Schema from the conomyhq-api OpenAPI specification.
-{% endopenapi-schemas %}
+## OpenAPI reference
+- Spec: `conomyhq-api`
+- Component: `swift`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

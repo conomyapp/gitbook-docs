@@ -62,8 +62,7 @@ When PCT is used as origin, the valid destinations are:
 | `ACCOUNT` | Internal platform account |
 
 
-## Schema
-
-{% openapi-schemas spec="conomyhq-api" schemas="pct" grouped="false" %}
-Schema from the conomyhq-api OpenAPI specification.
-{% endopenapi-schemas %}
+## OpenAPI reference
+- Spec: `conomyhq-api`
+- Component: `pct`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

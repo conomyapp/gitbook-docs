@@ -25,17 +25,18 @@ const BUILDER_HTML = `<!doctype html>
       * { box-sizing: border-box; }
       body {
         margin: 0;
-        padding: 20px;
+        padding: 16px;
         background: var(--bg);
         color: var(--fg);
         font-family: Geist, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        overflow: auto;
       }
       .wrap {
         max-width: 1120px;
         margin: 0 auto;
         display: grid;
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 12px;
       }
       .card {
         border: 1px solid var(--line);
@@ -53,11 +54,16 @@ const BUILDER_HTML = `<!doctype html>
         color: var(--muted);
         font-size: 12px;
       }
+      .sub a {
+        color: #111827;
+        text-decoration: underline;
+        text-underline-offset: 2px;
+      }
       .grid {
         margin-top: 14px;
         display: grid;
         gap: 12px;
-        grid-template-columns: repeat(2, minmax(240px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       }
       .field {
         display: flex;
@@ -121,10 +127,23 @@ const BUILDER_HTML = `<!doctype html>
         background: #fff;
       }
       .chips {
-        margin-top: 10px;
+        margin-top: 8px;
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
+      }
+      .meta {
+        margin-top: 10px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #fff;
+        padding: 8px 10px;
+      }
+      .meta summary {
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        color: #374151;
       }
       .chip {
         font-size: 11px;
@@ -165,7 +184,7 @@ const BUILDER_HTML = `<!doctype html>
       }
       .code {
         margin: 0;
-        min-height: 250px;
+        min-height: 220px;
         max-height: 460px;
         overflow: auto;
         border-radius: 10px;
@@ -200,7 +219,7 @@ const BUILDER_HTML = `<!doctype html>
     <div class="wrap">
       <div class="card">
         <h3 class="title">Transaction Builder</h3>
-        <p class="sub">Generate JSON and cURL for <code>POST /payments</code>. No execution.</p>
+        <p class="sub">Generate JSON and cURL for <code>POST /payments</code>. No execution. <a href="${PUBLIC_ENDPOINT}/builder" target="_blank" rel="noreferrer">Open standalone</a>.</p>
 
         <div class="grid">
           <div class="field">
@@ -253,7 +272,10 @@ const BUILDER_HTML = `<!doctype html>
         </div>
 
         <div id="route" class="route"></div>
-        <div id="compatibility" class="chips"></div>
+        <details class="meta">
+          <summary>Compatibility details</summary>
+          <div id="compatibility" class="chips"></div>
+        </details>
         <div id="error" class="error"></div>
       </div>
 
@@ -680,6 +702,37 @@ const BUILDER_JS = String.raw`(function () {
     $("destinationNodeJson").value = defaultNodeJson(destinationType, "destination");
   }
 
+  function postResizeMessage(height) {
+    const payloads = [
+      { type: "gitbook:webframe:resize", height },
+      { type: "resize", height },
+      { name: "setHeight", height }
+    ];
+
+    payloads.forEach((payload) => {
+      try {
+        window.parent.postMessage(payload, "*");
+      } catch (error) {
+        // Ignore postMessage errors and keep builder usable.
+      }
+    });
+  }
+
+  function scheduleResize() {
+    const run = () => {
+      const bodyHeight = document.body ? document.body.scrollHeight : 0;
+      const docHeight = document.documentElement ? document.documentElement.scrollHeight : 0;
+      const height = Math.max(bodyHeight, docHeight, 760);
+      postResizeMessage(height + 24);
+    };
+
+    if (typeof window.requestAnimationFrame === "function") {
+      window.requestAnimationFrame(() => window.requestAnimationFrame(run));
+    } else {
+      setTimeout(run, 30);
+    }
+  }
+
   function renderRoute(originState, destinationState) {
     const source = toUpper($("purchaseCurrency").value);
     const target = toUpper($("currency").value);
@@ -726,6 +779,7 @@ const BUILDER_JS = String.raw`(function () {
     }
 
     renderRoute(originState, destinationState);
+    scheduleResize();
   }
 
   function applyPreset() {
@@ -871,6 +925,7 @@ const BUILDER_JS = String.raw`(function () {
       state.showAdvanced = !state.showAdvanced;
       $("advanced").classList.toggle("hidden", !state.showAdvanced);
       $("toggleAdvanced").textContent = state.showAdvanced ? "Hide advanced" : "Show advanced";
+      scheduleResize();
     });
 
     $("applyPreset").addEventListener("click", applyPreset);
@@ -891,13 +946,25 @@ const BUILDER_JS = String.raw`(function () {
         const payload = buildPayload();
         setOutputCode("generatedJsonCode", JSON.stringify(payload, null, 2));
         setOutputCode("generatedCurlCode", buildCurl(payload));
+        scheduleResize();
       } catch (error) {
         $("error").textContent = error instanceof Error ? error.message : "Unable to generate payload.";
+        scheduleResize();
       }
     });
 
+    if (typeof ResizeObserver !== "undefined") {
+      const resizeObserver = new ResizeObserver(() => scheduleResize());
+      resizeObserver.observe(document.body);
+      resizeObserver.observe(document.documentElement);
+    }
+
+    window.addEventListener("load", () => scheduleResize());
+    window.addEventListener("resize", () => scheduleResize());
+
     applyPreset();
     syncForm("init");
+    scheduleResize();
   }
 
   if (document.readyState === "loading") {
@@ -916,7 +983,7 @@ const transactionBuilderBlock = createComponent({
       <vstack>
         <markdown content="### Transaction Builder" />
         <markdown content="Build and validate `POST /payments` payloads, then copy generated `JSON` or `cURL` (no execution)." />
-        <webframe aspectRatio={1.45} source={{ url: `${PUBLIC_ENDPOINT}/builder` }} />
+        <webframe aspectRatio={0.78} source={{ url: `${PUBLIC_ENDPOINT}/builder` }} />
       </vstack>
     </block>
   )

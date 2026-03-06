@@ -1,0 +1,34 @@
+name: Publish OpenAPI to GitBook
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.gitbook/assets/Payment API.yaml'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GITBOOK_TOKEN: ${{ secrets.GITBOOK_TOKEN }}
+      GITBOOK_SPEC_NAME: ${{ vars.GITBOOK_SPEC_NAME }}
+      GITBOOK_ORGANIZATION_ID: ${{ vars.GITBOOK_ORGANIZATION_ID }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required variables
+        run: |
+          test -n "$GITBOOK_TOKEN" || { echo "Missing secret GITBOOK_TOKEN"; exit 1; }
+          test -n "$GITBOOK_SPEC_NAME" || { echo "Missing variable GITBOOK_SPEC_NAME"; exit 1; }
+          test -n "$GITBOOK_ORGANIZATION_ID" || { echo "Missing variable GITBOOK_ORGANIZATION_ID"; exit 1; }
+
+      - name: Publish Payment API spec to GitBook
+        run: |
+          npx -y @gitbook/cli@latest openapi publish \
+            ".gitbook/assets/Payment API.yaml" \
+            --spec "$GITBOOK_SPEC_NAME" \
+            --organization "$GITBOOK_ORGANIZATION_ID"

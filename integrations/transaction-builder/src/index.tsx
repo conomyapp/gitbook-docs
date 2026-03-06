@@ -22,21 +22,43 @@ const BUILDER_HTML = `<!doctype html>
         --code-bg: #0a0a0a;
         --code-fg: #e5e7eb;
       }
+      html, body {
+        width: 100%;
+        height: 100%;
+      }
       * { box-sizing: border-box; }
       body {
         margin: 0;
-        padding: 16px;
+        padding: 0;
         background: var(--bg);
         color: var(--fg);
         font-family: Geist, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-        overflow: auto;
+        overflow: hidden;
+      }
+      .viewport {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        padding: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+      }
+      .stage {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        overflow: hidden;
       }
       .wrap {
+        width: 1120px;
         max-width: 1120px;
-        margin: 0 auto;
+        margin: 0;
         display: grid;
         grid-template-columns: 1fr;
         gap: 12px;
+        transform-origin: top center;
       }
       .card {
         border: 1px solid var(--line);
@@ -185,8 +207,7 @@ const BUILDER_HTML = `<!doctype html>
       .code {
         margin: 0;
         min-height: 220px;
-        max-height: 460px;
-        overflow: auto;
+        overflow: hidden;
         border-radius: 10px;
         border: 1px solid #111827;
         background: var(--code-bg);
@@ -197,7 +218,8 @@ const BUILDER_HTML = `<!doctype html>
       }
       .code code {
         font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-        white-space: pre;
+        white-space: pre-wrap;
+        word-break: break-word;
       }
       .toast {
         position: fixed;
@@ -216,7 +238,9 @@ const BUILDER_HTML = `<!doctype html>
     </style>
   </head>
   <body>
-    <div class="wrap">
+    <div class="viewport" id="viewport">
+      <div class="stage" id="stage">
+        <div class="wrap" id="fitTarget">
       <div class="card">
         <h3 class="title">Transaction Builder</h3>
         <p class="sub">Generate JSON and cURL for <code>POST /payments</code>. No execution. <a href="${PUBLIC_ENDPOINT}/builder" target="_blank" rel="noreferrer">Open standalone</a>.</p>
@@ -321,6 +345,8 @@ const BUILDER_HTML = `<!doctype html>
             <button class="copy-btn" id="copyCurl">Copy cURL</button>
           </div>
           <pre class="code"><code id="generatedCurlCode"># Generate first</code></pre>
+        </div>
+      </div>
         </div>
       </div>
     </div>
@@ -720,10 +746,29 @@ const BUILDER_JS = String.raw`(function () {
 
   function scheduleResize() {
     const run = () => {
-      const bodyHeight = document.body ? document.body.scrollHeight : 0;
-      const docHeight = document.documentElement ? document.documentElement.scrollHeight : 0;
-      const height = Math.max(bodyHeight, docHeight, 760);
-      postResizeMessage(height + 24);
+      const viewport = $("viewport");
+      const stage = $("stage");
+      const fitTarget = $("fitTarget");
+      if (!viewport || !stage || !fitTarget) return;
+
+      fitTarget.style.transform = "scale(1)";
+
+      const naturalWidth = fitTarget.scrollWidth || 1120;
+      const naturalHeight = fitTarget.scrollHeight || 760;
+      const availableWidth = Math.max(viewport.clientWidth, 320);
+      const availableHeight = Math.max(viewport.clientHeight, 320);
+
+      const scale = Math.min(
+        availableWidth / naturalWidth,
+        availableHeight / naturalHeight,
+        1
+      );
+
+      fitTarget.style.transform = "scale(" + scale.toFixed(4) + ")";
+      const scaledHeight = Math.ceil(naturalHeight * scale);
+      stage.style.height = scaledHeight + "px";
+
+      postResizeMessage(Math.max(scaledHeight + 16, 520));
     };
 
     if (typeof window.requestAnimationFrame === "function") {

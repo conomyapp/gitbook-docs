@@ -52,5 +52,8 @@ layout:
 
 ## OpenAPI schema
 
-- Component: `crypto-wrapper`
-- Spec file: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
+## Schema
+
+{% openapi-schemas spec="conomyhq-api" schemas="cvu" grouped="false" %}
+[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
+{% endopenapi-schemas %}

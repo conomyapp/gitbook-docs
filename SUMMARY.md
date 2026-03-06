@@ -58,6 +58,7 @@
     * [BANK\_ACCOUNT](payments/origins-and-destinations/nodes/bank-account.md)
 * [Payment status](payments/transaction-status.md)
 * [Creating payments](payments/creating-payments.md)
+* [Transaction builder](payments/transaction-builder.md)
 * [Peer to peer payment - P2P](payments/peer-to-peer-payment-p2p.md)
 * [Collect](payments/collect.md)
 * [Add & remove fees](payments/add-and-remove-fees.md)

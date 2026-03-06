@@ -147,11 +147,24 @@ Use `PURCHASE` with checkout/payment-link flows and webhook-driven lifecycle upd
 {% endcolumn %}
 {% endcolumns %}
 
+{% columns fullWidth="true" %}
+{% column %}
+{% content-ref url="payments/transaction-builder.md" %}
+[🧠 Transaction builder](payments/transaction-builder.md)
+{% endcontent-ref %}
+{% endcolumn %}
+
+{% column %}
+{% content-ref url="payments/available-products.md" %}
+[🛠️ Available products](payments/available-products.md)
+{% endcontent-ref %}
+{% endcolumn %}
+{% endcolumns %}
+
 ## Support and Go-live
 
 Questions about integration, rails, or go-live:
 
 - [hola@conomyhq.com](mailto:hola@conomyhq.com)
-
 
 

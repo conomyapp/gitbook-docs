@@ -915,7 +915,7 @@ const transactionBuilderBlock = createComponent({
     <block>
       <vstack>
         <markdown content="### Transaction Builder" />
-        <markdown content="Interactive builder with dropdown UX to generate `JSON` and `cURL` for `POST /payments` (no execution)." />
+        <markdown content="Build and validate `POST /payments` payloads, then copy generated `JSON` or `cURL` (no execution)." />
         <webframe aspectRatio={1.45} source={{ url: `${PUBLIC_ENDPOINT}/builder` }} />
       </vstack>
     </block>

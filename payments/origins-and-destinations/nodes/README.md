@@ -49,7 +49,7 @@ Rule: `type` is uppercase and the payload object matches it in camelCase. Exampl
 | `type` | `string` | Rail identifier in uppercase (for example `"PIX"`, `"ACH"`, `"SEPA"`). |
 | `currency` | `string` | `ISO 4217` currency code (for example `"BRL"`, `"USD"`, `"EUR"`). |
 | `amount` | `string` | Amount in the smallest currency unit (for example, cents). |
-| `<rail>` | `object` | Rail-specific object. Name must match `type` in camelCase. |
+| `railPayload` | `object` | Rail-specific object. Name must match `type` in camelCase. |
 
 ## Rail summary
 

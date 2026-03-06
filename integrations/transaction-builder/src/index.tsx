@@ -1,5 +1,7 @@
 import { createComponent, createIntegration } from "@gitbook/runtime";
 
+type MenuKey = "showPresetMenu" | "showTypeMenu" | "showOriginMenu" | "showDestinationMenu";
+
 type BuilderState = {
   preset: string;
   baseUrl: string;
@@ -17,10 +19,59 @@ type BuilderState = {
   destinationCurrency: string;
   destinationAmount: string;
   destinationNodeJson: string;
+  showPresetMenu: boolean;
+  showTypeMenu: boolean;
+  showOriginMenu: boolean;
+  showDestinationMenu: boolean;
+  showAdvanced: boolean;
   generatedJson: string;
   generatedCurl: string;
   error: string;
 };
+
+const presetOptions = [
+  { id: "ars-cvu-topup", label: "ARS top-up with CVU" },
+  { id: "ars-pct-topup", label: "ARS top-up with PCT" },
+  { id: "pix-brl-to-clp", label: "PIX BRL to CLP account" },
+  { id: "custom", label: "Custom" }
+];
+
+const paymentTypeOptions = [
+  { id: "TOPUP_ACCOUNT", label: "Top up account" },
+  { id: "WITHDRAWAL_ACCOUNT", label: "Withdrawal account" },
+  { id: "REMITTANCE", label: "Remittance" },
+  { id: "PURCHASE", label: "Purchase" },
+  { id: "P2P", label: "P2P" },
+  { id: "COLLECT", label: "Collect" },
+  { id: "FEE", label: "Fee" }
+];
+
+const originRailOptions = [
+  "CVU",
+  "PCT",
+  "PIX",
+  "WEBPAY",
+  "PSE",
+  "SPEI",
+  "ACH",
+  "WIRE",
+  "SWIFT",
+  "CRYPTO",
+  "ACCOUNT"
+];
+
+const destinationRailOptions = [
+  "ACCOUNT",
+  "BANK_ACCOUNT",
+  "CVU",
+  "PIX",
+  "SPEI",
+  "ACH",
+  "WIRE",
+  "SWIFT",
+  "CRYPTO",
+  "PSE"
+];
 
 const nodeKeyByType: Record<string, string> = {
   ACCOUNT: "account",
@@ -50,20 +101,11 @@ const nodeKeyByType: Record<string, string> = {
   PAGO_MOVIL: "pagoMovil"
 };
 
-const supportedPaymentTypes = [
-  "TOPUP_ACCOUNT",
-  "WITHDRAWAL_ACCOUNT",
-  "REMITTANCE",
-  "PURCHASE",
-  "P2P",
-  "COLLECT",
-  "FEE"
-];
-
+const supportedPaymentTypes = paymentTypeOptions.map((option) => option.id);
 const supportedNodeTypes = Object.keys(nodeKeyByType);
 
 const baseState: BuilderState = {
-  preset: "custom",
+  preset: "ars-cvu-topup",
   baseUrl: "https://api.conomyhq.com/sandbox",
   type: "TOPUP_ACCOUNT",
   identityId: "",
@@ -80,24 +122,63 @@ const baseState: BuilderState = {
   destinationCurrency: "ARS",
   destinationAmount: "",
   destinationNodeJson: '{\n  "accountNumber": "<ACCOUNT_NUMBER>"\n}',
+  showPresetMenu: false,
+  showTypeMenu: false,
+  showOriginMenu: false,
+  showDestinationMenu: false,
+  showAdvanced: false,
   generatedJson: "",
   generatedCurl: "",
   error: ""
 };
 
-function parseObjectJson(text: string, label: string): Record<string, unknown> {
-  const value = JSON.parse(text);
-  if (!value || typeof value !== "object" || Array.isArray(value)) {
-    throw new Error(`${label} must be a valid JSON object.`);
-  }
-  return value as Record<string, unknown>;
+function getPresetLabel(preset: string): string {
+  return presetOptions.find((option) => option.id === preset)?.label || preset;
 }
 
-function withPreset(previous: BuilderState): BuilderState {
-  switch (previous.preset) {
+function getPaymentTypeLabel(type: string): string {
+  return paymentTypeOptions.find((option) => option.id === type)?.label || type;
+}
+
+function resetMenus(state: BuilderState): BuilderState {
+  return {
+    ...state,
+    showPresetMenu: false,
+    showTypeMenu: false,
+    showOriginMenu: false,
+    showDestinationMenu: false
+  };
+}
+
+function defaultNodeJson(type: string, direction: "origin" | "destination"): string {
+  switch (type) {
+    case "ACCOUNT":
+      return '{\n  "accountNumber": "<ACCOUNT_NUMBER>"\n}';
+    case "BANK_ACCOUNT":
+      return '{\n  "accountNumber": "<ACCOUNT_NUMBER>",\n  "bankCode": "<BANK_CODE>"\n}';
+    case "CVU":
+      return '{\n  "customer": {\n    "firstName": "Juan",\n    "lastName": "Perez",\n    "email": "juan@example.com"\n  }\n}';
+    case "PCT":
+      return '{\n  "customer": {\n    "email": "juan@example.com",\n    "phoneNumber": "1123456789",\n    "phoneNumberPrefix": "+54"\n  }\n}';
+    case "PIX":
+      return direction === "origin"
+        ? '{\n  "successUrl": "https://yourapp.com/success",\n  "failedUrl": "https://yourapp.com/failed",\n  "customer": {\n    "firstName": "Maria",\n    "lastName": "Silva",\n    "email": "maria@example.com",\n    "documentNumber": "12345678901"\n  }\n}'
+        : '{\n  "keyType": "email",\n  "key": "maria@example.com"\n}';
+    case "CRYPTO":
+      return '{\n  "address": "<WALLET_ADDRESS>",\n  "network": "<NETWORK>",\n  "asset": "<ASSET>"\n}';
+    case "WEBPAY":
+      return '{\n  "successUrl": "https://yourapp.com/success",\n  "failedUrl": "https://yourapp.com/failed"\n}';
+    default:
+      return "{}";
+  }
+}
+
+function withPreset(previous: BuilderState, preset: string): BuilderState {
+  switch (preset) {
     case "ars-cvu-topup":
       return {
         ...previous,
+        preset,
         type: "TOPUP_ACCOUNT",
         purchaseCurrency: "ARS",
         currency: "ARS",
@@ -105,9 +186,8 @@ function withPreset(previous: BuilderState): BuilderState {
         originCurrency: "ARS",
         destinationType: "ACCOUNT",
         destinationCurrency: "ARS",
-        originNodeJson:
-          '{\n  "customer": {\n    "firstName": "Juan",\n    "lastName": "Perez",\n    "email": "juan@example.com"\n  }\n}',
-        destinationNodeJson: '{\n  "accountNumber": "<ACCOUNT_NUMBER>"\n}',
+        originNodeJson: defaultNodeJson("CVU", "origin"),
+        destinationNodeJson: defaultNodeJson("ACCOUNT", "destination"),
         error: "",
         generatedJson: "",
         generatedCurl: ""
@@ -115,6 +195,7 @@ function withPreset(previous: BuilderState): BuilderState {
     case "ars-pct-topup":
       return {
         ...previous,
+        preset,
         type: "TOPUP_ACCOUNT",
         purchaseCurrency: "ARS",
         currency: "ARS",
@@ -122,9 +203,8 @@ function withPreset(previous: BuilderState): BuilderState {
         originCurrency: "ARS",
         destinationType: "ACCOUNT",
         destinationCurrency: "ARS",
-        originNodeJson:
-          '{\n  "customer": {\n    "email": "juan@example.com",\n    "phoneNumber": "1123456789",\n    "phoneNumberPrefix": "+54"\n  }\n}',
-        destinationNodeJson: '{\n  "accountNumber": "<ACCOUNT_NUMBER>"\n}',
+        originNodeJson: defaultNodeJson("PCT", "origin"),
+        destinationNodeJson: defaultNodeJson("ACCOUNT", "destination"),
         error: "",
         generatedJson: "",
         generatedCurl: ""
@@ -132,6 +212,7 @@ function withPreset(previous: BuilderState): BuilderState {
     case "pix-brl-to-clp":
       return {
         ...previous,
+        preset,
         type: "TOPUP_ACCOUNT",
         purchaseCurrency: "BRL",
         currency: "CLP",
@@ -139,8 +220,7 @@ function withPreset(previous: BuilderState): BuilderState {
         originCurrency: "BRL",
         destinationType: "ACCOUNT",
         destinationCurrency: "CLP",
-        originNodeJson:
-          '{\n  "successUrl": "https://yourapp.com/success",\n  "failedUrl": "https://yourapp.com/failed",\n  "customer": {\n    "firstName": "Maria",\n    "lastName": "Silva",\n    "email": "maria@example.com",\n    "documentNumber": "12345678901"\n  }\n}',
+        originNodeJson: defaultNodeJson("PIX", "origin"),
         destinationNodeJson: '{\n  "accountNumber": "<ACCOUNT_NUMBER_CLP>"\n}',
         error: "",
         generatedJson: "",
@@ -149,11 +229,20 @@ function withPreset(previous: BuilderState): BuilderState {
     default:
       return {
         ...previous,
+        preset,
         error: "",
         generatedJson: "",
         generatedCurl: ""
       };
   }
+}
+
+function parseObjectJson(text: string, label: string): Record<string, unknown> {
+  const value = JSON.parse(text);
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new Error(`${label} must be a valid JSON object.`);
+  }
+  return value as Record<string, unknown>;
 }
 
 function buildPayload(state: BuilderState): Record<string, unknown> {
@@ -179,6 +268,7 @@ function buildPayload(state: BuilderState): Record<string, unknown> {
       `Unsupported origin type: ${originType}. Use one of: ${supportedNodeTypes.join(", ")}.`
     );
   }
+
   if (!destinationNodeKey) {
     throw new Error(
       `Unsupported destination type: ${destinationType}. Use one of: ${supportedNodeTypes.join(", ")}.`
@@ -193,14 +283,20 @@ function buildPayload(state: BuilderState): Record<string, unknown> {
     currency: originCurrency,
     [originNodeKey]: originNode
   };
+
   const destination: Record<string, unknown> = {
     type: destinationType,
     currency: destinationCurrency,
     [destinationNodeKey]: destinationNode
   };
 
-  if (state.originAmount) origin.amount = state.originAmount;
-  if (state.destinationAmount) destination.amount = state.destinationAmount;
+  if (state.originAmount) {
+    origin.amount = state.originAmount;
+  }
+
+  if (state.destinationAmount) {
+    destination.amount = state.destinationAmount;
+  }
 
   return {
     identityId: state.identityId || "<IDENTITY_ID>",
@@ -236,8 +332,69 @@ const transactionBuilderBlock = createComponent({
   action: async (previous: any, action: any) => {
     const state = previous.state as BuilderState;
 
-    if (action.action === "apply-preset") {
-      return { state: withPreset(state) };
+    if (action.action === "toggle-menu") {
+      const menu = action.menu as MenuKey | undefined;
+      if (!menu) {
+        return { state };
+      }
+
+      const closed = resetMenus(state);
+      return {
+        state: {
+          ...closed,
+          [menu]: !state[menu]
+        }
+      };
+    }
+
+    if (action.action === "choose-option") {
+      const field = action.field as keyof BuilderState | undefined;
+      const value = String(action.value ?? "");
+
+      if (!field) {
+        return { state };
+      }
+
+      let nextState: BuilderState = {
+        ...resetMenus(state),
+        [field]: value,
+        error: "",
+        generatedJson: "",
+        generatedCurl: ""
+      } as BuilderState;
+
+      if (field === "preset") {
+        nextState = resetMenus(withPreset(nextState, value));
+      }
+
+      if (field === "type") {
+        nextState.preset = "custom";
+      }
+
+      if (field === "originType") {
+        const normalized = value.trim().toUpperCase();
+        nextState.preset = "custom";
+        nextState.originType = normalized;
+        nextState.originNodeJson = defaultNodeJson(normalized, "origin");
+      }
+
+      if (field === "destinationType") {
+        const normalized = value.trim().toUpperCase();
+        nextState.preset = "custom";
+        nextState.destinationType = normalized;
+        nextState.destinationNodeJson = defaultNodeJson(normalized, "destination");
+      }
+
+      return { state: nextState };
+    }
+
+    if (action.action === "toggle-advanced") {
+      return {
+        state: {
+          ...state,
+          showAdvanced: !state.showAdvanced
+        }
+      };
     }
 
     if (action.action === "set-field") {
@@ -249,6 +406,7 @@ const transactionBuilderBlock = createComponent({
         state: {
           ...state,
           [field]: value,
+          preset: ["type", "originType", "destinationType"].includes(field) ? "custom" : state.preset,
           error: "",
           generatedJson: "",
           generatedCurl: ""
@@ -261,6 +419,7 @@ const transactionBuilderBlock = createComponent({
         const payload = buildPayload(state);
         const json = JSON.stringify(payload, null, 2);
         const curl = buildCurl(state.baseUrl, payload);
+
         return {
           state: {
             ...state,
@@ -284,125 +443,121 @@ const transactionBuilderBlock = createComponent({
   render: async ({ state }) => (
     <block>
       <vstack>
-        <markdown content="### Conomy Transaction Builder" />
-        <markdown content="Generate-only block. Build request payloads and cURL for `POST /payments` without executing transactions." />
+        <markdown content="### Transaction Builder" />
+        <markdown content="Simple builder to generate `JSON` + `cURL` for `POST /payments` (no execution)." />
 
-        <card title="Quick presets">
+        <card title="1) Route setup">
           <vstack>
-            <markdown content="Use one click to preload common routes." />
             <button
-              label="ARS top-up with CVU"
-              onPress={{ action: "set-field", field: "preset", value: "ars-cvu-topup" }}
+              label={`Preset: ${getPresetLabel(state.preset)} v`}
+              onPress={{ action: "toggle-menu", menu: "showPresetMenu" }}
             />
-            <button
-              label="ARS top-up with PCT"
-              onPress={{ action: "set-field", field: "preset", value: "ars-pct-topup" }}
-            />
-            <button
-              label="PIX BRL to CLP account"
-              onPress={{ action: "set-field", field: "preset", value: "pix-brl-to-clp" }}
-            />
-            <button label="Apply selected preset" onPress={{ action: "apply-preset" }} />
-          </vstack>
-        </card>
+            {state.showPresetMenu ? (
+              <vstack>
+                {presetOptions.map((option) => (
+                  <button
+                    label={option.label}
+                    onPress={{ action: "choose-option", field: "preset", value: option.id }}
+                  />
+                ))}
+              </vstack>
+            ) : null}
 
-        <card title="Transaction setup">
-          <vstack>
-            <markdown content="**Payment type**" />
             <button
-              label="TOPUP_ACCOUNT"
-              onPress={{ action: "set-field", field: "type", value: "TOPUP_ACCOUNT" }}
+              label={`Payment type: ${getPaymentTypeLabel(state.type)} v`}
+              onPress={{ action: "toggle-menu", menu: "showTypeMenu" }}
             />
-            <button
-              label="WITHDRAWAL_ACCOUNT"
-              onPress={{ action: "set-field", field: "type", value: "WITHDRAWAL_ACCOUNT" }}
-            />
-            <button
-              label="REMITTANCE"
-              onPress={{ action: "set-field", field: "type", value: "REMITTANCE" }}
-            />
-            <button
-              label="PURCHASE"
-              onPress={{ action: "set-field", field: "type", value: "PURCHASE" }}
-            />
-            <textinput state="type" placeholder="Type (e.g. TOPUP_ACCOUNT)" />
-            <divider />
-            <textinput state="identityId" placeholder="Identity ID" />
-            <textinput state="accountNumber" placeholder="Internal account number" />
+            {state.showTypeMenu ? (
+              <vstack>
+                {paymentTypeOptions.map((option) => (
+                  <button
+                    label={option.label}
+                    onPress={{ action: "choose-option", field: "type", value: option.id }}
+                  />
+                ))}
+              </vstack>
+            ) : null}
+
             <textinput state="purchaseAmount" placeholder="Amount (purchaseAmount)" />
             <textinput state="purchaseCurrency" placeholder="Source currency (e.g. ARS)" />
             <textinput state="currency" placeholder="Settlement currency (e.g. CLP)" />
-            <textinput state="baseUrl" placeholder="API base URL" />
           </vstack>
         </card>
 
-        <card title="Origin">
+        <card title="2) Rails">
           <vstack>
-            <markdown content="**Quick origin types**" />
-            <button label="CVU" onPress={{ action: "set-field", field: "originType", value: "CVU" }} />
-            <button label="PCT" onPress={{ action: "set-field", field: "originType", value: "PCT" }} />
-            <button label="PIX" onPress={{ action: "set-field", field: "originType", value: "PIX" }} />
             <button
-              label="ACCOUNT"
-              onPress={{ action: "set-field", field: "originType", value: "ACCOUNT" }}
+              label={`Origin rail: ${state.originType} v`}
+              onPress={{ action: "toggle-menu", menu: "showOriginMenu" }}
             />
+            {state.showOriginMenu ? (
+              <vstack>
+                {originRailOptions.map((option) => (
+                  <button
+                    label={option}
+                    onPress={{ action: "choose-option", field: "originType", value: option }}
+                  />
+                ))}
+              </vstack>
+            ) : null}
+
             <button
-              label="CRYPTO"
-              onPress={{ action: "set-field", field: "originType", value: "CRYPTO" }}
+              label={`Destination rail: ${state.destinationType} v`}
+              onPress={{ action: "toggle-menu", menu: "showDestinationMenu" }}
             />
-            <textinput
-              state="originType"
-              placeholder="Origin type (e.g. CVU, PIX, CRYPTO, ACCOUNT)"
+            {state.showDestinationMenu ? (
+              <vstack>
+                {destinationRailOptions.map((option) => (
+                  <button
+                    label={option}
+                    onPress={{ action: "choose-option", field: "destinationType", value: option }}
+                  />
+                ))}
+              </vstack>
+            ) : null}
+
+            <markdown
+              content={`Route preview: **${state.purchaseCurrency.toUpperCase()}** ${state.originType} -> ${state.destinationType} -> **${state.currency.toUpperCase()}**`}
             />
-            <textinput state="originCurrency" placeholder="Origin currency" />
-            <textinput state="originAmount" placeholder="Origin amount (optional)" />
+          </vstack>
+        </card>
+
+        <card title="3) Node payloads">
+          <vstack>
+            <markdown content={`**Origin node (${state.originType})**`} />
             <codeblock content={state.originNodeJson} state="originNodeJson" syntax="json" />
+            <markdown content={`**Destination node (${state.destinationType})**`} />
+            <codeblock content={state.destinationNodeJson} state="destinationNodeJson" syntax="json" />
           </vstack>
         </card>
 
-        <card title="Destination">
-          <vstack>
-            <markdown content="**Quick destination types**" />
-            <button
-              label="ACCOUNT"
-              onPress={{ action: "set-field", field: "destinationType", value: "ACCOUNT" }}
-            />
-            <button
-              label="BANK_ACCOUNT"
-              onPress={{ action: "set-field", field: "destinationType", value: "BANK_ACCOUNT" }}
-            />
-            <button
-              label="CRYPTO"
-              onPress={{ action: "set-field", field: "destinationType", value: "CRYPTO" }}
-            />
-            <button
-              label="PIX"
-              onPress={{ action: "set-field", field: "destinationType", value: "PIX" }}
-            />
-            <textinput
-              state="destinationType"
-              placeholder="Destination type (e.g. ACCOUNT, BANK_ACCOUNT, CRYPTO)"
-            />
-            <textinput state="destinationCurrency" placeholder="Destination currency" />
-            <textinput state="destinationAmount" placeholder="Destination amount (optional)" />
-            <codeblock
-              content={state.destinationNodeJson}
-              state="destinationNodeJson"
-              syntax="json"
-            />
-          </vstack>
-        </card>
+        <button
+          label={state.showAdvanced ? "Hide advanced fields" : "Show advanced fields"}
+          onPress={{ action: "toggle-advanced" }}
+        />
+
+        {state.showAdvanced ? (
+          <card title="Advanced (optional)">
+            <vstack>
+              <textinput state="identityId" placeholder="Identity ID" />
+              <textinput state="accountNumber" placeholder="Internal account number" />
+              <textinput state="baseUrl" placeholder="API base URL" />
+              <textinput state="originCurrency" placeholder="Origin currency override" />
+              <textinput state="destinationCurrency" placeholder="Destination currency override" />
+              <textinput state="originAmount" placeholder="Origin amount override" />
+              <textinput state="destinationAmount" placeholder="Destination amount override" />
+              <textinput state="originType" placeholder="Origin type override (for rails not in menu)" />
+              <textinput
+                state="destinationType"
+                placeholder="Destination type override (for rails not in menu)"
+              />
+            </vstack>
+          </card>
+        ) : null}
 
         <button label="Generate JSON and cURL" onPress={{ action: "generate" }} />
 
         {state.error ? <markdown content={`**Validation error:** ${state.error}`} /> : null}
-
-        <card title="Supported values">
-          <vstack>
-            <markdown content={`**Payment types**: \`${supportedPaymentTypes.join("`, `")}\``} />
-            <markdown content={`**Node types**: \`${supportedNodeTypes.join("`, `")}\``} />
-          </vstack>
-        </card>
 
         <card title="Generated JSON">
           <codeblock content={state.generatedJson || "{}"} syntax="json" />

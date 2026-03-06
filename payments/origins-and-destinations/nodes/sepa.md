@@ -1,5 +1,7 @@
 ---
 description: European bank transfer standard. Used for pay-out across the eurozone.
+layout:
+  width: full
 ---
 
 # SEPA

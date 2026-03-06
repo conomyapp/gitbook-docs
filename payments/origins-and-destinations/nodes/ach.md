@@ -1,5 +1,7 @@
 ---
 description: US Automated Clearing House network. Used for pay-in and pay-out in the USA.
+layout:
+  width: full
 ---
 
 # ACH

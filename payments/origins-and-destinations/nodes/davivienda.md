@@ -1,5 +1,7 @@
 ---
 description: Davivienda's direct pay-in button. Used for pay-in in Colombia.
+layout:
+  width: full
 ---
 
 # DAVIVIENDA

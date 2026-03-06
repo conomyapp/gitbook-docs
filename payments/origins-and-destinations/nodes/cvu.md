@@ -1,5 +1,7 @@
 ---
 description: Argentina's virtual account identifier for bank transfers. Used for pay-in in Argentina.
+layout:
+  width: full
 ---
 
 # CVU

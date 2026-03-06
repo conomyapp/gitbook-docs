@@ -1,5 +1,7 @@
 ---
 description: The Clearing House's Real-Time Payments network. Used for instant pay-in in the USA.
+layout:
+  width: full
 ---
 
 # RTP

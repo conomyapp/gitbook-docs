@@ -1,5 +1,7 @@
 ---
 description: Venezuela's mobile interbank payment system. Used for pay-in in Venezuela.
+layout:
+  width: full
 ---
 
 # PAGO_MOVIL

@@ -1,5 +1,7 @@
 ---
 description: UK's Faster Payments scheme. Used for pay-out in the United Kingdom.
+layout:
+  width: full
 ---
 
 # FPE

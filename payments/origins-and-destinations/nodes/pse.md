@@ -1,5 +1,7 @@
 ---
 description: Colombian online bank transfer gateway. Used for pay-in in Colombia.
+layout:
+  width: full
 ---
 
 # PSE

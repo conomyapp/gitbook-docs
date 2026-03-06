@@ -1,5 +1,7 @@
 ---
 description: Generic bank account node for payouts. Used across multiple countries.
+layout:
+  width: full
 ---
 
 # BANK_ACCOUNT

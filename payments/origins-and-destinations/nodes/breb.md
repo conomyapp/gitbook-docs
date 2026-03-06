@@ -1,5 +1,7 @@
 ---
 description: Colombia's interbank electronic transfer network. Used for pay-out in Colombia.
+layout:
+  width: full
 ---
 
 # BREB

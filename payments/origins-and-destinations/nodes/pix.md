@@ -1,5 +1,7 @@
 ---
 description: Brazilian instant payment system. Used for pay-in and pay-out in Brazil.
+layout:
+  width: full
 ---
 
 # PIX

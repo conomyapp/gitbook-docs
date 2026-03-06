@@ -1,5 +1,7 @@
 ---
 description: Mexico's interbank electronic transfer system. Used for pay-in and pay-out in Mexico.
+layout:
+  width: full
 ---
 
 # SPEI

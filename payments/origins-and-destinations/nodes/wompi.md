@@ -1,5 +1,7 @@
 ---
 description: Colombian payment gateway. Used for pay-in in Colombia.
+layout:
+  width: full
 ---
 
 # WOMPI

@@ -1,5 +1,7 @@
 ---
 description: Domestic and international wire transfer. Used for pay-out in the USA.
+layout:
+  width: full
 ---
 
 # WIRE

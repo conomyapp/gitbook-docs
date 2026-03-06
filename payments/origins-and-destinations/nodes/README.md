@@ -1,5 +1,7 @@
 ---
 description: Every payment needs at least one origin and one destination. This page explains what nodes are, how they work, and which rail to use for each country.
+layout:
+  width: full
 ---
 
 # Nodes

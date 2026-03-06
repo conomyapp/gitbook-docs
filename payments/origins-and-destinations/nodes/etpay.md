@@ -1,5 +1,7 @@
 ---
 description: Chilean open banking pay-in via redirect. Used for pay-in in Chile.
+layout:
+  width: full
 ---
 
 # ETPAY

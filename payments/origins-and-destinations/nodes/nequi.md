@@ -1,5 +1,7 @@
 ---
 description: Bancolombia's digital wallet. Used for pay-in and pay-out in Colombia.
+layout:
+  width: full
 ---
 
 # NEQUI

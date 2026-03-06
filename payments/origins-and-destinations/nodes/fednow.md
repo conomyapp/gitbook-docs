@@ -1,5 +1,7 @@
 ---
 description: The Federal Reserve's instant payment rail. Used for instant transfers in the USA.
+layout:
+  width: full
 ---
 
 # FEDNOW

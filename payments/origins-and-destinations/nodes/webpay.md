@@ -1,5 +1,7 @@
 ---
 description: Chile's Transbank card and transfer gateway. Used for pay-in in Chile.
+layout:
+  width: full
 ---
 
 # WEBPAY

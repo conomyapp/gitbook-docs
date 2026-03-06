@@ -1,5 +1,7 @@
 ---
 description: International wire transfer via the SWIFT network. Used for cross-border pay-out.
+layout:
+  width: full
 ---
 
 # SWIFT

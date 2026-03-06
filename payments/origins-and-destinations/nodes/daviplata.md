@@ -1,5 +1,7 @@
 ---
 description: Davivienda's mobile wallet. Used for pay-in and pay-out in Colombia.
+layout:
+  width: full
 ---
 
 # DAVIPLATA

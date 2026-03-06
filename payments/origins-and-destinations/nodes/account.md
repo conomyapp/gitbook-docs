@@ -1,5 +1,7 @@
 ---
 description: Platform account node. Used to reference an account held on the platform.
+layout:
+  width: full
 ---
 
 # ACCOUNT

@@ -59,7 +59,6 @@ Every payment includes `origins` and `destinations` arrays. Each array item is a
 
 ## Rail summary
 
-- [CRYPTO](crypto.md): Global, USDC/USDT, pay-in and pay-out.
 - [PIX](pix.md): Brazil, BRL, pay-in and pay-out.
 - [PCT](pct.md): Argentina, ARS, pay-in.
 - [CVU](cvu.md): Argentina, ARS, pay-in.

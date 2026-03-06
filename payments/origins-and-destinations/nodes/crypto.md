@@ -1,29 +1,33 @@
 ---
-description: Cryptocurrency wallet node for global transfers. Used for pay-in and pay-out.
+description: Crypto wallet rail for global pay-in and pay-out.
 layout:
   width: full
 ---
 
 # CRYPTO
 
-Use `CRYPTO` when funds move to or from an external blockchain wallet.
+`CRYPTO` is the wallet rail used to move funds to or from external blockchain wallets.
 
-**Countries:** Global
-**Currency:** `USDC`, `USDT` (network-dependent)
-**Direction:** Pay-in / Pay-out
+- Country scope: Global
+- Currency scope: USDC, USDT (network dependent)
+- Direction: Pay-in and Pay-out
 
 ## Required fields
 
-1. `type` (`string`): must be `"CRYPTO"`.
-2. `currency` (`string`): settlement currency configured for the flow (for example, `"USDC"` or `"USDT"`).
-3. `wallet.address` (`string`): source or destination wallet address.
+| Field | Type | Description |
+| --- | --- | --- |
+| `type` | `string` | Must be `"CRYPTO"`. |
+| `currency` | `string` | Settlement currency for the flow. |
+| `wallet.address` | `string` | Source or destination wallet address. |
 
 ## Optional fields
 
-1. `wallet.provider` (`string`): provider identifier used by your integration.
-2. `wallet.referenceId` (`string`): external wallet identifier in the provider system.
-3. `wallet.token` (`string`): token symbol when you need to clarify or override the token in the payload.
-4. `wallet.network` (`string`): blockchain network (for example, `ETH`, `TRON`, `SOLANA`).
+| Field | Type | Description |
+| --- | --- | --- |
+| `wallet.provider` | `string` | Provider identifier. |
+| `wallet.referenceId` | `string` | External wallet identifier. |
+| `wallet.token` | `string` | Token symbol. |
+| `wallet.network` | `string` | Chain/network (for example `ETH`, `TRON`, `SOLANA`). |
 
 ## Example
 
@@ -41,11 +45,11 @@ Use `CRYPTO` when funds move to or from an external blockchain wallet.
 
 ## Valid combinations
 
-- If `CRYPTO` is the origin, valid counterpart node type: `ACCOUNT`.
-- If `CRYPTO` is the destination, valid counterpart node type: `ACCOUNT`.
+| Origin | Destination |
+| --- | --- |
+| `CRYPTO` | `ACCOUNT` |
+| `ACCOUNT` | `CRYPTO` |
 
-## Schema
+## OpenAPI
 
-{% openapi-schemas spec="conomyhq-api" schemas="crypto-wrapper" grouped="false" %}
-[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
-{% endopenapi-schemas %}
+See `.gitbook/assets/Payment API.yaml` (`payment-node` and `wallet` components).

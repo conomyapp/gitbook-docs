@@ -19,28 +19,29 @@ layout:
 
 # Transaction Builder
 
-Build a valid `POST /payments` payload from user intent, currency, and rail availability.
+Build any valid `POST /payments` payload from user intent, currency pair, and rail availability.
 
 {% hint style="info" %}
-Use this page as a decision guide. For dynamic integrations, always validate rails and required fields with `GET /payments/available-products` before creating the payment.
+This builder is dynamic: it uses `GET /payments/available-products` to discover rails and required fields per identity and currency at runtime.
 {% endhint %}
 
-## 1. Define the user intent
+## 1. Builder inputs
 
-| User intent | `type` | Typical origin | Typical destination |
-| --- | --- | --- | --- |
-| Load an internal balance | `TOPUP_ACCOUNT` | Pay-in rail (`PIX`, `CVU`, `PCT`, `PSE`, etc.) | `ACCOUNT` |
-| Send money out from platform balance | `WITHDRAWAL_ACCOUNT` | `ACCOUNT` | Pay-out rail (`PIX`, `BANK_ACCOUNT`, `ACH`, `SWIFT`, etc.) |
-| Cross-border transfer | `REMITTANCE` | `ACCOUNT` or pay-in rail | Pay-out rail |
-| Charge a customer | `PURCHASE` | Pay-in rail | `ACCOUNT` |
+| Input | Description |
+| --- | --- |
+| User intent | `TOPUP_ACCOUNT`, `WITHDRAWAL_ACCOUNT`, `REMITTANCE`, `PURCHASE` |
+| Amount | `purchaseAmount` |
+| Source currency | `purchaseCurrency` |
+| Settlement currency | `currency` |
+| Identity | `identityId` |
 
-## 2. Fetch available rails for the identity
+## 2. Resolve products and rails (dynamic step)
 
-```bash
-curl --request GET \
-  --url 'https://api.conomyhq.com/sandbox/payments/available-products?identityId=<IDENTITY_ID>&currencies=ARS,BRL,CLP' \
-  --header 'Authorization: Bearer <TOKEN>'
-```
+Use this endpoint first. It defines what the user can build for each currency.
+
+{% openapi-operation spec="conomyhq-api" path="/payments/available-products" method="get" %}
+[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
+{% endopenapi-operation %}
 
 Use:
 
@@ -49,128 +50,123 @@ Use:
 - `requiredFields` and `requiredFieldTypes` to build and validate node inputs.
 - `validOrigins` and `validDestinations` to enforce allowed combinations.
 
-## 3. Ready-to-use flows
+## 3. Route rules by intent
+
+| User intent | `type` | Origin rule | Destination rule |
+| --- | --- | --- | --- |
+| Load internal account | `TOPUP_ACCOUNT` | Any pay-in rail from `paymentMethods` | `ACCOUNT` |
+| Withdraw from internal account | `WITHDRAWAL_ACCOUNT` | `ACCOUNT` | Any pay-out rail from `withdrawalMethods` |
+| Cross-border transfer | `REMITTANCE` | `ACCOUNT` or pay-in rail | Any valid pay-out rail |
+| Checkout / customer charge | `PURCHASE` | Any pay-in rail | `ACCOUNT` |
+
+## 4. Payload template (works for any route)
+
+```json
+{
+  "identityId": "<IDENTITY_ID>",
+  "accountNumber": "<INTERNAL_ACCOUNT_NUMBER>",
+  "type": "<TYPE>",
+  "product": "<PURCHASE_CURRENCY>:<SETTLEMENT_CURRENCY>",
+  "purchaseAmount": "<AMOUNT>",
+  "purchaseCurrency": "<PURCHASE_CURRENCY>",
+  "currency": "<SETTLEMENT_CURRENCY>",
+  "origins": [
+    {
+      "type": "<ORIGIN_TYPE>",
+      "currency": "<ORIGIN_CURRENCY>",
+      "<originNodeKey>": {
+        "<requiredField1>": "<value>",
+        "<requiredField2>": "<value>"
+      }
+    }
+  ],
+  "destinations": [
+    {
+      "type": "<DESTINATION_TYPE>",
+      "currency": "<DESTINATION_CURRENCY>",
+      "<destinationNodeKey>": {
+        "<requiredField1>": "<value>",
+        "<requiredField2>": "<value>"
+      }
+    }
+  ]
+}
+```
+
+{% hint style="warning" %}
+Use only one node object matching `type` in each origin/destination. Example: if `type` is `PIX`, send only `pix`.
+{% endhint %}
+
+## 5. Validate and create the payment
+
+Run the payment creation endpoint after selecting rail + required fields.
+
+{% openapi-operation spec="conomyhq-api" path="/payments" method="post" %}
+[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
+{% endopenapi-operation %}
+
+## 6. Example routes (using the same dynamic builder)
 
 {% tabs %}
-{% tab title="ARS top-up with CVU" %}
+{% tab title="Load ARS account with CVU" %}
 
-Use when the user wants to load an internal ARS account from Argentina bank rails.
+`type`: `TOPUP_ACCOUNT`  
+`product`: `ARS:ARS`  
+`origin`: `CVU`  
+`destination`: `ACCOUNT`
 
 ```json
 {
-  "identityId": "<IDENTITY_ID>",
-  "accountNumber": "<ACCOUNT_NUMBER>",
   "type": "TOPUP_ACCOUNT",
   "product": "ARS:ARS",
-  "purchaseAmount": "10000",
   "purchaseCurrency": "ARS",
   "currency": "ARS",
-  "origins": [
-    {
-      "type": "CVU",
-      "currency": "ARS",
-      "cvu": {
-        "customer": {
-          "firstName": "Juan",
-          "lastName": "Perez",
-          "email": "juan@example.com"
-        }
-      }
-    }
-  ],
-  "destinations": [
-    {
-      "type": "ACCOUNT",
-      "currency": "ARS",
-      "identity": { "identityId": "<IDENTITY_ID>" },
-      "account": { "accountNumber": "<ACCOUNT_NUMBER>" }
-    }
-  ]
+  "origins": [{ "type": "CVU" }],
+  "destinations": [{ "type": "ACCOUNT" }]
 }
 ```
 {% endtab %}
 
-{% tab title="ARS top-up with PCT" %}
+{% tab title="Load ARS account with PCT" %}
 
-Use when the user pays with Argentina transfer QR (`PCT`) and funds an internal ARS account.
+`type`: `TOPUP_ACCOUNT`  
+`product`: `ARS:ARS`  
+`origin`: `PCT`  
+`destination`: `ACCOUNT`
 
 ```json
 {
-  "identityId": "<IDENTITY_ID>",
-  "accountNumber": "<ACCOUNT_NUMBER>",
   "type": "TOPUP_ACCOUNT",
   "product": "ARS:ARS",
-  "purchaseAmount": "10000",
   "purchaseCurrency": "ARS",
   "currency": "ARS",
-  "origins": [
-    {
-      "type": "PCT",
-      "currency": "ARS",
-      "pct": {
-        "customer": {
-          "email": "juan@example.com",
-          "phoneNumber": "1123456789",
-          "phoneNumberPrefix": "+54"
-        }
-      }
-    }
-  ],
-  "destinations": [
-    {
-      "type": "ACCOUNT",
-      "currency": "ARS",
-      "identity": { "identityId": "<IDENTITY_ID>" },
-      "account": { "accountNumber": "<ACCOUNT_NUMBER>" }
-    }
-  ]
+  "origins": [{ "type": "PCT" }],
+  "destinations": [{ "type": "ACCOUNT" }]
 }
 ```
 {% endtab %}
 
-{% tab title="PIX to CLP account" %}
+{% tab title="Pay in BRL (PIX) and settle CLP" %}
 
-Use when the user pays in Brazil with `PIX` and you settle into an internal CLP account.
+`type`: `TOPUP_ACCOUNT`  
+`product`: `BRL:CLP`  
+`origin`: `PIX`  
+`destination`: `ACCOUNT`
 
 ```json
 {
-  "identityId": "<IDENTITY_ID>",
-  "accountNumber": "<ACCOUNT_NUMBER_CLP>",
   "type": "TOPUP_ACCOUNT",
   "product": "BRL:CLP",
-  "purchaseAmount": "100",
   "purchaseCurrency": "BRL",
   "currency": "CLP",
-  "origins": [
-    {
-      "type": "PIX",
-      "currency": "BRL",
-      "pix": {
-        "successUrl": "https://yourapp.com/success",
-        "failedUrl": "https://yourapp.com/failed",
-        "customer": {
-          "firstName": "Maria",
-          "lastName": "Silva",
-          "email": "maria@example.com",
-          "documentNumber": "12345678901"
-        }
-      }
-    }
-  ],
-  "destinations": [
-    {
-      "type": "ACCOUNT",
-      "currency": "CLP",
-      "identity": { "identityId": "<IDENTITY_ID>" },
-      "account": { "accountNumber": "<ACCOUNT_NUMBER_CLP>" }
-    }
-  ]
+  "origins": [{ "type": "PIX", "currency": "BRL" }],
+  "destinations": [{ "type": "ACCOUNT", "currency": "CLP" }]
 }
 ```
 {% endtab %}
 {% endtabs %}
 
-## 4. Builder rules (must enforce)
+## 7. Builder validation rules
 
 1. `type` controls which origin/destination families are valid.
 2. `product` must match `purchaseCurrency:currency`.
@@ -178,7 +174,7 @@ Use when the user pays in Brazil with `PIX` and you settle into an internal CLP 
 4. For split flows, each node must include `amount`, and all sums must match the payment amount.
 5. Keep only the node object that matches `origins[].type` or `destinations[].type`.
 
-## 5. Route selection checklist
+## 8. Implementation checklist
 
 - Confirm the user goal (`TOPUP_ACCOUNT`, `WITHDRAWAL_ACCOUNT`, `REMITTANCE`, `PURCHASE`).
 - Confirm source currency (`purchaseCurrency`) and settlement currency (`currency`).
@@ -186,6 +182,80 @@ Use when the user pays in Brazil with `PIX` and you settle into an internal CLP 
 - Select a rail that appears in `paymentMethods`/`withdrawalMethods`.
 - Render only the fields listed in `requiredFields`.
 - Submit `POST /payments`.
+
+## 9. Frontend payload factory (example)
+
+```ts
+type BuilderInput = {
+  identityId: string;
+  accountNumber: string;
+  type: "TOPUP_ACCOUNT" | "WITHDRAWAL_ACCOUNT" | "REMITTANCE" | "PURCHASE";
+  purchaseAmount: string;
+  purchaseCurrency: string;
+  currency: string;
+  originType: string;
+  destinationType: string;
+  originCurrency: string;
+  destinationCurrency: string;
+  originNode: Record<string, unknown>;
+  destinationNode: Record<string, unknown>;
+};
+
+const nodeKeyByType: Record<string, string> = {
+  ACCOUNT: "account",
+  BANK_ACCOUNT: "bank",
+  CRYPTO: "wallet",
+  PIX: "pix",
+  PCT: "pct",
+  CVU: "cvu",
+  ETPAY: "etpay",
+  FINTOC: "fintoc",
+  WEBPAY: "webpay",
+  SPEI: "spei",
+  PSE: "pse",
+  BANCOLOMBIA: "bancolombia",
+  DAVIVIENDA: "davivienda",
+  DAVIPLATA: "daviplata",
+  NEQUI: "nequi",
+  ACH: "ach",
+  WIRE: "wire",
+  SWIFT: "swift",
+  RTP: "rtp",
+  FEDNOW: "fednow",
+  FPE: "fpe",
+  SEPA: "sepa"
+};
+
+export function buildPaymentPayload(input: BuilderInput) {
+  const originNodeKey = nodeKeyByType[input.originType];
+  const destinationNodeKey = nodeKeyByType[input.destinationType];
+  if (!originNodeKey || !destinationNodeKey) throw new Error("Unsupported node type");
+
+  return {
+    identityId: input.identityId,
+    accountNumber: input.accountNumber,
+    type: input.type,
+    product: `${input.purchaseCurrency}:${input.currency}`,
+    purchaseAmount: input.purchaseAmount,
+    purchaseCurrency: input.purchaseCurrency,
+    currency: input.currency,
+    origins: [
+      {
+        type: input.originType,
+        currency: input.originCurrency,
+        [originNodeKey]: input.originNode
+      }
+    ],
+    destinations: [
+      {
+        type: input.destinationType,
+        currency: input.destinationCurrency,
+        [destinationNodeKey]: input.destinationNode
+      }
+    ]
+  };
+}
+```
 
 ## Related docs
 

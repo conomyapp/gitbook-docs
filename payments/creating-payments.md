@@ -16,6 +16,10 @@ layout:
 
 A payment uses the transaction model. The model has several key elements that are essential for creating a payment.
 
+{% hint style="info" %}
+If you want a runtime-guided flow to build payloads by intent, currency, and rail availability, use the [Transaction Builder](transaction-builder.md).
+{% endhint %}
+
 ### Key Elements
 
 * `identityId`: The identity initiating the payment.

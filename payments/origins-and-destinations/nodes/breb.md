@@ -10,15 +10,52 @@ BREB (Banco de la República Electronic Bridge) is Colombia's interbank settleme
 
 ## Required fields
 
-| Field | Type | Description |
-|---|---|---|
-| `type` | `string` | Must be `"BREB"` |
-| `currency` | `string` | Must be `"COP"` |
-| `breB.bankId` | `string` | Bank code of the recipient's bank |
-| `breB.customer.firstName` | `string` | Recipient's first name |
-| `breB.customer.lastName` | `string` | Recipient's last name |
-| `breB.customer.email` | `string` | Recipient's email |
-| `breB.bank.accountNumber` | `string` | Recipient's account number |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>type</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;BREB&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>currency</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;COP&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>breB.bankId</code></td>
+      <td><code>string</code></td>
+      <td>Bank code of the recipient&#x27;s bank</td>
+    </tr>
+    <tr>
+      <td><code>breB.customer.firstName</code></td>
+      <td><code>string</code></td>
+      <td>Recipient&#x27;s first name</td>
+    </tr>
+    <tr>
+      <td><code>breB.customer.lastName</code></td>
+      <td><code>string</code></td>
+      <td>Recipient&#x27;s last name</td>
+    </tr>
+    <tr>
+      <td><code>breB.customer.email</code></td>
+      <td><code>string</code></td>
+      <td>Recipient&#x27;s email</td>
+    </tr>
+    <tr>
+      <td><code>breB.bank.accountNumber</code></td>
+      <td><code>string</code></td>
+      <td>Recipient&#x27;s account number</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Example
 

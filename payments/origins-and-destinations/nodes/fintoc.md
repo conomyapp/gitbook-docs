@@ -10,11 +10,32 @@ Fintoc is a Chilean open banking provider. It uses a hosted widget where the use
 
 ## Required fields
 
-| Field | Type | Description |
-|---|---|---|
-| `type` | `string` | Must be `"FINTOC"` |
-| `currency` | `string` | Must be `"CLP"` |
-| `fintoc.customer` | `object` | Optional payer information |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>type</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;FINTOC&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>currency</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;CLP&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>fintoc.customer</code></td>
+      <td><code>object</code></td>
+      <td>Optional payer information</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Example
 
@@ -33,10 +54,24 @@ Fintoc is a Chilean open banking provider. It uses a hosted widget where the use
 
 ## Response fields
 
-| Field | Description |
-|---|---|
-| `url` | Hosted widget URL — redirect the user here |
-| `token` | Session token for tracking |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>url</code></td>
+      <td>Hosted widget URL — redirect the user here</td>
+    </tr>
+    <tr>
+      <td><code>token</code></td>
+      <td>Session token for tracking</td>
+    </tr>
+  </tbody>
+</table>
 
 Send the user to `fintoc.url` to complete the bank connection and authorization.
 

@@ -10,17 +10,62 @@ RTP (Real-Time Payments) is The Clearing House's instant payment network, operat
 
 ## Required fields
 
-| Field | Type | Description |
-|---|---|---|
-| `type` | `string` | Must be `"RTP"` |
-| `currency` | `string` | Must be `"USD"` |
-| `rtp.bank.accountNumber` | `string` | Bank account number |
-| `rtp.routingNumber` | `string` | 9-digit ABA routing number |
-| `rtp.customer.firstName` | `string` | Account holder's first name |
-| `rtp.customer.lastName` | `string` | Account holder's last name |
-| `rtp.customer.email` | `string` | Account holder's email |
-| `rtp.customer.documentNumber` | `string` | SSN or ITIN |
-| `rtp.customer.documentType` | `string` | Document type |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>type</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;RTP&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>currency</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;USD&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>rtp.bank.accountNumber</code></td>
+      <td><code>string</code></td>
+      <td>Bank account number</td>
+    </tr>
+    <tr>
+      <td><code>rtp.routingNumber</code></td>
+      <td><code>string</code></td>
+      <td>9-digit ABA routing number</td>
+    </tr>
+    <tr>
+      <td><code>rtp.customer.firstName</code></td>
+      <td><code>string</code></td>
+      <td>Account holder&#x27;s first name</td>
+    </tr>
+    <tr>
+      <td><code>rtp.customer.lastName</code></td>
+      <td><code>string</code></td>
+      <td>Account holder&#x27;s last name</td>
+    </tr>
+    <tr>
+      <td><code>rtp.customer.email</code></td>
+      <td><code>string</code></td>
+      <td>Account holder&#x27;s email</td>
+    </tr>
+    <tr>
+      <td><code>rtp.customer.documentNumber</code></td>
+      <td><code>string</code></td>
+      <td>SSN or ITIN</td>
+    </tr>
+    <tr>
+      <td><code>rtp.customer.documentType</code></td>
+      <td><code>string</code></td>
+      <td>Document type</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Example
 

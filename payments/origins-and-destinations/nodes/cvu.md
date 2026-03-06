@@ -10,14 +10,47 @@ CVU (Clave Virtual Uniforme) is the virtual account identifier used in Argentina
 
 ## Required fields
 
-| Field | Type | Description |
-|---|---|---|
-| `type` | `string` | Must be `"CVU"` |
-| `currency` | `string` | Must be `"ARS"` |
-| `cvu.code` | `string` | 22-digit CVU code of the recipient |
-| `cvu.customer.firstName` | `string` | Recipient's first name |
-| `cvu.customer.lastName` | `string` | Recipient's last name |
-| `cvu.customer.email` | `string` | Recipient's email |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>type</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;CVU&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>currency</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;ARS&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>cvu.code</code></td>
+      <td><code>string</code></td>
+      <td>22-digit CVU code of the recipient</td>
+    </tr>
+    <tr>
+      <td><code>cvu.customer.firstName</code></td>
+      <td><code>string</code></td>
+      <td>Recipient&#x27;s first name</td>
+    </tr>
+    <tr>
+      <td><code>cvu.customer.lastName</code></td>
+      <td><code>string</code></td>
+      <td>Recipient&#x27;s last name</td>
+    </tr>
+    <tr>
+      <td><code>cvu.customer.email</code></td>
+      <td><code>string</code></td>
+      <td>Recipient&#x27;s email</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Example
 
@@ -40,9 +73,20 @@ CVU (Clave Virtual Uniforme) is the virtual account identifier used in Argentina
 
 When CVU is used as destination, the valid origins are:
 
-| Node | Description |
-|---|---|
-| `ACCOUNT` | Internal platform account |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Node</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>ACCOUNT</code></td>
+      <td>Internal platform account</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Schema
 

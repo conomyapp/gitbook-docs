@@ -10,15 +10,52 @@ FPE (Faster Payments) is the UK's real-time payment network. Payments settle in 
 
 ## Required fields
 
-| Field | Type | Description |
-|---|---|---|
-| `type` | `string` | Must be `"FPE"` |
-| `currency` | `string` | Must be `"GBP"` |
-| `fpe.accountNumber` | `string` | UK bank account number (8 digits) |
-| `fpe.sortCode` | `string` | Sort code (6 digits, e.g., `"200415"`) |
-| `fpe.customer.firstName` | `string` | Recipient's first name |
-| `fpe.customer.lastName` | `string` | Recipient's last name |
-| `fpe.customer.email` | `string` | Recipient's email |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>type</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;FPE&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>currency</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;GBP&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>fpe.accountNumber</code></td>
+      <td><code>string</code></td>
+      <td>UK bank account number (8 digits)</td>
+    </tr>
+    <tr>
+      <td><code>fpe.sortCode</code></td>
+      <td><code>string</code></td>
+      <td>Sort code (6 digits, e.g., <code>&quot;200415&quot;</code>)</td>
+    </tr>
+    <tr>
+      <td><code>fpe.customer.firstName</code></td>
+      <td><code>string</code></td>
+      <td>Recipient&#x27;s first name</td>
+    </tr>
+    <tr>
+      <td><code>fpe.customer.lastName</code></td>
+      <td><code>string</code></td>
+      <td>Recipient&#x27;s last name</td>
+    </tr>
+    <tr>
+      <td><code>fpe.customer.email</code></td>
+      <td><code>string</code></td>
+      <td>Recipient&#x27;s email</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Example
 

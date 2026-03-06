@@ -10,14 +10,47 @@ SPEI (Sistema de Pagos Electrónicos Interbancarios) is Mexico's real-time inter
 
 ## Required fields
 
-| Field | Type | Description |
-|---|---|---|
-| `type` | `string` | Must be `"SPEI"` |
-| `currency` | `string` | Must be `"MXN"` |
-| `spei.customer.firstName` | `string` | Customer's first name |
-| `spei.customer.lastName` | `string` | Customer's last name |
-| `spei.clabe` | `string` | 18-digit CLABE (required for pay-out) |
-| `spei.bankId` | `string` | Bank identifier code |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>type</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;SPEI&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>currency</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;MXN&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>spei.customer.firstName</code></td>
+      <td><code>string</code></td>
+      <td>Customer&#x27;s first name</td>
+    </tr>
+    <tr>
+      <td><code>spei.customer.lastName</code></td>
+      <td><code>string</code></td>
+      <td>Customer&#x27;s last name</td>
+    </tr>
+    <tr>
+      <td><code>spei.clabe</code></td>
+      <td><code>string</code></td>
+      <td>18-digit CLABE (required for pay-out)</td>
+    </tr>
+    <tr>
+      <td><code>spei.bankId</code></td>
+      <td><code>string</code></td>
+      <td>Bank identifier code</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Pay-in example
 
@@ -56,10 +89,24 @@ For pay-out, provide the recipient's CLABE:
 
 ## Response fields (pay-in)
 
-| Field | Description |
-|---|---|
-| `clabe` | CLABE the payer should transfer to |
-| `bankId` | Receiving bank code |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>clabe</code></td>
+      <td>CLABE the payer should transfer to</td>
+    </tr>
+    <tr>
+      <td><code>bankId</code></td>
+      <td>Receiving bank code</td>
+    </tr>
+  </tbody>
+</table>
 
 Share the `spei.clabe` with your user so they can complete the transfer from their banking app.
 

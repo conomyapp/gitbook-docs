@@ -10,12 +10,37 @@ Nequi is Bancolombia's digital wallet with over 20 million users in Colombia. It
 
 ## Required fields
 
-| Field | Type | Description |
-|---|---|---|
-| `type` | `string` | Must be `"NEQUI"` |
-| `currency` | `string` | Must be `"COP"` |
-| `nequi.customer.phoneNumber` | `string` | Nequi phone number (digits only) |
-| `nequi.customer.email` | `string` | Customer's email |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>type</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;NEQUI&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>currency</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;COP&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>nequi.customer.phoneNumber</code></td>
+      <td><code>string</code></td>
+      <td>Nequi phone number (digits only)</td>
+    </tr>
+    <tr>
+      <td><code>nequi.customer.email</code></td>
+      <td><code>string</code></td>
+      <td>Customer&#x27;s email</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Example
 

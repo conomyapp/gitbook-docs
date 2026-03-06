@@ -10,19 +10,72 @@ ACH (Automated Clearing House) is the standard US bank-to-bank transfer network.
 
 ## Required fields
 
-| Field | Type | Description |
-|---|---|---|
-| `type` | `string` | Must be `"ACH"` |
-| `currency` | `string` | Must be `"USD"` |
-| `ach.bank.accountNumber` | `string` | US bank account number |
-| `ach.routingNumber` | `string` | 9-digit ABA routing number |
-| `ach.customer.firstName` | `string` | Account holder's first name |
-| `ach.customer.lastName` | `string` | Account holder's last name |
-| `ach.customer.email` | `string` | Account holder's email |
-| `ach.customer.documentNumber` | `string` | SSN or ITIN |
-| `ach.customer.documentType` | `string` | Document type (e.g., `"SSN"`) |
-| `ach.accountType` | `string` | `"CHECKING"` or `"SAVINGS"` |
-| `ach.accountHolderType` | `string` | `"INDIVIDUAL"` or `"BUSINESS"` |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>type</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;ACH&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>currency</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;USD&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>ach.bank.accountNumber</code></td>
+      <td><code>string</code></td>
+      <td>US bank account number</td>
+    </tr>
+    <tr>
+      <td><code>ach.routingNumber</code></td>
+      <td><code>string</code></td>
+      <td>9-digit ABA routing number</td>
+    </tr>
+    <tr>
+      <td><code>ach.customer.firstName</code></td>
+      <td><code>string</code></td>
+      <td>Account holder&#x27;s first name</td>
+    </tr>
+    <tr>
+      <td><code>ach.customer.lastName</code></td>
+      <td><code>string</code></td>
+      <td>Account holder&#x27;s last name</td>
+    </tr>
+    <tr>
+      <td><code>ach.customer.email</code></td>
+      <td><code>string</code></td>
+      <td>Account holder&#x27;s email</td>
+    </tr>
+    <tr>
+      <td><code>ach.customer.documentNumber</code></td>
+      <td><code>string</code></td>
+      <td>SSN or ITIN</td>
+    </tr>
+    <tr>
+      <td><code>ach.customer.documentType</code></td>
+      <td><code>string</code></td>
+      <td>Document type (e.g., <code>&quot;SSN&quot;</code>)</td>
+    </tr>
+    <tr>
+      <td><code>ach.accountType</code></td>
+      <td><code>string</code></td>
+      <td><code>&quot;CHECKING&quot;</code> or <code>&quot;SAVINGS&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>ach.accountHolderType</code></td>
+      <td><code>string</code></td>
+      <td><code>&quot;INDIVIDUAL&quot;</code> or <code>&quot;BUSINESS&quot;</code></td>
+    </tr>
+  </tbody>
+</table>
 
 ## Example
 

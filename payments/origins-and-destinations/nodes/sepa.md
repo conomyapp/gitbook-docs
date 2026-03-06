@@ -10,17 +10,62 @@ SEPA (Single Euro Payments Area) is the European standard for bank transfers in 
 
 ## Required fields
 
-| Field | Type | Description |
-|---|---|---|
-| `type` | `string` | Must be `"SEPA"` |
-| `currency` | `string` | Must be `"EUR"` |
-| `sepa.iban` | `string` | Recipient's IBAN |
-| `sepa.customer.firstName` | `string` | Recipient's first name |
-| `sepa.customer.lastName` | `string` | Recipient's last name |
-| `sepa.customer.email` | `string` | Recipient's email |
-| `sepa.customer.documentNumber` | `string` | National ID or tax number |
-| `sepa.customer.documentType` | `string` | Document type |
-| `sepa.bic` | `string` | BIC/SWIFT code of the bank |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>type</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;SEPA&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>currency</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;EUR&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>sepa.iban</code></td>
+      <td><code>string</code></td>
+      <td>Recipient&#x27;s IBAN</td>
+    </tr>
+    <tr>
+      <td><code>sepa.customer.firstName</code></td>
+      <td><code>string</code></td>
+      <td>Recipient&#x27;s first name</td>
+    </tr>
+    <tr>
+      <td><code>sepa.customer.lastName</code></td>
+      <td><code>string</code></td>
+      <td>Recipient&#x27;s last name</td>
+    </tr>
+    <tr>
+      <td><code>sepa.customer.email</code></td>
+      <td><code>string</code></td>
+      <td>Recipient&#x27;s email</td>
+    </tr>
+    <tr>
+      <td><code>sepa.customer.documentNumber</code></td>
+      <td><code>string</code></td>
+      <td>National ID or tax number</td>
+    </tr>
+    <tr>
+      <td><code>sepa.customer.documentType</code></td>
+      <td><code>string</code></td>
+      <td>Document type</td>
+    </tr>
+    <tr>
+      <td><code>sepa.bic</code></td>
+      <td><code>string</code></td>
+      <td>BIC/SWIFT code of the bank</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Example
 

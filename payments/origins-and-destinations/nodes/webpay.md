@@ -10,13 +10,42 @@ Webpay is the Transbank gateway, widely used in Chile for both debit and credit 
 
 ## Required fields
 
-| Field | Type | Description |
-|---|---|---|
-| `type` | `string` | Must be `"WEBPAY"` |
-| `currency` | `string` | Must be `"CLP"` |
-| `webpay.customer.firstName` | `string` | Payer's first name |
-| `webpay.customer.lastName` | `string` | Payer's last name |
-| `webpay.customer.email` | `string` | Payer's email |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>type</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;WEBPAY&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>currency</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;CLP&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>webpay.customer.firstName</code></td>
+      <td><code>string</code></td>
+      <td>Payer&#x27;s first name</td>
+    </tr>
+    <tr>
+      <td><code>webpay.customer.lastName</code></td>
+      <td><code>string</code></td>
+      <td>Payer&#x27;s last name</td>
+    </tr>
+    <tr>
+      <td><code>webpay.customer.email</code></td>
+      <td><code>string</code></td>
+      <td>Payer&#x27;s email</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Example
 
@@ -36,10 +65,24 @@ Webpay is the Transbank gateway, widely used in Chile for both debit and credit 
 
 ## Response fields
 
-| Field | Description |
-|---|---|
-| `url` | Transbank-hosted payment URL |
-| `token` | Session token |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>url</code></td>
+      <td>Transbank-hosted payment URL</td>
+    </tr>
+    <tr>
+      <td><code>token</code></td>
+      <td>Session token</td>
+    </tr>
+  </tbody>
+</table>
 
 Redirect your user to `webpay.url` to complete the payment on the Transbank page.
 

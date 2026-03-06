@@ -10,14 +10,47 @@ ETPAY is a Chilean open banking provider that lets users pay directly from their
 
 ## Required fields
 
-| Field | Type | Description |
-|---|---|---|
-| `type` | `string` | Must be `"ETPAY"` |
-| `currency` | `string` | Must be `"CLP"` |
-| `etpay.successUrl` | `string` | URL to redirect after successful payment |
-| `etpay.failedUrl` | `string` | URL to redirect if payment fails |
-| `etpay.customer.firstName` | `string` | Payer's first name |
-| `etpay.customer.email` | `string` | Payer's email |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>type</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;ETPAY&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>currency</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;CLP&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>etpay.successUrl</code></td>
+      <td><code>string</code></td>
+      <td>URL to redirect after successful payment</td>
+    </tr>
+    <tr>
+      <td><code>etpay.failedUrl</code></td>
+      <td><code>string</code></td>
+      <td>URL to redirect if payment fails</td>
+    </tr>
+    <tr>
+      <td><code>etpay.customer.firstName</code></td>
+      <td><code>string</code></td>
+      <td>Payer&#x27;s first name</td>
+    </tr>
+    <tr>
+      <td><code>etpay.customer.email</code></td>
+      <td><code>string</code></td>
+      <td>Payer&#x27;s email</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Example
 
@@ -38,10 +71,24 @@ ETPAY is a Chilean open banking provider that lets users pay directly from their
 
 ## Response fields
 
-| Field | Description |
-|---|---|
-| `url` | Redirect URL — send the user here to complete the payment |
-| `expiresAt` | When the session expires |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>url</code></td>
+      <td>Redirect URL — send the user here to complete the payment</td>
+    </tr>
+    <tr>
+      <td><code>expiresAt</code></td>
+      <td>When the session expires</td>
+    </tr>
+  </tbody>
+</table>
 
 Redirect your user to `etpay.url` immediately after creating the payment.
 

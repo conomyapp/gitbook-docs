@@ -10,11 +10,32 @@ Bancolombia's transfer button allows Bancolombia account holders to authorize a 
 
 ## Required fields
 
-| Field | Type | Description |
-|---|---|---|
-| `type` | `string` | Must be `"BANCOLOMBIA"` |
-| `currency` | `string` | Must be `"COP"` |
-| `bancolombia.customer.email` | `string` | Payer's email |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>type</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;BANCOLOMBIA&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>currency</code></td>
+      <td><code>string</code></td>
+      <td>Must be <code>&quot;COP&quot;</code></td>
+    </tr>
+    <tr>
+      <td><code>bancolombia.customer.email</code></td>
+      <td><code>string</code></td>
+      <td>Payer&#x27;s email</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Example
 
@@ -32,9 +53,20 @@ Bancolombia's transfer button allows Bancolombia account holders to authorize a 
 
 ## Response fields
 
-| Field | Description |
-|---|---|
-| `url` | Deep link / redirect URL to Bancolombia's authorization flow |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>url</code></td>
+      <td>Deep link / redirect URL to Bancolombia&#x27;s authorization flow</td>
+    </tr>
+  </tbody>
+</table>
 
 Redirect the user to `bancolombia.url` to complete authorization.
 

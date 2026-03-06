@@ -42,59 +42,284 @@ The rule is simple: the `type` field must always be in uppercase, and there must
 
 ## Node structure
 
-| Field | Type | Description |
-|---|---|---|
-| `type` | `string` | The rail identifier in uppercase (e.g., `"PIX"`, `"ACH"`, `"SEPA"`) |
-| `currency` | `string` | `ISO 4217` currency code (e.g., `"BRL"`, `"USD"`, `"EUR"`) |
-| `amount` | `string` | Amount in the smallest currency unit (e.g., cents) |
-| `<rail>` | `object` | Rail-specific data object — name matches `type` in camelCase |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>type</code></td>
+      <td><code>string</code></td>
+      <td>The rail identifier in uppercase (e.g., <code>&quot;PIX&quot;</code>, <code>&quot;ACH&quot;</code>, <code>&quot;SEPA&quot;</code>)</td>
+    </tr>
+    <tr>
+      <td><code>currency</code></td>
+      <td><code>string</code></td>
+      <td><code>ISO 4217</code> currency code (e.g., <code>&quot;BRL&quot;</code>, <code>&quot;USD&quot;</code>, <code>&quot;EUR&quot;</code>)</td>
+    </tr>
+    <tr>
+      <td><code>amount</code></td>
+      <td><code>string</code></td>
+      <td>Amount in the smallest currency unit (e.g., cents)</td>
+    </tr>
+    <tr>
+      <td><code>&lt;rail&gt;</code></td>
+      <td><code>object</code></td>
+      <td>Rail-specific data object — name matches <code>type</code> in camelCase</td>
+    </tr>
+  </tbody>
+</table>
 
 ## Rail summary
 
 Choose your rail based on country and direction:
 
-| Rail | Country | Currency | Direction | Type |
-|---|---|---|---|---|
-| [PIX](pix.md) | Brazil | BRL | Pay-in / Pay-out | Redirect / QR |
-| [PCT](pct.md) | Argentina | ARS | Pay-in | QR |
-| [CVU](cvu.md) | Argentina | ARS | Pay-in | Bank transfer |
-| [ETPAY](etpay.md) | Chile | CLP | Pay-in | Redirect |
-| [FINTOC](fintoc.md) | Chile | CLP | Pay-in | Open banking |
-| [WEBPAY](webpay.md) | Chile | CLP | Pay-in | Redirect |
-| [SPEI](spei.md) | Mexico | MXN | Pay-in / Pay-out | Bank transfer |
-| [PSE](pse.md) | Colombia | COP | Pay-in | Redirect |
-| [BANCOLOMBIA](bancolombia.md) | Colombia | COP | Pay-in | Redirect |
-| [DAVIVIENDA](davivienda.md) | Colombia | COP | Pay-in | Redirect |
-| [DAVIPLATA](daviplata.md) | Colombia | COP | Pay-in / Pay-out | Wallet |
-| [NEQUI](nequi.md) | Colombia | COP | Pay-in / Pay-out | Wallet |
-| [BREB](breb.md) | Colombia | COP | Pay-out | Bank transfer |
-| [WOMPI](wompi.md) | Colombia | COP | Pay-in | Redirect |
-| [PAGO\_MOVIL](pago-movil.md) | Venezuela | VES | Pay-in | Mobile payment |
-| [ACH](ach.md) | USA | USD | Pay-in / Pay-out | Bank transfer |
-| [WIRE](wire.md) | USA | USD | Pay-out | Wire transfer |
-| [FEDNOW](fednow.md) | USA | USD | Pay-in / Pay-out | Instant payment |
-| [RTP](rtp.md) | USA | USD | Pay-in | Instant payment |
-| [SEPA](sepa.md) | Europe | EUR | Pay-out | Bank transfer |
-| [SWIFT](swift.md) | International | Multi | Pay-out | Wire transfer |
-| [FPE](fpe.md) | UK | GBP | Pay-out | Faster Payments |
-| [ACCOUNT](account.md) | Any | Multi | Pay-in / Pay-out | Platform account |
-| [BANK\_ACCOUNT](bank-account.md) | Any | Multi | Pay-out | Generic bank |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Rail</th>
+      <th>Country</th>
+      <th>Currency</th>
+      <th>Direction</th>
+      <th>Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="pix.md">PIX</a></td>
+      <td>Brazil</td>
+      <td>BRL</td>
+      <td>Pay-in / Pay-out</td>
+      <td>Redirect / QR</td>
+    </tr>
+    <tr>
+      <td><a href="pct.md">PCT</a></td>
+      <td>Argentina</td>
+      <td>ARS</td>
+      <td>Pay-in</td>
+      <td>QR</td>
+    </tr>
+    <tr>
+      <td><a href="cvu.md">CVU</a></td>
+      <td>Argentina</td>
+      <td>ARS</td>
+      <td>Pay-in</td>
+      <td>Bank transfer</td>
+    </tr>
+    <tr>
+      <td><a href="etpay.md">ETPAY</a></td>
+      <td>Chile</td>
+      <td>CLP</td>
+      <td>Pay-in</td>
+      <td>Redirect</td>
+    </tr>
+    <tr>
+      <td><a href="fintoc.md">FINTOC</a></td>
+      <td>Chile</td>
+      <td>CLP</td>
+      <td>Pay-in</td>
+      <td>Open banking</td>
+    </tr>
+    <tr>
+      <td><a href="webpay.md">WEBPAY</a></td>
+      <td>Chile</td>
+      <td>CLP</td>
+      <td>Pay-in</td>
+      <td>Redirect</td>
+    </tr>
+    <tr>
+      <td><a href="spei.md">SPEI</a></td>
+      <td>Mexico</td>
+      <td>MXN</td>
+      <td>Pay-in / Pay-out</td>
+      <td>Bank transfer</td>
+    </tr>
+    <tr>
+      <td><a href="pse.md">PSE</a></td>
+      <td>Colombia</td>
+      <td>COP</td>
+      <td>Pay-in</td>
+      <td>Redirect</td>
+    </tr>
+    <tr>
+      <td><a href="bancolombia.md">BANCOLOMBIA</a></td>
+      <td>Colombia</td>
+      <td>COP</td>
+      <td>Pay-in</td>
+      <td>Redirect</td>
+    </tr>
+    <tr>
+      <td><a href="davivienda.md">DAVIVIENDA</a></td>
+      <td>Colombia</td>
+      <td>COP</td>
+      <td>Pay-in</td>
+      <td>Redirect</td>
+    </tr>
+    <tr>
+      <td><a href="daviplata.md">DAVIPLATA</a></td>
+      <td>Colombia</td>
+      <td>COP</td>
+      <td>Pay-in / Pay-out</td>
+      <td>Wallet</td>
+    </tr>
+    <tr>
+      <td><a href="nequi.md">NEQUI</a></td>
+      <td>Colombia</td>
+      <td>COP</td>
+      <td>Pay-in / Pay-out</td>
+      <td>Wallet</td>
+    </tr>
+    <tr>
+      <td><a href="breb.md">BREB</a></td>
+      <td>Colombia</td>
+      <td>COP</td>
+      <td>Pay-out</td>
+      <td>Bank transfer</td>
+    </tr>
+    <tr>
+      <td><a href="wompi.md">WOMPI</a></td>
+      <td>Colombia</td>
+      <td>COP</td>
+      <td>Pay-in</td>
+      <td>Redirect</td>
+    </tr>
+    <tr>
+      <td><a href="pago-movil.md">PAGO\_MOVIL</a></td>
+      <td>Venezuela</td>
+      <td>VES</td>
+      <td>Pay-in</td>
+      <td>Mobile payment</td>
+    </tr>
+    <tr>
+      <td><a href="ach.md">ACH</a></td>
+      <td>USA</td>
+      <td>USD</td>
+      <td>Pay-in / Pay-out</td>
+      <td>Bank transfer</td>
+    </tr>
+    <tr>
+      <td><a href="wire.md">WIRE</a></td>
+      <td>USA</td>
+      <td>USD</td>
+      <td>Pay-out</td>
+      <td>Wire transfer</td>
+    </tr>
+    <tr>
+      <td><a href="fednow.md">FEDNOW</a></td>
+      <td>USA</td>
+      <td>USD</td>
+      <td>Pay-in / Pay-out</td>
+      <td>Instant payment</td>
+    </tr>
+    <tr>
+      <td><a href="rtp.md">RTP</a></td>
+      <td>USA</td>
+      <td>USD</td>
+      <td>Pay-in</td>
+      <td>Instant payment</td>
+    </tr>
+    <tr>
+      <td><a href="sepa.md">SEPA</a></td>
+      <td>Europe</td>
+      <td>EUR</td>
+      <td>Pay-out</td>
+      <td>Bank transfer</td>
+    </tr>
+    <tr>
+      <td><a href="swift.md">SWIFT</a></td>
+      <td>International</td>
+      <td>Multi</td>
+      <td>Pay-out</td>
+      <td>Wire transfer</td>
+    </tr>
+    <tr>
+      <td><a href="fpe.md">FPE</a></td>
+      <td>UK</td>
+      <td>GBP</td>
+      <td>Pay-out</td>
+      <td>Faster Payments</td>
+    </tr>
+    <tr>
+      <td><a href="account.md">ACCOUNT</a></td>
+      <td>Any</td>
+      <td>Multi</td>
+      <td>Pay-in / Pay-out</td>
+      <td>Platform account</td>
+    </tr>
+    <tr>
+      <td><a href="bank-account.md">BANK\_ACCOUNT</a></td>
+      <td>Any</td>
+      <td>Multi</td>
+      <td>Pay-out</td>
+      <td>Generic bank</td>
+    </tr>
+  </tbody>
+</table>
 
 ## The customer object
 
 Most rails require a `customer` object nested inside the rail sub-object. It carries the end-user's identity for compliance and routing:
 
-| Field | Type | Description |
-|---|---|---|
-| `firstName` | `string` | First name |
-| `lastName` | `string` | Last name |
-| `email` | `string` | Email address |
-| `phoneNumber` | `string` | Phone number (digits only, no prefix) |
-| `phoneNumberPrefix` | `string` | Country calling code (e.g., `"54"`) |
-| `documentNumber` | `string` | National ID or tax number |
-| `documentType` | `string` | Document type (e.g., `"CPF"`, `"DNI"`, `"CC"`) |
-| `country` | `string` | `ISO 3166-1 alpha-2` country code (e.g., `"BR"`, `"MX"`) |
-| `address` | `object` | Address object — required by some rails |
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>firstName</code></td>
+      <td><code>string</code></td>
+      <td>First name</td>
+    </tr>
+    <tr>
+      <td><code>lastName</code></td>
+      <td><code>string</code></td>
+      <td>Last name</td>
+    </tr>
+    <tr>
+      <td><code>email</code></td>
+      <td><code>string</code></td>
+      <td>Email address</td>
+    </tr>
+    <tr>
+      <td><code>phoneNumber</code></td>
+      <td><code>string</code></td>
+      <td>Phone number (digits only, no prefix)</td>
+    </tr>
+    <tr>
+      <td><code>phoneNumberPrefix</code></td>
+      <td><code>string</code></td>
+      <td>Country calling code (e.g., <code>&quot;54&quot;</code>)</td>
+    </tr>
+    <tr>
+      <td><code>documentNumber</code></td>
+      <td><code>string</code></td>
+      <td>National ID or tax number</td>
+    </tr>
+    <tr>
+      <td><code>documentType</code></td>
+      <td><code>string</code></td>
+      <td>Document type (e.g., <code>&quot;CPF&quot;</code>, <code>&quot;DNI&quot;</code>, <code>&quot;CC&quot;</code>)</td>
+    </tr>
+    <tr>
+      <td><code>country</code></td>
+      <td><code>string</code></td>
+      <td><code>ISO 3166-1 alpha-2</code> country code (e.g., <code>&quot;BR&quot;</code>, <code>&quot;MX&quot;</code>)</td>
+    </tr>
+    <tr>
+      <td><code>address</code></td>
+      <td><code>object</code></td>
+      <td>Address object — required by some rails</td>
+    </tr>
+  </tbody>
+</table>
 
 ## What happens after you submit
 

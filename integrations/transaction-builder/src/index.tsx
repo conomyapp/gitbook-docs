@@ -214,210 +214,265 @@ const BUILDER_HTML = `<!doctype html>
       </div>
     </div>
 
-    <script>
-      const paymentTypeOptions = [
-        ["TOPUP_ACCOUNT", "Top up account"],
-        ["WITHDRAWAL_ACCOUNT", "Withdrawal account"],
-        ["REMITTANCE", "Remittance"],
-        ["PURCHASE", "Purchase"],
-        ["P2P", "P2P"],
-        ["COLLECT", "Collect"],
-        ["FEE", "Fee"]
-      ];
-
-      const originRailOptions = ["CVU", "PCT", "PIX", "WEBPAY", "PSE", "SPEI", "ACH", "WIRE", "SWIFT", "CRYPTO", "ACCOUNT"];
-      const destinationRailOptions = ["ACCOUNT", "BANK_ACCOUNT", "CVU", "PIX", "SPEI", "ACH", "WIRE", "SWIFT", "CRYPTO", "PSE"];
-
-      const nodeKeyByType = {
-        ACCOUNT: "account",
-        BANK_ACCOUNT: "bank",
-        CRYPTO: "wallet",
-        PIX: "pix",
-        PCT: "pct",
-        CVU: "cvu",
-        ETPAY: "etpay",
-        FINTOC: "fintoc",
-        WEBPAY: "webpay",
-        WOMPI: "wompi",
-        PSE: "pse",
-        BANCOLOMBIA: "bancolombia",
-        DAVIVIENDA: "davivienda",
-        DAVIPLATA: "daviplata",
-        NEQUI: "nequi",
-        BREB: "breb",
-        SPEI: "spei",
-        ACH: "ach",
-        WIRE: "wire",
-        FEDNOW: "fednow",
-        RTP: "rtp",
-        SEPA: "sepa",
-        FPE: "fpe",
-        SWIFT: "swift",
-        PAGO_MOVIL: "pagoMovil"
-      };
-
-      const $ = (id) => document.getElementById(id);
-      const state = {
-        showAdvanced: false
-      };
-
-      function fillSelect(select, options) {
-        select.innerHTML = "";
-        options.forEach((entry) => {
-          const value = Array.isArray(entry) ? entry[0] : entry;
-          const label = Array.isArray(entry) ? entry[1] : entry;
-          const option = document.createElement("option");
-          option.value = value;
-          option.textContent = label;
-          select.appendChild(option);
-        });
-      }
-
-      function defaultNodeJson(type, direction) {
-        if (type === "ACCOUNT") return JSON.stringify({ accountNumber: "<ACCOUNT_NUMBER>" }, null, 2);
-        if (type === "BANK_ACCOUNT") return JSON.stringify({ accountNumber: "<ACCOUNT_NUMBER>", bankCode: "<BANK_CODE>" }, null, 2);
-        if (type === "CVU") return JSON.stringify({ customer: { firstName: "Juan", lastName: "Perez", email: "juan@example.com" } }, null, 2);
-        if (type === "PCT") return JSON.stringify({ customer: { email: "juan@example.com", phoneNumber: "1123456789", phoneNumberPrefix: "+54" } }, null, 2);
-        if (type === "PIX") {
-          if (direction === "origin") {
-            return JSON.stringify({ successUrl: "https://yourapp.com/success", failedUrl: "https://yourapp.com/failed", customer: { firstName: "Maria", lastName: "Silva", email: "maria@example.com", documentNumber: "12345678901" } }, null, 2);
-          }
-          return JSON.stringify({ keyType: "email", key: "maria@example.com" }, null, 2);
-        }
-        if (type === "CRYPTO") return JSON.stringify({ address: "<WALLET_ADDRESS>", network: "<NETWORK>", asset: "<ASSET>" }, null, 2);
-        if (type === "WEBPAY") return JSON.stringify({ successUrl: "https://yourapp.com/success", failedUrl: "https://yourapp.com/failed" }, null, 2);
-        return "{}";
-      }
-
-      function normalizeRails() {
-        const originType = $("originType").value.toUpperCase();
-        const destinationType = $("destinationType").value.toUpperCase();
-        $("originNodeJson").value = defaultNodeJson(originType, "origin");
-        $("destinationNodeJson").value = defaultNodeJson(destinationType, "destination");
-        renderRoute();
-      }
-
-      function applyPreset() {
-        const preset = $("preset").value;
-        if (preset === "ars-cvu-topup") {
-          $("type").value = "TOPUP_ACCOUNT";
-          $("purchaseCurrency").value = "ARS";
-          $("currency").value = "ARS";
-          $("originType").value = "CVU";
-          $("destinationType").value = "ACCOUNT";
-        } else if (preset === "ars-pct-topup") {
-          $("type").value = "TOPUP_ACCOUNT";
-          $("purchaseCurrency").value = "ARS";
-          $("currency").value = "ARS";
-          $("originType").value = "PCT";
-          $("destinationType").value = "ACCOUNT";
-        } else if (preset === "pix-brl-to-clp") {
-          $("type").value = "TOPUP_ACCOUNT";
-          $("purchaseCurrency").value = "BRL";
-          $("currency").value = "CLP";
-          $("originType").value = "PIX";
-          $("destinationType").value = "ACCOUNT";
-        }
-        normalizeRails();
-      }
-
-      function renderRoute() {
-        const source = ($("purchaseCurrency").value || "").toUpperCase();
-        const target = ($("currency").value || "").toUpperCase();
-        const origin = $("originType").value;
-        const destination = $("destinationType").value;
-        $("route").textContent = "Route preview: " + source + " " + origin + " -> " + destination + " -> " + target;
-      }
-
-      function buildPayload() {
-        const type = ($("type").value || "").trim().toUpperCase();
-        const purchaseCurrency = ($("purchaseCurrency").value || "").trim().toUpperCase();
-        const currency = ($("currency").value || "").trim().toUpperCase();
-        const originType = ($("originType").value || "").trim().toUpperCase();
-        const destinationType = ($("destinationType").value || "").trim().toUpperCase();
-
-        const originNodeKey = nodeKeyByType[originType];
-        const destinationNodeKey = nodeKeyByType[destinationType];
-
-        if (!originNodeKey) throw new Error("Unsupported origin type: " + originType);
-        if (!destinationNodeKey) throw new Error("Unsupported destination type: " + destinationType);
-
-        const originNode = JSON.parse(($("originNodeJson").value || defaultNodeJson(originType, "origin")).trim() || "{}");
-        const destinationNode = JSON.parse(($("destinationNodeJson").value || defaultNodeJson(destinationType, "destination")).trim() || "{}");
-
-        const origin = {
-          type: originType,
-          currency: (($("originCurrency").value || purchaseCurrency).trim() || purchaseCurrency).toUpperCase(),
-          [originNodeKey]: originNode
-        };
-
-        const destination = {
-          type: destinationType,
-          currency: (($("destinationCurrency").value || currency).trim() || currency).toUpperCase(),
-          [destinationNodeKey]: destinationNode
-        };
-
-        if ($("originAmount").value) origin.amount = $("originAmount").value;
-        if ($("destinationAmount").value) destination.amount = $("destinationAmount").value;
-
-        return {
-          identityId: $("identityId").value || "<IDENTITY_ID>",
-          accountNumber: $("accountNumber").value || "<ACCOUNT_NUMBER>",
-          type,
-          product: purchaseCurrency + ":" + currency,
-          purchaseAmount: $("purchaseAmount").value,
-          purchaseCurrency,
-          currency,
-          origins: [origin],
-          destinations: [destination]
-        };
-      }
-
-      function buildCurl(payload) {
-        const base = (($("baseUrl").value || "https://api.conomyhq.com/sandbox").trim() || "https://api.conomyhq.com/sandbox").replace(/\/+$/, "");
-        const body = JSON.stringify(payload).replace(/'/g, "'\\\\''");
-        return [
-          "curl --request POST \\",
-          "  --url '" + base + "/payments' \\",
-          "  --header 'Authorization: Bearer <TOKEN>' \\",
-          "  --header 'x-api-key: <API_KEY>' \\",
-          "  --header 'Content-Type: application/json' \\",
-          "  --data '" + body + "'"
-        ].join("\\n");
-      }
-
-      $("toggleAdvanced").addEventListener("click", () => {
-        state.showAdvanced = !state.showAdvanced;
-        $("advanced").classList.toggle("hidden", !state.showAdvanced);
-        $("toggleAdvanced").textContent = state.showAdvanced ? "Hide advanced" : "Show advanced";
-      });
-
-      $("applyPreset").addEventListener("click", applyPreset);
-      $("defaults").addEventListener("click", normalizeRails);
-      $("purchaseCurrency").addEventListener("input", renderRoute);
-      $("currency").addEventListener("input", renderRoute);
-      $("originType").addEventListener("change", renderRoute);
-      $("destinationType").addEventListener("change", renderRoute);
-
-      $("generate").addEventListener("click", () => {
-        try {
-          $("error").textContent = "";
-          const payload = buildPayload();
-          $("generatedJson").value = JSON.stringify(payload, null, 2);
-          $("generatedCurl").value = buildCurl(payload);
-        } catch (error) {
-          $("error").textContent = error instanceof Error ? error.message : "Unable to generate payload.";
-        }
-      });
-
-      fillSelect($("type"), paymentTypeOptions);
-      fillSelect($("originType"), originRailOptions);
-      fillSelect($("destinationType"), destinationRailOptions);
-      applyPreset();
-      renderRoute();
-    </script>
+    <script src="${PUBLIC_ENDPOINT}/builder.js"></script>
   </body>
 </html>`;
+
+const BUILDER_JS = String.raw`(function () {
+  const paymentTypeOptions = [
+    ["TOPUP_ACCOUNT", "Top up account"],
+    ["WITHDRAWAL_ACCOUNT", "Withdrawal account"],
+    ["REMITTANCE", "Remittance"],
+    ["PURCHASE", "Purchase"],
+    ["P2P", "P2P"],
+    ["COLLECT", "Collect"],
+    ["FEE", "Fee"]
+  ];
+
+  const originRailOptions = [
+    "CVU",
+    "PCT",
+    "PIX",
+    "WEBPAY",
+    "PSE",
+    "SPEI",
+    "ACH",
+    "WIRE",
+    "SWIFT",
+    "CRYPTO",
+    "ACCOUNT"
+  ];
+
+  const destinationRailOptions = [
+    "ACCOUNT",
+    "BANK_ACCOUNT",
+    "CVU",
+    "PIX",
+    "SPEI",
+    "ACH",
+    "WIRE",
+    "SWIFT",
+    "CRYPTO",
+    "PSE"
+  ];
+
+  const nodeKeyByType = {
+    ACCOUNT: "account",
+    BANK_ACCOUNT: "bank",
+    CRYPTO: "wallet",
+    PIX: "pix",
+    PCT: "pct",
+    CVU: "cvu",
+    ETPAY: "etpay",
+    FINTOC: "fintoc",
+    WEBPAY: "webpay",
+    WOMPI: "wompi",
+    PSE: "pse",
+    BANCOLOMBIA: "bancolombia",
+    DAVIVIENDA: "davivienda",
+    DAVIPLATA: "daviplata",
+    NEQUI: "nequi",
+    BREB: "breb",
+    SPEI: "spei",
+    ACH: "ach",
+    WIRE: "wire",
+    FEDNOW: "fednow",
+    RTP: "rtp",
+    SEPA: "sepa",
+    FPE: "fpe",
+    SWIFT: "swift",
+    PAGO_MOVIL: "pagoMovil"
+  };
+
+  const $ = (id) => document.getElementById(id);
+  const state = { showAdvanced: false };
+
+  function fillSelect(el, options) {
+    el.innerHTML = "";
+    options.forEach((entry) => {
+      const value = Array.isArray(entry) ? entry[0] : entry;
+      const label = Array.isArray(entry) ? entry[1] : entry;
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = label;
+      el.appendChild(option);
+    });
+  }
+
+  function defaultNodeJson(type, direction) {
+    if (type === "ACCOUNT") {
+      return JSON.stringify({ accountNumber: "<ACCOUNT_NUMBER>" }, null, 2);
+    }
+
+    if (type === "BANK_ACCOUNT") {
+      return JSON.stringify({ accountNumber: "<ACCOUNT_NUMBER>", bankCode: "<BANK_CODE>" }, null, 2);
+    }
+
+    if (type === "CVU") {
+      return JSON.stringify({ customer: { firstName: "Juan", lastName: "Perez", email: "juan@example.com" } }, null, 2);
+    }
+
+    if (type === "PCT") {
+      return JSON.stringify({ customer: { email: "juan@example.com", phoneNumber: "1123456789", phoneNumberPrefix: "+54" } }, null, 2);
+    }
+
+    if (type === "PIX") {
+      if (direction === "origin") {
+        return JSON.stringify({ successUrl: "https://yourapp.com/success", failedUrl: "https://yourapp.com/failed", customer: { firstName: "Maria", lastName: "Silva", email: "maria@example.com", documentNumber: "12345678901" } }, null, 2);
+      }
+      return JSON.stringify({ keyType: "email", key: "maria@example.com" }, null, 2);
+    }
+
+    if (type === "CRYPTO") {
+      return JSON.stringify({ address: "<WALLET_ADDRESS>", network: "<NETWORK>", asset: "<ASSET>" }, null, 2);
+    }
+
+    if (type === "WEBPAY") {
+      return JSON.stringify({ successUrl: "https://yourapp.com/success", failedUrl: "https://yourapp.com/failed" }, null, 2);
+    }
+
+    return "{}";
+  }
+
+  function normalizeRails() {
+    const originType = ($("originType").value || "").toUpperCase();
+    const destinationType = ($("destinationType").value || "").toUpperCase();
+    $("originNodeJson").value = defaultNodeJson(originType, "origin");
+    $("destinationNodeJson").value = defaultNodeJson(destinationType, "destination");
+    renderRoute();
+  }
+
+  function applyPreset() {
+    const preset = $("preset").value;
+
+    if (preset === "ars-cvu-topup") {
+      $("type").value = "TOPUP_ACCOUNT";
+      $("purchaseCurrency").value = "ARS";
+      $("currency").value = "ARS";
+      $("originType").value = "CVU";
+      $("destinationType").value = "ACCOUNT";
+    } else if (preset === "ars-pct-topup") {
+      $("type").value = "TOPUP_ACCOUNT";
+      $("purchaseCurrency").value = "ARS";
+      $("currency").value = "ARS";
+      $("originType").value = "PCT";
+      $("destinationType").value = "ACCOUNT";
+    } else if (preset === "pix-brl-to-clp") {
+      $("type").value = "TOPUP_ACCOUNT";
+      $("purchaseCurrency").value = "BRL";
+      $("currency").value = "CLP";
+      $("originType").value = "PIX";
+      $("destinationType").value = "ACCOUNT";
+    }
+
+    normalizeRails();
+  }
+
+  function renderRoute() {
+    const source = ($("purchaseCurrency").value || "").toUpperCase();
+    const target = ($("currency").value || "").toUpperCase();
+    const origin = $("originType").value;
+    const destination = $("destinationType").value;
+    $("route").textContent = "Route preview: " + source + " " + origin + " -> " + destination + " -> " + target;
+  }
+
+  function buildPayload() {
+    const type = ($("type").value || "").trim().toUpperCase();
+    const purchaseCurrency = ($("purchaseCurrency").value || "").trim().toUpperCase();
+    const currency = ($("currency").value || "").trim().toUpperCase();
+    const originType = ($("originType").value || "").trim().toUpperCase();
+    const destinationType = ($("destinationType").value || "").trim().toUpperCase();
+
+    const originNodeKey = nodeKeyByType[originType];
+    const destinationNodeKey = nodeKeyByType[destinationType];
+
+    if (!originNodeKey) throw new Error("Unsupported origin type: " + originType);
+    if (!destinationNodeKey) throw new Error("Unsupported destination type: " + destinationType);
+
+    const originNode = JSON.parse(($("originNodeJson").value || defaultNodeJson(originType, "origin")).trim() || "{}");
+    const destinationNode = JSON.parse(($("destinationNodeJson").value || defaultNodeJson(destinationType, "destination")).trim() || "{}");
+
+    const origin = {
+      type: originType,
+      currency: (($("originCurrency").value || purchaseCurrency).trim() || purchaseCurrency).toUpperCase(),
+      [originNodeKey]: originNode
+    };
+
+    const destination = {
+      type: destinationType,
+      currency: (($("destinationCurrency").value || currency).trim() || currency).toUpperCase(),
+      [destinationNodeKey]: destinationNode
+    };
+
+    if ($("originAmount").value) origin.amount = $("originAmount").value;
+    if ($("destinationAmount").value) destination.amount = $("destinationAmount").value;
+
+    return {
+      identityId: $("identityId").value || "<IDENTITY_ID>",
+      accountNumber: $("accountNumber").value || "<ACCOUNT_NUMBER>",
+      type,
+      product: purchaseCurrency + ":" + currency,
+      purchaseAmount: $("purchaseAmount").value,
+      purchaseCurrency,
+      currency,
+      origins: [origin],
+      destinations: [destination]
+    };
+  }
+
+  function buildCurl(payload) {
+    const base = (($("baseUrl").value || "https://api.conomyhq.com/sandbox").trim() || "https://api.conomyhq.com/sandbox").replace(/\/+$/, "");
+    const body = JSON.stringify(payload).replace(/'/g, "'\\''");
+
+    return [
+      "curl --request POST \\",
+      "  --url '" + base + "/payments' \\",
+      "  --header 'Authorization: Bearer <TOKEN>' \\",
+      "  --header 'x-api-key: <API_KEY>' \\",
+      "  --header 'Content-Type: application/json' \\",
+      "  --data '" + body + "'"
+    ].join("\n");
+  }
+
+  function init() {
+    fillSelect($("type"), paymentTypeOptions);
+    fillSelect($("originType"), originRailOptions);
+    fillSelect($("destinationType"), destinationRailOptions);
+
+    $("toggleAdvanced").addEventListener("click", () => {
+      state.showAdvanced = !state.showAdvanced;
+      $("advanced").classList.toggle("hidden", !state.showAdvanced);
+      $("toggleAdvanced").textContent = state.showAdvanced ? "Hide advanced" : "Show advanced";
+    });
+
+    $("applyPreset").addEventListener("click", applyPreset);
+    $("defaults").addEventListener("click", normalizeRails);
+    $("purchaseCurrency").addEventListener("input", renderRoute);
+    $("currency").addEventListener("input", renderRoute);
+    $("originType").addEventListener("change", renderRoute);
+    $("destinationType").addEventListener("change", renderRoute);
+
+    $("generate").addEventListener("click", () => {
+      try {
+        $("error").textContent = "";
+        const payload = buildPayload();
+        $("generatedJson").value = JSON.stringify(payload, null, 2);
+        $("generatedCurl").value = buildCurl(payload);
+      } catch (error) {
+        $("error").textContent = error instanceof Error ? error.message : "Unable to generate payload.";
+      }
+    });
+
+    applyPreset();
+    renderRoute();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();`;
 
 const transactionBuilderBlock = createComponent({
   componentId: "transaction-builder-block",
@@ -442,6 +497,15 @@ export default createIntegration({
       return new Response(BUILDER_HTML, {
         headers: {
           "content-type": "text/html; charset=utf-8",
+          "cache-control": "public, max-age=300"
+        }
+      });
+    }
+
+    if (url.pathname.endsWith("/builder.js")) {
+      return new Response(BUILDER_JS, {
+        headers: {
+          "content-type": "application/javascript; charset=utf-8",
           "cache-control": "public, max-age=300"
         }
       });

@@ -56,3 +56,8 @@ Pago Móvil is Venezuela's interbank mobile payment system, allowing users to tr
 }
 ```
 
+## OpenAPI reference
+
+- Spec: `conomyhq-api`
+- Component: `pago-movil`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

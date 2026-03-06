@@ -57,3 +57,9 @@ The user is redirected to a Transbank-hosted checkout page.
 - `token`: Session token.
 
 Redirect your user to `webpay.url` to complete the payment on the Transbank page.
+
+## OpenAPI reference
+
+- Spec: `conomyhq-api`
+- Component: `webpay`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

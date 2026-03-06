@@ -56,3 +56,8 @@ FPE (Faster Payments) is the UK's real-time payment network. Payments settle in 
 }
 ```
 
+## OpenAPI reference
+
+- Spec: `conomyhq-api`
+- Component: `fpe`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

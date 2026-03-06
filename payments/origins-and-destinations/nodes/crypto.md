@@ -57,3 +57,9 @@ description: Crypto wallet rail for global pay-in and pay-out.
 
 - `CRYPTO` -> `ACCOUNT`
 - `ACCOUNT` -> `CRYPTO`
+
+## OpenAPI reference
+
+- Spec: `conomyhq-api`
+- Component: `wallet`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

@@ -1,0 +1,43 @@
+name: Publish OpenAPI to GitBook
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '.gitbook/assets/Payment API.yaml'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    env:
+      GITBOOK_TOKEN: ${{ secrets.GITBOOK_TOKEN }}
+      GITBOOK_SPEC_NAME: conomyhq-api
+      GITBOOK_ORGANIZATION_ID: w9xZeAeVKntkFCGMHbQ5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check GitBook token
+        id: token
+        run: |
+          if [ -n "$GITBOOK_TOKEN" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Skip publish when token is missing
+        if: steps.token.outputs.present != 'true'
+        run: |
+          echo "GITBOOK_TOKEN is not configured. Skipping OpenAPI publish."
+
+      - name: Publish Payment API spec to GitBook
+        if: steps.token.outputs.present == 'true'
+        run: |
+          npx -y @gitbook/cli@latest openapi publish \
+            ".gitbook/assets/Payment API.yaml" \
+            --spec "$GITBOOK_SPEC_NAME" \
+            --organization "$GITBOOK_ORGANIZATION_ID"

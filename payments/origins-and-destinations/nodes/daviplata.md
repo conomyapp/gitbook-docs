@@ -52,3 +52,8 @@ Daviplata is Davivienda's mobile wallet, widely used for transfers among unbanke
 }
 ```
 
+## OpenAPI reference
+
+- Spec: `conomyhq-api`
+- Component: `daviplata`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

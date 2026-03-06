@@ -62,3 +62,8 @@ The ACCOUNT node references an internal account on the conomy_hq platform. It's 
 
 The `accountNumber` corresponds to the account created via the [Accounts API](../../../api-reference/accounts.md).
 
+## OpenAPI reference
+
+- Spec: `conomyhq-api`
+- Component: `account`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

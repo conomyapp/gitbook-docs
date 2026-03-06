@@ -58,3 +58,8 @@ Bancolombia's transfer button allows Bancolombia account holders to authorize a 
 
 Redirect the user to `bancolombia.url` to complete authorization.
 
+## OpenAPI reference
+
+- Spec: `conomyhq-api`
+- Component: `bancolombia`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

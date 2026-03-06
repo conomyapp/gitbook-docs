@@ -65,3 +65,8 @@ ETPAY is a Chilean open banking provider that lets users pay directly from their
 
 Redirect your user to `etpay.url` immediately after creating the payment.
 
+## OpenAPI reference
+
+- Spec: `conomyhq-api`
+- Component: `etpay`
+- Source: [Payment API.yaml](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)

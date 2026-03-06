@@ -1,63 +1,26 @@
 ---
-description: Colombia's interbank electronic transfer network. Used for pay-out in Colombia.
+description: Colombia interbank transfer rail. Used for pay-out in Colombia.
 layout:
   width: full
 ---
 
 # BREB
 
-BREB (Banco de la República Electronic Bridge) is Colombia's interbank settlement network, used for direct bank-to-bank transfers. Use it as a destination for payouts to Colombian bank accounts.
+BREB (Banco de la Republica Electronic Bridge) is Colombia's interbank settlement network for bank-to-bank transfers.
 
 **Country:** Colombia | **Currency:** COP | **Direction:** Pay-out
 
 ## Required fields
 
-<table data-full-width="true">
-  <thead>
-    <tr>
-      <th>Field</th>
-      <th>Type</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>type</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;BREB&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>currency</code></td>
-      <td><code>string</code></td>
-      <td>Must be <code>&quot;COP&quot;</code></td>
-    </tr>
-    <tr>
-      <td><code>breB.bankId</code></td>
-      <td><code>string</code></td>
-      <td>Bank code of the recipient&#x27;s bank</td>
-    </tr>
-    <tr>
-      <td><code>breB.customer.firstName</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s first name</td>
-    </tr>
-    <tr>
-      <td><code>breB.customer.lastName</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s last name</td>
-    </tr>
-    <tr>
-      <td><code>breB.customer.email</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s email</td>
-    </tr>
-    <tr>
-      <td><code>breB.bank.accountNumber</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s account number</td>
-    </tr>
-  </tbody>
-</table>
+| Field | Type | Description |
+| --- | --- | --- |
+| `type` | `string` | Must be `"BREB"` |
+| `currency` | `string` | Must be `"COP"` |
+| `breb.bankId` | `string` | Recipient bank code |
+| `breb.accountNumber` | `string` | Recipient account number |
+| `breb.customer.firstName` | `string` | Recipient first name |
+| `breb.customer.lastName` | `string` | Recipient last name |
+| `breb.customer.email` | `string` | Recipient email |
 
 ## Example
 
@@ -65,11 +28,9 @@ BREB (Banco de la República Electronic Bridge) is Colombia's interbank settleme
 {
   "type": "BREB",
   "currency": "COP",
-  "breB": {
+  "breb": {
     "bankId": "1022",
-    "bank": {
-      "accountNumber": "123456789"
-    },
+    "accountNumber": "123456789",
     "customer": {
       "firstName": "Camila",
       "lastName": "Torres",

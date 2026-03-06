@@ -25,6 +25,10 @@ Build any valid `POST /payments` payload from user intent, currency pair, and ra
 This builder is dynamic: it uses `GET /payments/available-products` to discover rails and required fields per identity and currency at runtime.
 {% endhint %}
 
+{% hint style="success" %}
+Goal of this page: users can assemble a payment request and copy **JSON** or **cURL** from the GitBook API playground, without executing the transaction.
+{% endhint %}
+
 ## 1. Builder inputs
 
 | Input | Description |
@@ -59,7 +63,7 @@ Use:
 | Cross-border transfer | `REMITTANCE` | `ACCOUNT` or pay-in rail | Any valid pay-out rail |
 | Checkout / customer charge | `PURCHASE` | Any pay-in rail | `ACCOUNT` |
 
-## 4. Payload template (works for any route)
+## 4. Request shape
 
 ```json
 {
@@ -97,15 +101,20 @@ Use:
 Use only one node object matching `type` in each origin/destination. Example: if `type` is `PIX`, send only `pix`.
 {% endhint %}
 
-## 5. Validate and create the payment
+## 5. Generate JSON/cURL in the API playground
 
-Run the payment creation endpoint after selecting rail + required fields.
+Use the `POST /payments` block below to fill the request body and copy the generated request code.
+
+1. Click `Try it` in the block.
+2. Complete `type`, currencies, `product`, `origins`, and `destinations`.
+3. Use the code preview to copy `cURL` or `JSON`.
+4. Do not send the request if you only want request generation.
 
 {% openapi-operation spec="conomyhq-api" path="/payments" method="post" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-operation %}
 
-## 6. Example routes (using the same dynamic builder)
+## 6. Common route presets
 
 {% tabs %}
 {% tab title="Load ARS account with CVU" %}
@@ -114,17 +123,6 @@ Run the payment creation endpoint after selecting rail + required fields.
 `product`: `ARS:ARS`  
 `origin`: `CVU`  
 `destination`: `ACCOUNT`
-
-```json
-{
-  "type": "TOPUP_ACCOUNT",
-  "product": "ARS:ARS",
-  "purchaseCurrency": "ARS",
-  "currency": "ARS",
-  "origins": [{ "type": "CVU" }],
-  "destinations": [{ "type": "ACCOUNT" }]
-}
-```
 {% endtab %}
 
 {% tab title="Load ARS account with PCT" %}
@@ -133,17 +131,6 @@ Run the payment creation endpoint after selecting rail + required fields.
 `product`: `ARS:ARS`  
 `origin`: `PCT`  
 `destination`: `ACCOUNT`
-
-```json
-{
-  "type": "TOPUP_ACCOUNT",
-  "product": "ARS:ARS",
-  "purchaseCurrency": "ARS",
-  "currency": "ARS",
-  "origins": [{ "type": "PCT" }],
-  "destinations": [{ "type": "ACCOUNT" }]
-}
-```
 {% endtab %}
 
 {% tab title="Pay in BRL (PIX) and settle CLP" %}
@@ -152,17 +139,6 @@ Run the payment creation endpoint after selecting rail + required fields.
 `product`: `BRL:CLP`  
 `origin`: `PIX`  
 `destination`: `ACCOUNT`
-
-```json
-{
-  "type": "TOPUP_ACCOUNT",
-  "product": "BRL:CLP",
-  "purchaseCurrency": "BRL",
-  "currency": "CLP",
-  "origins": [{ "type": "PIX", "currency": "BRL" }],
-  "destinations": [{ "type": "ACCOUNT", "currency": "CLP" }]
-}
-```
 {% endtab %}
 {% endtabs %}
 
@@ -174,88 +150,14 @@ Run the payment creation endpoint after selecting rail + required fields.
 4. For split flows, each node must include `amount`, and all sums must match the payment amount.
 5. Keep only the node object that matches `origins[].type` or `destinations[].type`.
 
-## 8. Implementation checklist
+## 8. Builder checklist
 
 - Confirm the user goal (`TOPUP_ACCOUNT`, `WITHDRAWAL_ACCOUNT`, `REMITTANCE`, `PURCHASE`).
 - Confirm source currency (`purchaseCurrency`) and settlement currency (`currency`).
 - Call `GET /payments/available-products` for the target identity.
 - Select a rail that appears in `paymentMethods`/`withdrawalMethods`.
 - Render only the fields listed in `requiredFields`.
-- Submit `POST /payments`.
-
-## 9. Frontend payload factory (example)
-
-```ts
-type BuilderInput = {
-  identityId: string;
-  accountNumber: string;
-  type: "TOPUP_ACCOUNT" | "WITHDRAWAL_ACCOUNT" | "REMITTANCE" | "PURCHASE";
-  purchaseAmount: string;
-  purchaseCurrency: string;
-  currency: string;
-  originType: string;
-  destinationType: string;
-  originCurrency: string;
-  destinationCurrency: string;
-  originNode: Record<string, unknown>;
-  destinationNode: Record<string, unknown>;
-};
-
-const nodeKeyByType: Record<string, string> = {
-  ACCOUNT: "account",
-  BANK_ACCOUNT: "bank",
-  CRYPTO: "wallet",
-  PIX: "pix",
-  PCT: "pct",
-  CVU: "cvu",
-  ETPAY: "etpay",
-  FINTOC: "fintoc",
-  WEBPAY: "webpay",
-  SPEI: "spei",
-  PSE: "pse",
-  BANCOLOMBIA: "bancolombia",
-  DAVIVIENDA: "davivienda",
-  DAVIPLATA: "daviplata",
-  NEQUI: "nequi",
-  ACH: "ach",
-  WIRE: "wire",
-  SWIFT: "swift",
-  RTP: "rtp",
-  FEDNOW: "fednow",
-  FPE: "fpe",
-  SEPA: "sepa"
-};
-
-export function buildPaymentPayload(input: BuilderInput) {
-  const originNodeKey = nodeKeyByType[input.originType];
-  const destinationNodeKey = nodeKeyByType[input.destinationType];
-  if (!originNodeKey || !destinationNodeKey) throw new Error("Unsupported node type");
-
-  return {
-    identityId: input.identityId,
-    accountNumber: input.accountNumber,
-    type: input.type,
-    product: `${input.purchaseCurrency}:${input.currency}`,
-    purchaseAmount: input.purchaseAmount,
-    purchaseCurrency: input.purchaseCurrency,
-    currency: input.currency,
-    origins: [
-      {
-        type: input.originType,
-        currency: input.originCurrency,
-        [originNodeKey]: input.originNode
-      }
-    ],
-    destinations: [
-      {
-        type: input.destinationType,
-        currency: input.destinationCurrency,
-        [destinationNodeKey]: input.destinationNode
-      }
-    ]
-  };
-}
-```
+- Generate and copy `cURL`/`JSON`.
 
 ## Related docs
 

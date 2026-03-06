@@ -22,9 +22,9 @@ The transaction is initiated by the account owner when they decide to move money
 | -------------- | ----------------------------------------------------------------------------------------------------------------- |
 | `type`         | `WITHDRAWAL_ACCOUNT`                                                                                              |
 | `origins`      | One internal `ACCOUNT` node                                                                                       |
-| `destinations` | One or more payout rail nodes (for example: `BANK_ACCOUNT`, `CVU`, `SPEI`, `PIX`, `ACH`, `WIRE`, `SEPA`, `SWIFT`) |
+| `destinations` | One or more payout rail nodes (for example: `BANK_ACCOUNT`, `SPEI`, `PIX`, `ACH`, `WIRE`, `SEPA`, `SWIFT`) |
 
-The destination must be a payout rail specific to the recipient's country and currency. See [Nodes](../origins-and-destinations/nodes.md) for all available payout rails.
+The destination must be a payout rail specific to the recipient's country and currency. See [Nodes](../origins-and-destinations/nodes/README.md) for all available payout rails.
 
 ### Example
 
@@ -87,7 +87,6 @@ Bulk disbursements are **supported**: one origin, multiple destinations.
 | Region        | Rail          | Type           |
 | ------------- | ------------- | -------------- |
 | Argentina  | Bank transfer | `BANK_ACCOUNT` |
-| Argentina  | CVU/CBU       | `CVU`          |
 | Mexico     | CLABE         | `SPEI`         |
 | Brazil     | PIX key       | `PIX`          |
 | Colombia   | Bank payout   | `BREB`         |

@@ -6,7 +6,7 @@ layout:
 
 # CVU
 
-CVU (Clave Virtual Uniforme) is the virtual account identifier used in Argentina for instant bank transfers between banks and fintechs. Use it as a destination when sending funds to an Argentine recipient.
+CVU (Clave Virtual Uniforme) is the virtual account identifier used in Argentina for instant bank transfers between banks and fintechs. Use it as an origin when collecting funds from an Argentine payer.
 
 **Country:** Argentina | **Currency:** ARS | **Direction:** Pay-in
 
@@ -31,25 +31,29 @@ CVU (Clave Virtual Uniforme) is the virtual account identifier used in Argentina
       <td><code>string</code></td>
       <td>Must be <code>&quot;ARS&quot;</code></td>
     </tr>
+  </tbody>
+</table>
+
+## Optional fields
+
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
     <tr>
       <td><code>cvu.code</code></td>
       <td><code>string</code></td>
-      <td>22-digit CVU code of the recipient</td>
+      <td>Optional CVU/CBU code when your flow provides a pre-assigned identifier.</td>
     </tr>
     <tr>
-      <td><code>cvu.customer.firstName</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s first name</td>
-    </tr>
-    <tr>
-      <td><code>cvu.customer.lastName</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s last name</td>
-    </tr>
-    <tr>
-      <td><code>cvu.customer.email</code></td>
-      <td><code>string</code></td>
-      <td>Recipient&#x27;s email</td>
+      <td><code>cvu.customer.*</code></td>
+      <td><code>object</code></td>
+      <td>Optional customer data for downstream reconciliation.</td>
     </tr>
   </tbody>
 </table>
@@ -60,20 +64,13 @@ CVU (Clave Virtual Uniforme) is the virtual account identifier used in Argentina
 {
   "type": "CVU",
   "currency": "ARS",
-  "cvu": {
-    "code": "0000003100010000123456",
-    "customer": {
-      "firstName": "María",
-      "lastName": "González",
-      "email": "maria@example.com"
-    }
-  }
+  "cvu": {}
 }
 ```
 
-## Valid origins
+## Valid destinations
 
-When CVU is used as destination, the valid origins are:
+When CVU is used as origin, the valid destinations are:
 
 <table data-full-width="true">
   <thead>

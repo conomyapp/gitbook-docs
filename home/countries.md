@@ -59,7 +59,7 @@ Each country supports specific payment rails for moving funds in and out of the 
 | Mexico     | —                                                   | `SPEI`                            |
 | Colombia   | `PSE`, `BANCOLOMBIA`, `DAVIVIENDA`, `DAVIPLATA`, `NEQUI` | `BREB`, `BANK_ACCOUNT`               |
 | Brazil     | `PIX`                                               | `PIX`                             |
-| Argentina  | `PCT`                                               | `CVU`, `BANK_ACCOUNT`             |
+| Argentina  | `PCT`, `CVU`                                        | `BANK_ACCOUNT`                    |
 | Peru       | `LIGO`, `SIP`                                       | `BANK_ACCOUNT`                    |
 | Bolivia    | `SIP`                                               | `BANK_ACCOUNT`                    |
 | Paraguay   | —                                                   | `BANK_ACCOUNT`                    |

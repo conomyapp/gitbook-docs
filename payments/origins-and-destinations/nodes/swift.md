@@ -66,10 +66,29 @@ SWIFT transfers are the standard for international cross-border payments. They r
       <td><code>string</code></td>
       <td>Document type</td>
     </tr>
+  </tbody>
+</table>
+
+## Optional fields
+
+<table data-full-width="true">
+  <thead>
+    <tr>
+      <th>Field</th>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>swift.bank.name</code></td>
+      <td><code>string</code></td>
+      <td>Recipient bank name.</td>
+    </tr>
     <tr>
       <td><code>swift.iban</code></td>
       <td><code>string</code></td>
-      <td>IBAN (required for SEPA-zone recipients)</td>
+      <td>IBAN (required only for destinations that enforce IBAN format, such as SEPA-zone recipients).</td>
     </tr>
   </tbody>
 </table>

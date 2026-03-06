@@ -37,7 +37,7 @@ Use the Payment Destinations API to list all destinations defined in a payment f
 
 Go to [origins and destinations](../../payments/origins-and-destinations/) page for more information.
 
-Each `origin` and `destination` must include a `type` field that defines how the funds move. Go to [Payment node page](../../payments/origins-and-destinations/nodes.md) for more information.
+Each `origin` and `destination` must include a `type` field that defines how the funds move. Go to [Payment node page](../../payments/origins-and-destinations/nodes/README.md) for more information.
 {% endcolumn %}
 
 {% column %}

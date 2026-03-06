@@ -92,6 +92,13 @@ Choose your rail based on country and direction:
   </thead>
   <tbody>
     <tr>
+      <td><a href="crypto.md">CRYPTO</a></td>
+      <td>Global</td>
+      <td>USDC, USDT (network-dependent)</td>
+      <td>Pay-in / Pay-out</td>
+      <td>Wallet transfer</td>
+    </tr>
+    <tr>
       <td><a href="pix.md">PIX</a></td>
       <td>Brazil</td>
       <td>BRL</td>
@@ -327,6 +334,6 @@ Most rails require a `customer` object nested inside the rail sub-object. It car
 
 For **redirect-based rails** (PIX, PCT, ETPAY, WEBPAY, WOMPI, PSE, BANCOLOMBIA, DAVIVIENDA), the API response includes a `url` or `qrCode` in the node's response object. You redirect your user there to complete the payment.
 
-For **direct rails** (ACH, SEPA, SPEI pay-out, FPE, WIRE, SWIFT), funds move directly to the destination account without user interaction.
+For **direct rails** (ACH, SEPA, SPEI pay-out, FPE, WIRE, SWIFT, CRYPTO), funds move directly to the destination account or wallet without user interaction.
 
 The payment status transitions from `CREATED` → `PENDING` → `COMPLETED` (or `FAILED`). You can track this via the [payment status page](../../transaction-status.md) or via [webhooks](../../../api-reference/payments/webhooks.md).

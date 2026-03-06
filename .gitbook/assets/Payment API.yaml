@@ -5562,6 +5562,18 @@ components:
         wallet:
           type: object
           properties:
+            provider:
+              type: string
+              description: Optional wallet provider identifier (for routing/integration).
+            referenceId:
+              type: string
+              description: Optional external wallet identifier in the provider system.
+            token:
+              type: string
+              description: Optional token symbol (e.g., `USDC`, `USDT`) when not implied by `currency`.
+            network:
+              type: string
+              description: Optional blockchain network (e.g., `ETH`, `TRON`, `SOLANA`).
             address:
               type: string
               description: Wallet's address
@@ -5569,6 +5581,11 @@ components:
             - address
       required:
         - wallet
+      title: CRYPTO
+    crypto-wrapper:
+      description: Dedicated wrapper for CRYPTO nodes. Holds the `wallet` payload.
+      allOf:
+        - $ref: '#/components/schemas/wallet-wrapper'
       title: CRYPTO
     pix-wrapper:
       description: Wrapper object exposing the `pix` node payload.
@@ -5760,19 +5777,16 @@ components:
       title: BREB
     cvu-wrapper:
       type: object
-      description: CVU pay-out node for Argentina (ARS). Virtual account / CBU bank transfers.
+      description: CVU pay-in node for Argentina (ARS). Virtual account / CBU bank transfers.
       properties:
         cvu:
           type: object
           properties:
             code:
               type: string
-              description: CVU or CBU code of the recipient's account.
+              description: Optional CVU/CBU code when pre-assigned by the payer flow.
             customer:
               $ref: '#/components/schemas/customer'
-          required:
-            - code
-            - customer
       required:
         - cvu
       title: CVU
@@ -5998,17 +6012,37 @@ components:
             swiftCode:
               type: string
               description: SWIFT/BIC code of the recipient's bank.
-            accountNumber:
+            iban:
               type: string
-              description: Recipient's bank account number.
-            bankName:
-              type: string
-              description: Name of the recipient's bank.
+              description: >-
+                Recipient IBAN when destination country requires it (typically
+                SEPA zone).
+            bank:
+              type: object
+              description: Recipient bank account details.
+              properties:
+                accountNumber:
+                  type: string
+                  description: Recipient's bank account number.
+                name:
+                  type: string
+                  description: Name of the recipient's bank.
+              required:
+                - accountNumber
             customer:
-              $ref: '#/components/schemas/customer'
+              description: Beneficiary identity data required by correspondent banks.
+              allOf:
+                - $ref: '#/components/schemas/customer'
+                - type: object
+                  required:
+                    - firstName
+                    - lastName
+                    - email
+                    - documentNumber
+                    - documentType
           required:
             - swiftCode
-            - accountNumber
+            - bank
             - customer
       required:
         - swift
@@ -6153,7 +6187,7 @@ components:
         mapping:
           CARD: '#/components/schemas/card-wrapper1'
           ACCOUNT: '#/components/schemas/account-wrapper2'
-          CRYPTO: '#/components/schemas/wallet-wrapper3'
+          CRYPTO: '#/components/schemas/crypto-wrapper-get'
           BANK_ACCOUNT: '#/components/schemas/bank-account-wrapper4'
           PIX: '#/components/schemas/pix-wrapper5'
           PCT: '#/components/schemas/pct-wrapper6'
@@ -6182,7 +6216,7 @@ components:
         - $ref: '#/components/schemas/card-wrapper1'
         - $ref: '#/components/schemas/account-wrapper2'
         - $ref: '#/components/schemas/bank-account-wrapper4'
-        - $ref: '#/components/schemas/wallet-wrapper3'
+        - $ref: '#/components/schemas/crypto-wrapper-get'
         - $ref: '#/components/schemas/pix-wrapper5'
         - $ref: '#/components/schemas/pct-wrapper6'
         - $ref: '#/components/schemas/etpay-wrapper'
@@ -6328,6 +6362,11 @@ components:
         - account
     bank-account-wrapper4: *ref_1
     wallet-wrapper3: *ref_2
+    crypto-wrapper-get:
+      description: Response wrapper used to return CRYPTO node details.
+      allOf:
+        - $ref: '#/components/schemas/wallet-wrapper3'
+      title: CRYPTO
     pix-wrapper5:
       description: Alternative PIX node wrapper used in composed schemas.
       type: object
@@ -6353,7 +6392,7 @@ components:
         mapping:
           CARD: '#/components/schemas/card-wrapper'
           ACCOUNT: '#/components/schemas/account-wrapper'
-          CRYPTO: '#/components/schemas/wallet-wrapper'
+          CRYPTO: '#/components/schemas/crypto-wrapper'
           BANK_ACCOUNT: '#/components/schemas/bank-account-wrapper'
           PIX: '#/components/schemas/pix-wrapper'
           PCT: '#/components/schemas/pct-wrapper'
@@ -6382,7 +6421,7 @@ components:
         - $ref: '#/components/schemas/card-wrapper'
         - $ref: '#/components/schemas/account-wrapper'
         - $ref: '#/components/schemas/bank-account-wrapper'
-        - $ref: '#/components/schemas/wallet-wrapper'
+        - $ref: '#/components/schemas/crypto-wrapper'
         - $ref: '#/components/schemas/pix-wrapper'
         - $ref: '#/components/schemas/pct-wrapper'
         - $ref: '#/components/schemas/etpay-wapper'
@@ -6882,7 +6921,7 @@ components:
 
         | `PCT`         | `pct`         | Argentina      | Pay-in           |
 
-        | `CVU`         | `cvu`         | Argentina      | Pay-out          |
+        | `CVU`         | `cvu`         | Argentina      | Pay-in           |
 
         | `ETPAY`       | `etpay`       | Chile          | Pay-in           |
 
@@ -6953,12 +6992,14 @@ components:
         - SWIFT
       x-enumDescriptions:
         CARD: Represents a card payment. Opens the card node.
-        CRYPTO: Represents a cryptocurrency payment or wallet. Opens the wallet node.
+        CRYPTO: >-
+          Cryptocurrency wallet rail (global). Supports both pay-in and pay-out
+          flows. Opens the wallet node.
         ACCOUNT: Represents an internal platform account. Opens the account node.
         BANK_ACCOUNT: Generic external bank account for payouts. Opens the bank node.
         PIX: PIX QR code or copy-paste code in Brazil (BRL). Opens the pix node.
         PCT: Interoperable QR payment in Argentina (ARS) under BCRA PCT standard. Opens the pct node.
-        CVU: Virtual account / CBU bank transfer payout in Argentina (ARS). Opens the cvu node.
+        CVU: Virtual account / CBU bank transfer pay-in in Argentina (ARS). Opens the cvu node.
         ETPAY: Open banking pay-in for Chile (CLP) via Etpay. Opens the etpay node.
         FINTOC: Open banking pay-in for Chile (CLP) via Fintoc widget. Opens the fintoc node.
         WEBPAY: Card payment in Chile (CLP) via Transbank. Opens the webpay node.
@@ -6978,7 +7019,9 @@ components:
         RTP: Real-time payments network pay-in for USA (USD). Opens the rtp node.
         SEPA: Single Euro Payments Area payout for Europe (EUR). Opens the sepa node.
         FPE: Faster Payments near-instant bank transfer payout for UK (GBP). Opens the fpe node.
-        SWIFT: International bank wire transfer payout, multi-currency. Opens the swift node.
+        SWIFT: >-
+          International bank wire transfer rail (global). Pay-out only.
+          Opens the swift node.
     identity-type:
       type: string
       description: >-
@@ -8145,13 +8188,19 @@ components:
       properties:
         provider:
           type: string
-          description: Provider's name
+          description: Optional provider identifier.
         referenceId:
           type: string
-          description: External wallet id
+          description: Optional external wallet id in the provider system.
+        token:
+          type: string
+          description: Optional token symbol (e.g., `USDC`, `USDT`).
+        network:
+          type: string
+          description: Optional blockchain network (e.g., `ETH`, `TRON`, `SOLANA`).
         address:
           type: string
-          description: Wallet's address
+          description: Wallet address used to receive or send funds.
       required:
         - address
     pagination:

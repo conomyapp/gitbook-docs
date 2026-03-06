@@ -27,16 +27,16 @@ Below are the key fields used in `origins` and `destinations`:
 
 ### Payment-node types
 
-Each node `type` maps to a sub-object with the same name in camelCase. The table below shows the core types. For the full list of payment rails (PIX, SPEI, ETPAY, ACH, etc.), see the [Nodes page](nodes.md).
+Each node `type` maps to a sub-object with the same name in camelCase. The table below shows the core types. For the full list of payment rails (PIX, SPEI, ETPAY, ACH, etc.), see the [Nodes page](nodes/README.md).
 
 | Type           | Description                                               | Sub-object     |
 | -------------- | --------------------------------------------------------- | -------------- |
 | `ACCOUNT`      | Internal conomy\_hq account (origin or destination)       | `account`      |
 | `BANK_ACCOUNT` | External bank account (for payouts)                       | `bank`         |
-| `CRYPTO`       | Crypto wallet                                             | `wallet`       |
+| `CRYPTO`       | Crypto wallet (global pay-in / pay-out)                  | `wallet`       |
 | `PIX`          | Brazil instant payment (pay-in / payout)                  | `pix`          |
 | `PCT`          | Argentina QR transfer (pay-in)                            | `pct`          |
-| `CVU`          | Argentina CVU/CBU bank transfer (payout)                  | `cvu`          |
+| `CVU`          | Argentina CVU/CBU bank transfer (pay-in)                  | `cvu`          |
 | `SPEI`         | Mexico CLABE transfer (payout)                            | `spei`         |
 | `ETPAY`        | Chile open banking (pay-in)                               | `etpay`        |
 | `FINTOC`       | Chile open banking via Fintoc (pay-in)                    | `fintoc`       |
@@ -46,6 +46,7 @@ Each node `type` maps to a sub-object with the same name in camelCase. The table
 | `DAVIPLATA`    | Colombia Daviplata wallet (pay-in)                        | `daviplata`    |
 | `NEQUI`        | Colombia Nequi wallet (pay-in)                            | `nequi`        |
 | `ACH`          | USA bank transfer (payout)                                | `ach`          |
+| `SWIFT`        | International wire transfer (global payout)               | `swift`        |
 | `SEPA`         | Europe IBAN transfer (payout)                             | `sepa`         |
 | `FPE`          | UK Faster Payments (payout)                               | `fpe`          |
 

@@ -59,8 +59,8 @@ Below are the key fields used in the Payment object:
 | `status`           | The current status of the transaction, [see lifecycle below](payment-structure.md#transaction-lifecycle).                                                                                   |
 | `type`             | The payment type (e.g., `PURCHASE`, `TOPUP_ACCOUNT`, etc.). Check the [payment type page](payment-types/) for more info.                                                                    |
 | `fees`             | An array containing all fee transactions applied to this payment.                                                                                                                           |
-| `origins`          | Array of origin nodes — either an internal `ACCOUNT` or an external payment rail (e.g., `ETPAY`, `PIX`, `PCT`). See [Nodes](origins-and-destinations/nodes.md).                            |
-| `destinations`     | Array of destination nodes — either an internal `ACCOUNT` or a payout rail (e.g., `BANK_ACCOUNT`, `SPEI`, `ACH`). See [Nodes](origins-and-destinations/nodes.md).                         |
+| `origins`          | Array of origin nodes — either an internal `ACCOUNT` or an external payment rail (e.g., `ETPAY`, `PIX`, `PCT`). See [Nodes](origins-and-destinations/nodes/README.md).                            |
+| `destinations`     | Array of destination nodes — either an internal `ACCOUNT` or a payout rail (e.g., `BANK_ACCOUNT`, `SPEI`, `ACH`). See [Nodes](origins-and-destinations/nodes/README.md).                         |
 
 ***
 

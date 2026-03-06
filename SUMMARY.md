@@ -68,6 +68,7 @@
     * [SEPA](payments/origins-and-destinations/nodes/sepa.md)
     * [SWIFT](payments/origins-and-destinations/nodes/swift.md)
     * [FPE](payments/origins-and-destinations/nodes/fpe.md)
+    * [CRYPTO](payments/origins-and-destinations/nodes/crypto.md)
     * [ACCOUNT](payments/origins-and-destinations/nodes/account.md)
     * [BANK\_ACCOUNT](payments/origins-and-destinations/nodes/bank-account.md)
 * [Copy of Origins and Destinations](payments/copy-of-origins-and-destinations/README.md)

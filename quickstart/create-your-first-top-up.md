@@ -28,7 +28,7 @@ A **TOPUP\_ACCOUNT** transaction funds an internal conomy\_hq account. The origi
 
 Creates a top-up using a payment rail as the origin and an internal account as the destination.
 
-The example below uses `ETPAY` (open banking, Chile). Replace the `origins` node type and sub-object to use a different rail — see the [Nodes page](../payments/origins-and-destinations/nodes.md) for all available rails.
+The example below uses `ETPAY` (open banking, Chile). Replace the `origins` node type and sub-object to use a different rail — see the [Nodes page](../payments/origins-and-destinations/nodes/README.md) for all available rails.
 
 {% code overflow="wrap" %}
 ```sh

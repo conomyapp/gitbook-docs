@@ -24,7 +24,7 @@ This payment type enables users to add funds to their internal balance for futur
 | `origins`      | One pay-in rail node (for example: `CARD`, `PIX`, `ETPAY`, `PSE`, `WOMPI`, `ACH`, `FEDNOW`)   |
 | `destinations` | One or more internal `ACCOUNT` nodes                                                             |
 
-The origin must be a payment rail specific to the destination country and currency. The `type` field of the origin node determines the rail used — for example, `"type": "ETPAY"` for Chile or `"type": "PIX"` for Brazil. See [Nodes](../origins-and-destinations/nodes.md) for all available rails.
+The origin must be a payment rail specific to the destination country and currency. The `type` field of the origin node determines the rail used — for example, `"type": "ETPAY"` for Chile or `"type": "PIX"` for Brazil. See [Nodes](../origins-and-destinations/nodes/README.md) for all available rails.
 
 ### Example
 

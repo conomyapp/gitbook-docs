@@ -8,21 +8,6 @@
 * [Supported Identity document types](home/supported-identity-document-types.md)
 * [Financial institutions](home/financial-institutions.md)
 
-## Accounts\_old
-
-* [Overview](accounts_old/page-2.md)
-* [Account types](accounts_old/account-types.md)
-
-## Payments\_old
-
-* [Overview](payments_old/page-1.md)
-* [Quickstart](payments_old/quickstart.md)
-* [Transaction types](payments_old/transaction-types.md)
-
-## Whitelabel\_old
-
-* [Overview](whitelabel_old/overview.md)
-
 ## Quickstart
 
 * [Introduction](quickstart/introduction.md)
@@ -71,8 +56,6 @@
     * [FPE](payments/origins-and-destinations/nodes/fpe.md)
     * [ACCOUNT](payments/origins-and-destinations/nodes/account.md)
     * [BANK\_ACCOUNT](payments/origins-and-destinations/nodes/bank-account.md)
-* [Copy of Origins and Destinations](payments/copy-of-origins-and-destinations/README.md)
-  * [Nodes](payments/copy-of-origins-and-destinations/nodes.md)
 * [Payment status](payments/transaction-status.md)
 * [Creating payments](payments/creating-payments.md)
 * [Peer to peer payment - P2P](payments/peer-to-peer-payment-p2p.md)

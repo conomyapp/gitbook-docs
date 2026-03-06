@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITBOOK_TOKEN: ${{ secrets.GITBOOK_TOKEN }}
-      GITBOOK_SPEC_NAME: ${{ vars.GITBOOK_SPEC_NAME }}
-      GITBOOK_ORGANIZATION_ID: ${{ vars.GITBOOK_ORGANIZATION_ID }}
+      GITBOOK_SPEC_NAME: conomyhq-api
+      GITBOOK_ORGANIZATION_ID: w9xZeAeVKntkFCGMHbQ5
 
     steps:
       - name: Checkout
@@ -23,8 +23,6 @@ jobs:
       - name: Validate required variables
         run: |
           test -n "$GITBOOK_TOKEN" || { echo "Missing secret GITBOOK_TOKEN"; exit 1; }
-          test -n "$GITBOOK_SPEC_NAME" || { echo "Missing variable GITBOOK_SPEC_NAME"; exit 1; }
-          test -n "$GITBOOK_ORGANIZATION_ID" || { echo "Missing variable GITBOOK_ORGANIZATION_ID"; exit 1; }
 
       - name: Publish Payment API spec to GitBook
         run: |

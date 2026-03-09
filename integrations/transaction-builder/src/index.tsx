@@ -239,6 +239,8 @@ const BUILDER_HTML = `<!doctype html>
           <div class="field">
             <label>Preset</label>
             <select id="preset">
+              <option value="global-remittance-swift">Global remittance (USD via SWIFT)</option>
+              <option value="global-withdrawal-wire">Global withdrawal (USD via WIRE)</option>
               <option value="ars-cvu-topup">ARS top-up with CVU</option>
               <option value="ars-pct-topup">ARS top-up with PCT</option>
               <option value="pix-brl-to-clp">PIX BRL to CLP account</option>
@@ -253,23 +255,23 @@ const BUILDER_HTML = `<!doctype html>
           <div class="field">
             <label>Origin rail</label>
             <select id="originType"></select>
-            <span class="hint">Filtered by selected source currency.</span>
+            <span class="hint">Filtered by source currency and transaction type.</span>
           </div>
           <div class="field">
             <label>Source currency</label>
             <select id="purchaseCurrency"></select>
-            <span class="hint">Filtered by selected origin rail.</span>
+            <span class="hint">Available currencies for the selected transaction type.</span>
           </div>
 
           <div class="field">
             <label>Destination rail</label>
             <select id="destinationType"></select>
-            <span class="hint">Filtered by settlement currency.</span>
+            <span class="hint">Filtered by settlement currency and transaction type.</span>
           </div>
           <div class="field">
             <label>Settlement currency</label>
             <select id="currency"></select>
-            <span class="hint">Filtered by selected destination rail.</span>
+            <span class="hint">Available settlement currencies for the selected transaction type.</span>
           </div>
 
           <div class="field">
@@ -447,6 +449,20 @@ const BUILDER_JS = String.raw`(function () {
   };
 
   const PRESETS = {
+    "global-remittance-swift": {
+      type: "REMITTANCE",
+      purchaseCurrency: "USD",
+      currency: "USD",
+      originType: "ACCOUNT",
+      destinationType: "SWIFT"
+    },
+    "global-withdrawal-wire": {
+      type: "WITHDRAWAL_ACCOUNT",
+      purchaseCurrency: "USD",
+      currency: "USD",
+      originType: "ACCOUNT",
+      destinationType: "WIRE"
+    },
     "ars-cvu-topup": {
       type: "TOPUP_ACCOUNT",
       purchaseCurrency: "ARS",
@@ -629,15 +645,16 @@ const BUILDER_JS = String.raw`(function () {
     const currentRail = toUpper($("originType").value);
     const currentCurrency = toUpper($("purchaseCurrency").value);
     const railCurrencies = (rail) => currenciesForRail(ORIGIN_CURRENCIES_BY_RAIL, rail, allOriginCurrencies);
+    const currenciesByType = unique(allowedRails.flatMap((rail) => railCurrencies(rail)));
 
     let selectedRail = currentRail;
     let selectedCurrency = currentCurrency;
 
     if (driver === "currency") {
-      let railsForCurrency = allowedRails.filter((rail) => railCurrencies(rail).includes(currentCurrency));
+      selectedCurrency = setSelectOptions($("purchaseCurrency"), currenciesByType, currentCurrency);
+      let railsForCurrency = allowedRails.filter((rail) => railCurrencies(rail).includes(selectedCurrency));
       if (!railsForCurrency.length) railsForCurrency = allowedRails;
       selectedRail = setSelectOptions($("originType"), railsForCurrency, currentRail);
-      selectedCurrency = setSelectOptions($("purchaseCurrency"), railCurrencies(selectedRail), currentCurrency);
 
       railsForCurrency = allowedRails.filter((rail) => railCurrencies(rail).includes(selectedCurrency));
       if (railsForCurrency.length) {
@@ -645,7 +662,7 @@ const BUILDER_JS = String.raw`(function () {
       }
     } else {
       selectedRail = setSelectOptions($("originType"), allowedRails, currentRail);
-      selectedCurrency = setSelectOptions($("purchaseCurrency"), railCurrencies(selectedRail), currentCurrency);
+      selectedCurrency = setSelectOptions($("purchaseCurrency"), currenciesByType, currentCurrency);
 
       const railsForCurrency = allowedRails.filter((rail) => railCurrencies(rail).includes(selectedCurrency));
       if (railsForCurrency.length) {
@@ -667,15 +684,16 @@ const BUILDER_JS = String.raw`(function () {
     const currentRail = toUpper($("destinationType").value);
     const currentCurrency = toUpper($("currency").value);
     const railCurrencies = (rail) => currenciesForRail(DESTINATION_CURRENCIES_BY_RAIL, rail, allDestinationCurrencies);
+    const currenciesByType = unique(allowedRails.flatMap((rail) => railCurrencies(rail)));
 
     let selectedRail = currentRail;
     let selectedCurrency = currentCurrency;
 
     if (driver === "currency") {
-      let railsForCurrency = allowedRails.filter((rail) => railCurrencies(rail).includes(currentCurrency));
+      selectedCurrency = setSelectOptions($("currency"), currenciesByType, currentCurrency);
+      let railsForCurrency = allowedRails.filter((rail) => railCurrencies(rail).includes(selectedCurrency));
       if (!railsForCurrency.length) railsForCurrency = allowedRails;
       selectedRail = setSelectOptions($("destinationType"), railsForCurrency, currentRail);
-      selectedCurrency = setSelectOptions($("currency"), railCurrencies(selectedRail), currentCurrency);
 
       railsForCurrency = allowedRails.filter((rail) => railCurrencies(rail).includes(selectedCurrency));
       if (railsForCurrency.length) {
@@ -683,7 +701,7 @@ const BUILDER_JS = String.raw`(function () {
       }
     } else {
       selectedRail = setSelectOptions($("destinationType"), allowedRails, currentRail);
-      selectedCurrency = setSelectOptions($("currency"), railCurrencies(selectedRail), currentCurrency);
+      selectedCurrency = setSelectOptions($("currency"), currenciesByType, currentCurrency);
 
       const railsForCurrency = allowedRails.filter((rail) => railCurrencies(rail).includes(selectedCurrency));
       if (railsForCurrency.length) {
@@ -935,11 +953,12 @@ const BUILDER_JS = String.raw`(function () {
   }
 
   function init() {
-    setSelectOptions($("type"), paymentTypeOptions, "TOPUP_ACCOUNT");
-    setSelectOptions($("originType"), originRailOptions, "CVU");
-    setSelectOptions($("destinationType"), destinationRailOptions, "ACCOUNT");
-    setSelectOptions($("purchaseCurrency"), allOriginCurrencies, "ARS");
-    setSelectOptions($("currency"), allDestinationCurrencies, "ARS");
+    setSelectOptions($("type"), paymentTypeOptions, "REMITTANCE");
+    setSelectOptions($("originType"), originRailOptions, "ACCOUNT");
+    setSelectOptions($("destinationType"), destinationRailOptions, "SWIFT");
+    setSelectOptions($("purchaseCurrency"), allOriginCurrencies, "USD");
+    setSelectOptions($("currency"), allDestinationCurrencies, "USD");
+    $("preset").value = "global-remittance-swift";
 
     $("toggleAdvanced").addEventListener("click", () => {
       state.showAdvanced = !state.showAdvanced;

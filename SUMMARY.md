@@ -62,16 +62,21 @@
 * [Peer to peer payment - P2P](payments/peer-to-peer-payment-p2p.md)
 * [Collect](payments/collect.md)
 * [Add & remove fees](payments/add-and-remove-fees.md)
+* [CVU deposits](payments/cvu-deposits.md)
+* [Review flow (REQUIRES\_REVIEW)](payments/review-flow.md)
 
 ## API REFERENCE
 
 * [Authentication](api-reference/authentication.md)
 * [Identities](api-reference/identities.md)
 * [Accounts](api-reference/accounts.md)
+* [Customers](api-reference/customers.md)
+* [Balances & pending deposits](api-reference/balances.md)
 * [Payments](api-reference/payments/README.md)
   * [Origins and destinations](api-reference/payments/origins-and-destinations.md)
   * [Payment-attempts](api-reference/payments/payment-attempts.md)
   * [Payments](api-reference/payments/payments.md)
+  * [Refunds](api-reference/payments/refunds.md)
   * [Payment-links](api-reference/payments/payment-links.md)
   * [checkout session](api-reference/payments/checkout-session.md)
   * [Webhooks](api-reference/payments/webhooks.md)

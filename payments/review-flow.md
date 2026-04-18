@@ -23,7 +23,7 @@ This guide walks the whole flow from the integrator's point of view — what tri
 A payment lands in review when **any** of the following apply, after it reaches `AUTHORIZED` / `CAPTURED`:
 
 1. The amount is above the configured per-currency threshold for a customer that is not yet documented (`IsDocumented() == false`).
-2. An operator explicitly flags the payment through [`POST /payments/{id}/requestReview`](../api-reference/payments/payments.md#review-requires-review).
+2. An operator explicitly flags the payment through [`POST /payments/{id}/request-review`](../api-reference/payments/payments.md#review-requires-review).
 3. (Future) The rules engine matches a custom policy rule (flagged CUIT, client-level override, …).
 
 If the underlying customer is already documented (at least one `APPROVED` document), the review gate is **bypassed** automatically and the payment transitions straight to `CAPTURED`. No action required on your side.
@@ -34,8 +34,8 @@ When a review is required, the platform fires a `payment.requiresReview` webhook
 
 Once the payment is in `REQUIRES_REVIEW`, only two things move it forward:
 
-* [`POST /payments/{id}/resolveReview`](../api-reference/payments/payments.md#review-requires-review) with `decision=APPROVED` → payment transitions back to `CAPTURED`. Every attached document is flipped to `APPROVED`. Your endpoint receives `payment.reviewApproved`.
-* [`POST /payments/{id}/resolveReview`](../api-reference/payments/payments.md#review-requires-review) with `decision=REJECTED` → payment transitions to `FAILED`. Balance reservations are reversed. Every attached document is flipped to `REJECTED` with the supplied reason. Your endpoint receives `payment.reviewRejected`.
+* [`POST /payments/{id}/resolve-review`](../api-reference/payments/payments.md#review-requires-review) with `decision=APPROVED` → payment transitions back to `CAPTURED`. Every attached document is flipped to `APPROVED`. Your endpoint receives `payment.reviewApproved`.
+* [`POST /payments/{id}/resolve-review`](../api-reference/payments/payments.md#review-requires-review) with `decision=REJECTED` → payment transitions to `FAILED`. Balance reservations are reversed. Every attached document is flipped to `REJECTED` with the supplied reason. Your endpoint receives `payment.reviewRejected`. For pending CVU deposits, the rejection also spawns a child `REFUND` transaction routed to Vita before the parent is marked `FAILED`.
 
 Both outcomes also fire the umbrella `payment.reviewResolved` event for consumers that don't branch on the decision.
 
@@ -44,6 +44,18 @@ Both outcomes also fire the umbrella `payment.reviewResolved` event for consumer
 Two supported upload styles. Pick whichever fits your frontend best:
 
 ### Direct attach (server knows the URL)
+
+Register a document associated with the payment — either for **KYC** (identification of the originante during review) **or as a proof of source of funds** (`source_of_funds`) required by vertical-specific regulations. The endpoint also accepts auxiliary documents such as invoices or contracts that back the payment.
+
+Supported values for `type`:
+
+| Value             | Purpose                                                                  |
+| ----------------- | ------------------------------------------------------------------------ |
+| `kyc`             | Identity document for the originante (passport, DNI, etc.).              |
+| `source_of_funds` | Proof of source of funds required by regulated verticals.                |
+| `invoice`         | Invoice or billing document backing the payment.                         |
+| `contract`        | Signed contract or agreement tied to the payment.                        |
+| `other`           | Any other supporting evidence that doesn't fit the categories above.     |
 
 When you already have the document stored somewhere accessible to the platform (an internal KYC provider, a pre-existing S3 object), register it in one call:
 
@@ -109,7 +121,7 @@ This is how `REQUIRES_REVIEW` amortises over time: the first high-value payment 
 
 ```bash
 # 1. Flag the payment (operator action, or automatic via rules)
-curl -X POST https://api.conomyhq.com/payments/$PAYMENT_ID/requestReview \
+curl -X POST https://api.conomyhq.com/payments/$PAYMENT_ID/request-review \
   -H 'Authorization: Bearer $TOKEN' \
   -d '{"reason":"manual high-value check","force":true}'
 
@@ -125,7 +137,7 @@ curl -X POST https://api.conomyhq.com/payments/$PAYMENT_ID/documents \
   -d '{"type":"source_of_funds","url":"https://.../source_of_funds/...","contentType":"application/pdf"}'
 
 # 4. Operator approves
-curl -X POST https://api.conomyhq.com/payments/$PAYMENT_ID/resolveReview \
+curl -X POST https://api.conomyhq.com/payments/$PAYMENT_ID/resolve-review \
   -H 'Authorization: Bearer $TOKEN' \
   -d '{"decision":"APPROVED"}'
 ```

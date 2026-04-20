@@ -44,13 +44,13 @@ GET  /payment-attempts/:id
 POST /payments
 GET  /payments
 GET  /payments/:id
+POST /payments/:id/refund
+GET  /payments/:id/refunds
 POST /payments/:id/assign
 POST /payments/:id/documents
 POST /payments/:id/documents/presign
 GET  /payments/:id/customer
-POST /refunds
 GET  /refunds
-GET  /refunds/:id
 ```
 {% endcode %}
 

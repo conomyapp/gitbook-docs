@@ -4,11 +4,11 @@
 {% column %}
 Payments represent the intent and execution of moving funds from one or more origins to one or more destinations using a defined method.
 
-Each payment moves through a lifecycle (created → authorized → captured → received → settled) that the platform drives automatically as the chosen rail reports back. You don't drive state transitions yourself — you react to them through webhooks.
+Each payment moves through a lifecycle (created → authorized → captured → received → settled) that the platform drives automatically as the chosen rail reports back. You don't drive state transitions yourself — you react to them through [webhooks](webhooks.md).
 
 See [Payment status](../../payments/transaction-status.md) for the complete state machine.
 
-Use the Payments API to create payments, retrieve them, assign incoming push deposits, attach documentation for review, and link them to the customer they belong to. Refunds live under their own namespace — see [Refunds](refunds.md).
+Use the Payments API to create payments, retrieve them, issue refunds (refunds are modelled as child payments), assign incoming push deposits, attach documentation for review, and link them to the customer they belong to.
 {% endcolumn %}
 
 {% column %}
@@ -17,6 +17,13 @@ Use the Payments API to create payments, retrieve them, assign incoming push dep
 POST /payments
 GET  /payments
 GET  /payments/:id
+```
+{% endcode %}
+
+{% code title="Refunds (child payments)" overflow="wrap" %}
+```http
+POST /payments/:id/refund
+GET  /payments/:id/refunds
 ```
 {% endcode %}
 
@@ -59,6 +66,102 @@ GET /payments/:id/customer
 
 ***
 
+## Refunds
+
+Refunds are **child payments** linked to the parent via `parentPaymentId` — the parent stays in `SETTLED` regardless of how many refunds are issued. Everything lives in the payment namespace; the [Refunds](refunds.md) page also exposes a cross-tenant listing helper.
+
+### `POST /payments/{id}/refund`
+
+Creates a refund child on a `SETTLED` parent. Supports partial refunds.
+
+**Path parameters**
+
+| Name | Type   | Description                  |
+| ---- | ------ | ---------------------------- |
+| `id` | string | Parent payment id (ObjectId) |
+
+**Body**
+
+```json
+{
+  "amount": "150.00",
+  "reason": "Client requested partial refund"
+}
+```
+
+| Field    | Type   | Required | Description                                                                                                             |
+| -------- | ------ | :------: | ----------------------------------------------------------------------------------------------------------------------- |
+| `amount` | string |          | Positive decimal. When omitted, refunds the full remaining refundable balance (parent total minus active refunds).       |
+| `reason` | string |          | Free-text. Stored on the refund child's description for audit.                                                          |
+
+**Response** `201 Created`
+
+```json
+{
+  "refundId": "69e25383b604159c5b8ba5bb",
+  "parentPaymentId": "69e0df45b604159c5b8ba5a9",
+  "status": "RECEIVED",
+  "totalAmount": "150.00",
+  "currency": "ARS",
+  "createdAt": "2026-04-17T14:37:44Z"
+}
+```
+
+**Errors**
+
+| HTTP | Meaning                                                                                 |
+| :--: | --------------------------------------------------------------------------------------- |
+|  404 | Parent payment not found.                                                               |
+|  422 | Parent is not in `SETTLED`, or the requested amount exceeds the remaining refundable.   |
+
+Watch your webhooks for `payment.refund.created`, `payment.refund.captured`, `payment.refund.settled`.
+
+### `GET /payments/{id}/refunds`
+
+Returns the list of refund children for a parent plus an aggregated summary.
+
+**Response** `200 OK`
+
+```json
+{
+  "parentId": "69e0df45b604159c5b8ba5a9",
+  "refunds": [
+    {
+      "id": "69e25383b604159c5b8ba5bb",
+      "status": "RECEIVED",
+      "totalAmount": "150.00",
+      "currency": "ARS",
+      "parentPaymentId": "69e0df45b604159c5b8ba5a9",
+      "createdAt": "2026-04-17T14:37:44Z"
+    }
+  ],
+  "summary": {
+    "parentPaymentId": "69e0df45b604159c5b8ba5a9",
+    "parentAmount": "2000.00",
+    "currency": "ARS",
+    "totalRefunded": "0",
+    "totalInProgress": "150.00",
+    "totalFailed": "0",
+    "maxRefundable": "1850.00",
+    "completedCount": 0,
+    "inProgressCount": 1,
+    "failedCount": 0
+  }
+}
+```
+
+| Bucket            | Includes children in status                       |
+| ----------------- | ------------------------------------------------- |
+| `totalRefunded`   | `SETTLED`                                         |
+| `totalInProgress` | `CREATED`, `AUTHORIZED`, `CAPTURED`, `RECEIVED`   |
+| `totalFailed`     | `FAILED`, `EXPIRED`, `UNSETTLED`                  |
+
+`maxRefundable` = `parentAmount` − (`totalRefunded` + `totalInProgress`). Use it to size your next refund.
+
+For a tenant-wide refund listing across all parents, see [`GET /refunds`](refunds.md).
+
+***
+
 ## Assignment (push deposits)
 
 Push deposits (CVU, PIX, …) arrive as pending-assignment payments: they're in `CREATED` with no destination `accountNumber` until your dashboard picks the destination account. See [Push deposits](../../payments/push-deposits.md) for the full lifecycle.
@@ -79,7 +182,7 @@ Assigns the pending deposit to one of the client's accounts and reconciles by am
 | Field            | Type   | Required | Description                                                                                                                                 |
 | ---------------- | ------ | :------: | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `accountId`      | string |    ✓     | Destination account id (must belong to the same client).                                                                                    |
-| `expectedAmount` | string |          | If supplied, drives amount classification (`UNDERPAID` / `OVERPAID`) and spawns a companion child transaction for the difference. If omitted, the deposit is treated as `PAID`. |
+| `expectedAmount` | string |          | If supplied, drives amount classification (`UNDERPAID` / `OVERPAID`) and spawns a companion child payment for the difference. If omitted, the deposit is treated as `PAID`. |
 
 **Response** `200 OK`
 
@@ -95,7 +198,7 @@ Assigns the pending deposit to one of the client's accounts and reconciles by am
 }
 ```
 
-When `reconciliationStatus` is `UNDERPAID` or `OVERPAID`, `childPaymentId` points at the companion transaction that captures the difference. See [Amount reconciliation](../../payments/transaction-status.md#amount-reconciliation).
+When `reconciliationStatus` is `UNDERPAID` or `OVERPAID`, `childPaymentId` points at the companion payment that captures the difference. See [Amount reconciliation](../../payments/transaction-status.md#amount-reconciliation).
 
 ***
 

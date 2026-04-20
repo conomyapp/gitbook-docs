@@ -89,7 +89,7 @@ Starting with the Observability & Conversion release, refunds are modelled as **
 * Each refund is a new `Transaction` with `type=REFUND` and `parentPaymentId` pointing at the original payment.
 * Partial refunds are supported: you can issue several refunds up to the parent's `totalAmount`.
 * Refund children transition through their own lifecycle (`RECEIVED` → `SETTLED`).
-* Refunds live under the [`/refunds`](../api-reference/payments/refunds.md) namespace. Create with `POST /refunds`, filter by `parentPaymentId` to get the per-payment summary.
+* Refunds are child payments. Create with [`POST /payments/{id}/refund`](../api-reference/payments/payments.md#refunds) and read the per-parent summary with [`GET /payments/{id}/refunds`](../api-reference/payments/payments.md#refunds). For tenant-wide reporting, see [`GET /refunds`](../api-reference/payments/refunds.md).
 
 When a refund is initiated, your endpoint receives:
 

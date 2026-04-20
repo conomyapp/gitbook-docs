@@ -6,7 +6,7 @@ When a push deposit (dedicated CVU, for example) arrives without a destination a
 
 These endpoints expose the unassigned balance widget + the paginated list of pending deposits so your dashboard can render both views without scraping `/payments`.
 
-Assignment happens via [`POST /payments/{id}/assign`](payments/payments.md#assignment-cvu-deposits). The full flow is documented in [Push deposits](../payments/push-deposits.md).
+Assignment happens via [`POST /payments/{id}/assign`](payments/payments.md#assignment-push-deposits). The full flow is documented in [Push deposits](../payments/push-deposits.md).
 {% endcolumn %}
 
 {% column %}

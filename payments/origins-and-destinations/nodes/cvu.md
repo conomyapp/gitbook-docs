@@ -92,7 +92,7 @@ On creation, the response includes the allocated CVU under `cvu.code`. Show that
 }
 ```
 
-Dedicated flows do not generate a per-attempt code — `cvu.code` is the merchant identifier you already have assigned. Deposits land as unassigned payments until you call [`POST /payments/{id}/assign`](../../../api-reference/payments/payments.md#assignment-cvu-deposits).
+Dedicated flows do not generate a per-attempt code — `cvu.code` is the merchant identifier you already have assigned. Deposits land as unassigned payments until you call [`POST /payments/{id}/assign`](../../../api-reference/payments/payments.md#assignment-push-deposits).
 
 ## Valid destinations
 

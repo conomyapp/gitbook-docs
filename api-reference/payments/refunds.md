@@ -2,17 +2,27 @@
 
 {% columns fullWidth="true" %}
 {% column %}
-Refunds reverse a settled payment, sending the funds back to the original sender. They are modelled as **child transactions** linked to the parent via `parentPaymentId`: the parent stays in `SETTLED` regardless of how many refunds are issued — the full history lives on the children.
+A refund reverses a settled payment and sends the funds back to the original sender. Refunds are not a separate resource — they are **child payments** linked to the parent via `parentPaymentId`, with `type=REFUND`.
 
-This namespace is the single entry point for refund operations: creating new refunds, listing them across the tenant, filtering by parent, and reading individual records.
+Because refunds are payments, their primary API surface lives under [Payments](payments.md#refunds):
+
+* `POST /payments/{id}/refund` — create a refund against a `SETTLED` parent.
+* `GET  /payments/{id}/refunds` — list the refund children of a single parent plus an aggregated summary.
+
+This page documents the cross-tenant listing endpoint (`GET /refunds`), which is a convenience over `GET /payments?type=REFUND` for reporting dashboards.
 {% endcolumn %}
 
 {% column %}
 {% code title="Endpoints" overflow="wrap" %}
 ```http
-POST /refunds
-GET  /refunds
-GET  /refunds/:id
+GET /refunds
+```
+{% endcode %}
+
+{% code title="See also" overflow="wrap" %}
+```http
+POST /payments/:id/refund
+GET  /payments/:id/refunds
 ```
 {% endcode %}
 {% endcolumn %}
@@ -20,67 +30,22 @@ GET  /refunds/:id
 
 ***
 
-## `POST /refunds`
-
-Creates a refund against a `SETTLED` parent payment. Supports partial refunds.
-
-**Body**
-
-```json
-{
-  "parentPaymentId": "69e0df45b604159c5b8ba5a9",
-  "amount": "150.00",
-  "reason": "Client requested partial refund"
-}
-```
-
-| Field             | Type   | Required | Description                                                                                                       |
-| ----------------- | ------ | :------: | ----------------------------------------------------------------------------------------------------------------- |
-| `parentPaymentId` | string |    ✓     | Id of the `SETTLED` payment being refunded.                                                                        |
-| `amount`          | string |          | Positive decimal. When omitted, refunds the full remaining refundable balance (parent total minus active refunds). |
-| `reason`          | string |          | Free-text. Stored on the refund child for audit.                                                                  |
-
-**Response** `201 Created`
-
-```json
-{
-  "id": "69e25383b604159c5b8ba5bb",
-  "parentPaymentId": "69e0df45b604159c5b8ba5a9",
-  "status": "RECEIVED",
-  "totalAmount": "150.00",
-  "currency": "ARS",
-  "createdAt": "2026-04-17T14:37:44Z"
-}
-```
-
-**Errors**
-
-| HTTP | Meaning                                                                                |
-| :--: | -------------------------------------------------------------------------------------- |
-|  404 | Parent payment not found.                                                              |
-|  422 | Parent is not in `SETTLED`, or the requested amount exceeds the remaining refundable.  |
-
-The parent stays in `SETTLED` and can receive further refunds while the sum does not exceed its `totalAmount`.
-
-***
-
 ## `GET /refunds`
 
-Returns a paginated list of refund children. Scope it to a single parent with `parentPaymentId`, or run tenant-wide queries for reporting.
+Returns a paginated list of refund child payments across the caller's tenant.
 
 **Query parameters**
 
-| Name              | Type   | Description                                                                                  |
-| ----------------- | ------ | -------------------------------------------------------------------------------------------- |
-| `parentPaymentId` | string | Limit to refunds of a single parent payment. Also returns the aggregated `summary` block.    |
-| `clientId`        | string | Limit to a specific client. Defaults to the caller's client when applicable.                 |
-| `status`          | string | Filter by child status (`RECEIVED`, `SETTLED`, `FAILED`, `EXPIRED`, `UNSETTLED`).             |
-| `dateFrom`        | string | ISO 8601 inclusive lower bound on `createdAt`.                                                |
-| `dateTo`          | string | ISO 8601 inclusive upper bound on `createdAt`.                                                |
-| `limit`           | int    | Page size. Default 50, max 500.                                                               |
-| `offset`          | int    | Pagination offset.                                                                            |
+| Name         | Type   | Description                                                                      |
+| ------------ | ------ | -------------------------------------------------------------------------------- |
+| `clientId`   | string | Limit to a specific client. Defaults to the caller's client when applicable.     |
+| `status`     | string | Filter by child status (`RECEIVED`, `SETTLED`, `FAILED`, `EXPIRED`, `UNSETTLED`). |
+| `dateFrom`   | string | ISO 8601 inclusive lower bound on `createdAt`.                                    |
+| `dateTo`     | string | ISO 8601 inclusive upper bound on `createdAt`.                                    |
+| `limit`      | int    | Page size. Default 50, max 500.                                                   |
+| `offset`     | int    | Pagination offset.                                                                |
 
-**Response** `200 OK` — tenant-wide
+**Response** `200 OK`
 
 ```json
 {
@@ -99,68 +64,11 @@ Returns a paginated list of refund children. Scope it to a single parent with `p
 }
 ```
 
-**Response** `200 OK` — with `parentPaymentId` filter (adds aggregated summary)
-
-```json
-{
-  "parentPaymentId": "69e0df45b604159c5b8ba5a9",
-  "total": 1,
-  "refunds": [
-    {
-      "id": "69e25383b604159c5b8ba5bb",
-      "parentPaymentId": "69e0df45b604159c5b8ba5a9",
-      "status": "RECEIVED",
-      "totalAmount": "150.00",
-      "currency": "ARS",
-      "createdAt": "2026-04-17T14:37:44Z"
-    }
-  ],
-  "summary": {
-    "parentAmount": "2000.00",
-    "currency": "ARS",
-    "totalRefunded": "0",
-    "totalInProgress": "150.00",
-    "totalFailed": "0",
-    "maxRefundable": "1850.00",
-    "completedCount": 0,
-    "inProgressCount": 1,
-    "failedCount": 0
-  }
-}
-```
-
-| Bucket            | Includes children in status                       |
-| ----------------- | ------------------------------------------------- |
-| `totalRefunded`   | `SETTLED`                                         |
-| `totalInProgress` | `CREATED`, `AUTHORIZED`, `CAPTURED`, `RECEIVED`   |
-| `totalFailed`     | `FAILED`, `EXPIRED`, `UNSETTLED`                  |
-
-`maxRefundable` = `parentAmount` − (`totalRefunded` + `totalInProgress`). Use it to size your next refund.
+The shape matches `GET /payments` filtered to `type=REFUND`; use whichever feels more natural to your integration.
 
 ***
 
-## `GET /refunds/{id}`
-
-Returns a single refund child.
-
-**Response** `200 OK`
-
-```json
-{
-  "id": "69e25383b604159c5b8ba5bb",
-  "parentPaymentId": "69e0df45b604159c5b8ba5a9",
-  "status": "SETTLED",
-  "totalAmount": "150.00",
-  "currency": "ARS",
-  "description": "Client requested partial refund",
-  "createdAt": "2026-04-17T14:37:44Z",
-  "settledAt": "2026-04-17T14:40:12Z"
-}
-```
-
-***
-
-## Lifecycle
+## Refund lifecycle
 
 Each refund child transitions through:
 
@@ -169,6 +77,13 @@ Each refund child transitions through:
 3. `SETTLED` — the reversal has been reconciled. Terminal.
 
 Failure paths land the child in `FAILED` (rejected) or `UNSETTLED` (received but unreconcilable).
+
+## Guidance
+
+* A `SETTLED` parent can have **multiple** refund children so long as the sum of their amounts does not exceed the parent's `totalAmount`.
+* Use the aggregated summary from [`GET /payments/{id}/refunds`](payments.md#refunds) to size your next refund (`maxRefundable`).
+* Partial refunds are honoured.
+* To create a refund, use [`POST /payments/{id}/refund`](payments.md#refunds) on the parent.
 
 ## Webhook events
 

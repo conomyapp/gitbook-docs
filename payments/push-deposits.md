@@ -117,7 +117,7 @@ The platform runs the compliance rules configured for your client (amount thresh
 - **Passes** → payment transitions to `AUTHORIZED`, then `CAPTURED` automatically for push rails (no separate capture step needed).
 - **Requires documentation** → payment moves to `REQUIRES_REVIEW` and you receive `payment.requiresReview`. Upload the required documents via [`POST /payments/{id}/documents`](../api-reference/payments/payments.md) — the [Review flow](review-flow.md) guide covers the upload styles.
 
-You do not need to call a capture endpoint for push deposits — the platform captures the payment internally as soon as the compliance gate clears. The capture endpoint (`POST /payments/{id}/captured`) remains only for the pull-style rails where you control the capture moment.
+You do not need to call a capture endpoint for push deposits — the platform captures the payment internally as soon as the compliance gate clears.
 
 ### 4. Assignment (optional)
 
@@ -190,8 +190,8 @@ See [Customers](../api-reference/customers.md) for the customer model.
 
 ## FAQ
 
-**Do I still need to call `POST /payments/{id}/captured`?**
-Not on push rails. The platform captures the payment as soon as compliance clears. The capture endpoint remains in the API for pull rails where you drive the capture moment.
+**Do I need to capture the payment manually?**
+No. The platform drives the lifecycle as the rail reports back — `AUTHORIZED` → `CAPTURED` → `RECEIVED` → `SETTLED` happen automatically. You only react through webhooks.
 
 **Should I rely on `relatedPaymentId` or `childPaymentId`?**
 They point at the same transaction (the child) in responses and webhooks. Either works; we recommend `relatedPaymentId` because the same field is used in the webhook payload.

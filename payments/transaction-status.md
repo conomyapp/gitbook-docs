@@ -30,13 +30,11 @@ Indicates that the transaction has been initiated. If a pre-authorization or pre
 
 #### `AUTHORIZED`
 
-Used to reserve funds in payment methods that support fund reservation. At this stage, funds are held but not yet captured by the payment provider. This step is optional in the payment flow.
-
-* **Endpoint:** [`/payments/{id}/authorized`](../api-reference/payments/payments.md#post-payments-id-authorized)
+Used to reserve funds in payment methods that support fund reservation. At this stage, funds are held but not yet captured by the rail. This step is driven by the platform as the rail reports back — you don't need to call an endpoint to move a payment into `AUTHORIZED`.
 
 #### `REQUIRES_REVIEW`
 
-The payment requires additional documentation before it can continue to capture. The customer (or an operator on their behalf) must upload documents through [`POST /payments/{id}/documents`](../api-reference/payments/payments.md), and an operator then approves or rejects the review through [`POST /payments/{id}/resolveReview`](../api-reference/payments/payments.md).
+The payment requires additional documentation before it can continue to capture. The customer (or an operator on their behalf) uploads documents through [`POST /payments/{id}/documents`](../api-reference/payments/payments.md). The review itself is resolved off-platform and the outcome is delivered to your webhook (`payment.reviewApproved` / `payment.reviewRejected`).
 
 * An `APPROVED` review unlocks the payment, which transitions back to `CAPTURED`.
 * A `REJECTED` review flips the payment to `FAILED`.
@@ -46,9 +44,7 @@ Your endpoint receives a `payment.requiresReview` webhook when this state is ent
 
 #### `CAPTURED`
 
-The instruction to capture the payment is sent to the payment provider. While the funds have not yet arrived in the destination account, the payment request has been successfully processed. This step is mandatory for further processing.
-
-* **Endpoint:** [`/payments/{id}/captured`](../api-reference/payments/payments.md#post-payments-id-captured)
+The instruction to capture the payment is sent to the rail. While the funds have not yet arrived in the destination account, the payment request has been successfully processed. The transition is driven by the platform as the rail confirms capture — you don't need to call an endpoint.
 
 #### `RECEIVED`
 
@@ -64,9 +60,8 @@ Reaching `SETTLED` triggers a `payment.settled` webhook. The payload carries `se
 
 The payment reached `RECEIVED` but could not be reconciled (for example, the provider couldn't match the incoming amount, or the deposit was later rejected post-receipt). This is a terminal state distinct from `FAILED`: the money did arrive, it just can't be applied to the intended destination.
 
-* **Endpoint:** [`/payments/{id}/markUnsettled`](../api-reference/payments/payments.md) — operator action.
-* The payload includes `unsettledAt` and `unsettledReason` so your backend can follow up with the counterparty.
-* Your endpoint receives a `payment.unsettled` webhook.
+* The transition is driven internally when reconciliation cannot be completed.
+* The `payment.unsettled` webhook payload includes `unsettledAt` and `unsettledReason` so your backend can follow up with the counterparty.
 
 #### `EXPIRED`
 
@@ -94,7 +89,7 @@ Starting with the Observability & Conversion release, refunds are modelled as **
 * Each refund is a new `Transaction` with `type=REFUND` and `parentPaymentId` pointing at the original payment.
 * Partial refunds are supported: you can issue several refunds up to the parent's `totalAmount`.
 * Refund children transition through their own lifecycle (`RECEIVED` → `SETTLED`).
-* The aggregated refund state for a payment can be queried via [`GET /payments/{id}/refunds`](../api-reference/payments/payments.md); the global list is [`GET /refunds`](../api-reference/payments/refunds.md).
+* Refunds live under the [`/refunds`](../api-reference/payments/refunds.md) namespace. Create with `POST /refunds`, filter by `parentPaymentId` to get the per-payment summary.
 
 When a refund is initiated, your endpoint receives:
 

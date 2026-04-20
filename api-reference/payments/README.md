@@ -16,38 +16,41 @@ layout:
 
 {% columns fullWidth="true" %}
 {% column %}
-The Payments API enables you to simulate, initiate, and manage the lifecycle of a payment—from defining the flow to receiving real-time updates.
+The Payments API lets you initiate payments and track them through their lifecycle — from defining the flow to receiving real-time updates.
 
-It provides a structured way to move funds from one or more origins to one or more destinations using a chosen method. The flow begins with defining the source (payment-origins) and destination (payment-destinations), optionally proceeds with a payment-attempt for simulation or validation, and then transitions to a payment for actual execution.
+It provides a structured way to move funds from one or more origins to one or more destinations using a chosen method. The flow begins with defining the source (payment-origins) and destination (payment-destinations), optionally proceeds with a payment-attempt for validation, and then transitions to a payment for actual execution.
 
-Payments can follow multi-step flows including authorization, capture, and receipt confirmation depending on the provider and method. Each stage is explicitly controlled via the API. Once the payment is confirmed by the provider, final reconciliation is handled separately in a settlement layer.
-
-To support real-time processing, the client-url webhook endpoint allows your system to receive updates when a payment transitions between states, such as being authorized, captured, received, or failed.
+Payments move through authorization, capture, receipt and settlement automatically as the chosen rail reports back — you react to state transitions through webhooks rather than driving them yourself. Refunds live in their own namespace; see [Refunds](refunds.md).
 
 Use this section to:
 
 * Define where money is coming from and going to.
-* Simulate and validate a payment attempt before execution.
-* Create, authorize, capture, and track payments.
-* Handle asynchronous provider notifications through webhooks.
+* Pre-register a payment attempt before execution.
+* Create and track payments.
+* Issue and track refunds.
+* Handle asynchronous rail notifications through webhooks.
 {% endcolumn %}
 
 {% column %}
 {% code title="Endpoints" overflow="wrap" %}
 ```http
-GET /payments/banks/{country}
-GET /payments/available-products
-GET /payment-origins
-GET /payment-destinations
+GET  /payments/banks/{country}
+GET  /payments/available-products
+GET  /payment-origins
+GET  /payment-destinations
 POST /payment-attempts
-GET /payment-attempts
-GET /payment-attempts/:id
-GET /payments
-GET /payments/:id
+GET  /payment-attempts
+GET  /payment-attempts/:id
 POST /payments
-POST /payments/:id/authorized
-POST /payments/:id/captured
-POST /payments/:id/received
+GET  /payments
+GET  /payments/:id
+POST /payments/:id/assign
+POST /payments/:id/documents
+POST /payments/:id/documents/presign
+GET  /payments/:id/customer
+POST /refunds
+GET  /refunds
+GET  /refunds/:id
 ```
 {% endcode %}
 
@@ -60,7 +63,7 @@ POST client-url
 {% endcolumns %}
 
 {% hint style="info" %}
-Recommended execution flow: `payment-origins/payment-destinations` → `payment-attempt` (optional) → `payment` lifecycle (`authorized`, `captured`, `received`) + webhook reconciliation.
+Recommended execution flow: `payment-origins/payment-destinations` → `payment-attempt` (optional) → `payment` → webhook-driven reconciliation. Lifecycle state transitions (authorized → captured → received → settled) are driven by the platform as the rail reports back — you subscribe through [Webhooks](webhooks.md).
 {% endhint %}
 
 ## Explore Endpoints

@@ -4,31 +4,19 @@
 {% column %}
 Payments represent the intent and execution of moving funds from one or more origins to one or more destinations using a defined method.
 
-Each payment moves through a lifecycle that may include optional authorization, review, and capture stages before final confirmation by the payment provider. Payments are linked to prior attempts and become the definitive execution step once initiated.
-
-A payment can be authorized (reserved but not yet charged), flagged for documentation review, captured (confirmed for collection), and marked as received when the provider notifies that the payment was successful. Final reconciliation (settled) occurs in a separate stage.
+Each payment moves through a lifecycle (created → authorized → captured → received → settled) that the platform drives automatically as the chosen rail reports back. You don't drive state transitions yourself — you react to them through webhooks.
 
 See [Payment status](../../payments/transaction-status.md) for the complete state machine.
 
-Use the Payments API to create payments, retrieve them, refund them, transition them through their lifecycle, attach documentation, and link them to the customer they belong to.
+Use the Payments API to create payments, retrieve them, assign incoming push deposits, attach documentation for review, and link them to the customer they belong to. Refunds live under their own namespace — see [Refunds](refunds.md).
 {% endcolumn %}
 
 {% column %}
-{% code title="Lifecycle endpoints" overflow="wrap" %}
+{% code title="Core endpoints" overflow="wrap" %}
 ```http
+POST /payments
 GET  /payments
 GET  /payments/:id
-POST /payments
-POST /payments/:id/authorized
-POST /payments/:id/captured
-POST /payments/:id/received
-```
-{% endcode %}
-
-{% code title="Refunds" overflow="wrap" %}
-```http
-POST /payments/:id/refund
-GET  /payments/:id/refunds
 ```
 {% endcode %}
 
@@ -55,7 +43,11 @@ GET /payments/:id/customer
 
 ***
 
-## Lifecycle
+## Core
+
+{% openapi-operation spec="conomyhq-api" path="/payments" method="post" %}
+[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
+{% endopenapi-operation %}
 
 {% openapi-operation spec="conomyhq-api" path="/payments" method="get" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
@@ -65,121 +57,11 @@ GET /payments/:id/customer
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-operation %}
 
-{% openapi-operation spec="conomyhq-api" path="/payments" method="post" %}
-[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
-{% endopenapi-operation %}
-
-{% openapi-operation spec="conomyhq-api" path="/payments/{id}/authorized" method="post" %}
-[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
-{% endopenapi-operation %}
-
-{% openapi-operation spec="conomyhq-api" path="/payments/{id}/captured" method="post" %}
-[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
-{% endopenapi-operation %}
-
-{% openapi-operation spec="conomyhq-api" path="/payments/received" method="post" %}
-[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
-{% endopenapi-operation %}
-
-***
-
-## Refunds
-
-Refunds are issued as **child transactions** linked to the parent via `parentPaymentId`. See [Refunds](refunds.md) for the full guide.
-
-### `POST /payments/{id}/refund`
-
-Creates a refund on a `SETTLED` parent. Supports partial refunds.
-
-**Path parameters**
-
-| Name | Type   | Description                  |
-| ---- | ------ | ---------------------------- |
-| `id` | string | Parent payment id (ObjectId) |
-
-**Body**
-
-```json
-{
-  "amount": "150.00",
-  "reason": "Client requested partial refund"
-}
-```
-
-| Field    | Type   | Required | Description                                                                                                             |
-| -------- | ------ | :------: | ----------------------------------------------------------------------------------------------------------------------- |
-| `amount` | string |          | Positive decimal. When omitted, refunds the full remaining refundable balance (parent total minus active refunds).       |
-| `reason` | string |          | Free-text. Stored on the refund child's description for audit.                                                          |
-
-**Response** `201 Created`
-
-```json
-{
-  "refundId": "69e25383b604159c5b8ba5bb",
-  "parentPaymentId": "69e0df45b604159c5b8ba5a9",
-  "status": "RECEIVED",
-  "totalAmount": "150.00",
-  "currency": "ARS",
-  "createdAt": "2026-04-17T14:37:44Z"
-}
-```
-
-**Errors**
-
-| HTTP | Meaning                                                                                 |
-| :--: | --------------------------------------------------------------------------------------- |
-|  404 | Parent payment not found.                                                               |
-|  422 | Parent is not in `SETTLED`, or the requested amount exceeds the remaining refundable.   |
-
-The parent payment stays in `SETTLED` regardless of how many refunds are issued. Watch your webhooks for `payment.refund.created` and `payment.refund.settled`.
-
-### `GET /payments/{id}/refunds`
-
-Returns the list of refund children plus an aggregated summary.
-
-**Response** `200 OK`
-
-```json
-{
-  "parentId": "69e0df45b604159c5b8ba5a9",
-  "refunds": [
-    {
-      "id": "69e25383b604159c5b8ba5bb",
-      "status": "RECEIVED",
-      "totalAmount": "150.00",
-      "currency": "ARS",
-      "parentPaymentId": "69e0df45b604159c5b8ba5a9",
-      "createdAt": "2026-04-17T14:37:44Z"
-    }
-  ],
-  "summary": {
-    "parentPaymentId": "69e0df45b604159c5b8ba5a9",
-    "parentAmount": "2000.00",
-    "currency": "ARS",
-    "totalRefunded": "0",
-    "totalInProgress": "150.00",
-    "totalFailed": "0",
-    "maxRefundable": "1850.00",
-    "completedCount": 0,
-    "inProgressCount": 1,
-    "failedCount": 0
-  }
-}
-```
-
-| Bucket            | Includes children in status                  |
-| ----------------- | -------------------------------------------- |
-| `totalRefunded`   | `SETTLED`                                    |
-| `totalInProgress` | `CREATED`, `AUTHORIZED`, `CAPTURED`, `RECEIVED` |
-| `totalFailed`     | `FAILED`, `EXPIRED`, `UNSETTLED`             |
-
-`maxRefundable` = `parentAmount` − (`totalRefunded` + `totalInProgress`). Use it to size your next refund.
-
 ***
 
 ## Assignment (push deposits)
 
-Push deposits (CVU, PIX, …) arrive as pending-assignment payments: they're in `CREATED` with no destination `accountNumber` until an operator picks the destination account. See [Push deposits](../../payments/push-deposits.md) for the full lifecycle.
+Push deposits (CVU, PIX, …) arrive as pending-assignment payments: they're in `CREATED` with no destination `accountNumber` until your dashboard picks the destination account. See [Push deposits](../../payments/push-deposits.md) for the full lifecycle.
 
 ### `POST /payments/{id}/assign`
 
@@ -230,14 +112,14 @@ Attaches a document descriptor to a `REQUIRES_REVIEW` payment.
 ```json
 {
   "type": "source_of_funds",
-  "url": "https://documents.stub.local/payments/69e25244.../source_of_funds/20260417T150000Z",
+  "url": "https://documents.conomyhq.com/payments/69e25244.../source_of_funds/20260417T150000Z",
   "contentType": "application/pdf"
 }
 ```
 
 | Field         | Type   | Required | Description                                                                                                        |
 | ------------- | ------ | :------: | ------------------------------------------------------------------------------------------------------------------ |
-| `type`        | string |    ✓     | Free-form tag (`source_of_funds`, `id_front`, `id_back`, `bank_statement`, …). Used for key generation and audit.   |
+| `type`        | string |    ✓     | `kyc`, `source_of_funds`, `invoice`, `contract`, or `other`.                                                       |
 | `url`         | string |          | Canonical storage URL (typically the `canonicalUrl` returned by `documents/presign`). When omitted, the document is stored in `PENDING_UPLOAD`. |
 | `contentType` | string |          | MIME type captured at upload.                                                                                      |
 
@@ -250,7 +132,7 @@ Attaches a document descriptor to a `REQUIRES_REVIEW` payment.
   "documentationStatus": "UPLOADED",
   "document": {
     "type": "source_of_funds",
-    "url": "https://documents.stub.local/...",
+    "url": "https://documents.conomyhq.com/...",
     "contentType": "application/pdf",
     "uploadedAt": "2026-04-17T15:34:23Z",
     "status": "UPLOADED"

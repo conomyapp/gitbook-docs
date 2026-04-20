@@ -91,8 +91,8 @@ The step of a payment evolves through the following lifecycle stages. For more i
 | ------------ | -------------------------------------------------------------------------------------------------------------------- |
 | `CREATED`    | Transaction created. For rail-based pay-ins, the QR code or redirect URL is generated at this stage.                |
 | `AUTHORIZED` | Funds reserved. Applies to flows where pre-authorization is required before capture.                                 |
-| `CAPTURED`   | Funds captured from the origin. Call `POST /payments/{id}/captured` to trigger this step.                           |
-| `RECEIVED`   | Payment provider confirms the fund transfer. Triggered via webhook or sandbox simulation.                            |
+| `CAPTURED`   | Funds captured from the origin. Driven internally by the platform as the rail reports back.                          |
+| `RECEIVED`   | The rail confirms the fund transfer. Driven by provider webhook.                                                     |
 | `SETTLED`    | The transaction amount is fully validated and available in the destination account.                                  |
 | `DISPUTED`   | A dispute has been opened before settlement.                                                                         |
 | `REVERSED`   | The transaction was cancelled before settlement.                                                                     |

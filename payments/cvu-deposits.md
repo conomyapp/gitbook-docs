@@ -1,5 +1,7 @@
 ---
+hidden: true
 layout:
+  width: default
   title:
     visible: true
   description:
@@ -10,9 +12,13 @@ layout:
     visible: false
   pagination:
     visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
 ---
 
-# Depósitos CVU
+# CVU deposits
 
 Un **depósito CVU** es una transferencia en pesos argentinos (ARS) que el pagador origina desde su banco hacia un CVU de la plataforma provisto por Vita. Llegan de forma **asíncrona**: el pagador inicia la transferencia, Vita acredita los fondos en el CVU del comercio, y la plataforma debe decidir a qué cuenta del comercio imputar el depósito.
 
@@ -22,13 +28,13 @@ Esta guía cubre el flujo completo post-refactor: notificación del webhook, dis
 
 Cada `NodeCVU` tiene un campo `Mode` que determina cómo se matchea el depósito con una intención de pago preexistente.
 
-| Característica            | **CVU fijo** (`Mode=STATIC`)                               | **CVU dinámico** (`Mode=DYNAMIC`)                                            |
-| ------------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| Ciclo de vida             | Código largo del comercio, compartido entre todos los pagadores. | Emitido por Vita para un único intento de pago.                         |
-| Trazabilidad              | No hay match automático: se crea un `LOCAL_DEPOSIT` huérfano que requiere **asignación manual**. | Match 1:1 con el ATTEMPT: al recibir el webhook, el intento se promueve a `CREATED`. |
-| Caso de uso típico        | Depósitos recurrentes, on-boarding con checkout off-platform. | Checkout con monto y originante predeterminados (purchase flow).         |
-| Clasificación UNDERPAID/OVERPAID | Solo al asignar (`expectedAmount` opcional).         | Automática, comparando monto recibido vs monto del ATTEMPT.                 |
-| Webhook inicial           | `purchase.pendingAssignment`.                              | `purchase.attempted` → `purchase.pendingAssignment` si el monto calza.       |
+| Característica                   | **CVU fijo** (`Mode=STATIC`)                                                                     | **CVU dinámico** (`Mode=DYNAMIC`)                                                    |
+| -------------------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| Ciclo de vida                    | Código largo del comercio, compartido entre todos los pagadores.                                 | Emitido por Vita para un único intento de pago.                                      |
+| Trazabilidad                     | No hay match automático: se crea un `LOCAL_DEPOSIT` huérfano que requiere **asignación manual**. | Match 1:1 con el ATTEMPT: al recibir el webhook, el intento se promueve a `CREATED`. |
+| Caso de uso típico               | Depósitos recurrentes, on-boarding con checkout off-platform.                                    | Checkout con monto y originante predeterminados (purchase flow).                     |
+| Clasificación UNDERPAID/OVERPAID | Solo al asignar (`expectedAmount` opcional).                                                     | Automática, comparando monto recibido vs monto del ATTEMPT.                          |
+| Webhook inicial                  | `purchase.pendingAssignment`.                                                                    | `purchase.attempted` → `purchase.pendingAssignment` si el monto calza.               |
 
 ## Flujo end-to-end
 
@@ -155,31 +161,31 @@ Tu dashboard típicamente necesita tres paneles. Todos están scoped por tenant 
 
 ## Webhooks emitidos
 
-| Reason interno       | Evento emitido al integrador              | Disparador                                                                      |
-| -------------------- | ----------------------------------------- | ------------------------------------------------------------------------------- |
-| `attempted`          | `purchase.attempted`                      | Se crea un ATTEMPT (CVU dinámico).                                              |
-| `pendingAssignment`  | `purchase.pendingAssignment`              | Depósito en `CREATED` esperando asignación por operador.                         |
-| `requiresReview`     | `payment.requiresReview`                  | El pago entra a `REQUIRES_REVIEW` (umbral + customer no documentado).            |
-| `reviewApproved`     | `payment.reviewApproved`                  | Operador aprueba con `decision=APPROVED`.                                        |
-| `reviewRejected`     | `payment.reviewRejected` (fallback `payment.failed`) | Operador rechaza con `decision=REJECTED`; se crea child REFUND.        |
-| `underpaid`          | `purchase.underpaid`                      | Asignado con `expectedAmount > received`.                                        |
-| `overpaid`           | `purchase.overpaid`                       | Asignado con `expectedAmount < received`.                                        |
-| `expired`            | `payment.expired`                         | Pasaron 48 h sin asignación; se crea child REFUND y el parent queda `EXPIRED`.   |
-| `refundCreated`      | `payment.refund.created`                  | Se crea la transacción hija REFUND (ruteado a la child).                         |
-| `refundSettled`      | `payment.refund.settled`                  | Vita confirma el refund (ruteado a la child; el parent sigue terminal).          |
-| `refundFailed`       | `payment.refund.failed`                   | Vita rechaza el refund (ruteado a la child).                                     |
-| `settled`            | `payment.settled`                         | Depósito asignado y reconciliado.                                                |
-| `failed`             | `payment.failed`                          | Fallo terminal del pago.                                                         |
+| Reason interno      | Evento emitido al integrador                         | Disparador                                                                     |
+| ------------------- | ---------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `attempted`         | `purchase.attempted`                                 | Se crea un ATTEMPT (CVU dinámico).                                             |
+| `pendingAssignment` | `purchase.pendingAssignment`                         | Depósito en `CREATED` esperando asignación por operador.                       |
+| `requiresReview`    | `payment.requiresReview`                             | El pago entra a `REQUIRES_REVIEW` (umbral + customer no documentado).          |
+| `reviewApproved`    | `payment.reviewApproved`                             | Operador aprueba con `decision=APPROVED`.                                      |
+| `reviewRejected`    | `payment.reviewRejected` (fallback `payment.failed`) | Operador rechaza con `decision=REJECTED`; se crea child REFUND.                |
+| `underpaid`         | `purchase.underpaid`                                 | Asignado con `expectedAmount > received`.                                      |
+| `overpaid`          | `purchase.overpaid`                                  | Asignado con `expectedAmount < received`.                                      |
+| `expired`           | `payment.expired`                                    | Pasaron 48 h sin asignación; se crea child REFUND y el parent queda `EXPIRED`. |
+| `refundCreated`     | `payment.refund.created`                             | Se crea la transacción hija REFUND (ruteado a la child).                       |
+| `refundSettled`     | `payment.refund.settled`                             | Vita confirma el refund (ruteado a la child; el parent sigue terminal).        |
+| `refundFailed`      | `payment.refund.failed`                              | Vita rechaza el refund (ruteado a la child).                                   |
+| `settled`           | `payment.settled`                                    | Depósito asignado y reconciliado.                                              |
+| `failed`            | `payment.failed`                                     | Fallo terminal del pago.                                                       |
 
 ## Endpoints relacionados
 
-| Método | Ruta                                        | Descripción                                                   |
-| ------ | ------------------------------------------- | ------------------------------------------------------------- |
-| POST   | `/payments/webhook/vitawallet`              | Webhook entrante unificado de Vita (órdenes + depósitos CVU). |
-| POST   | `/payments/{id}/assign`                     | Asignar depósito pendiente a una cuenta destino.              |
-| POST   | `/payments/{id}/request-review`             | Forzar el pago a `REQUIRES_REVIEW`.                           |
-| POST   | `/payments/{id}/resolve-review`             | Resolver review (`APPROVED` / `REJECTED`).                    |
-| POST   | `/payments/{id}/mark-unsettled`             | Marcar el depósito como no reconciliable después del recibo.  |
-| GET    | `/payments/unassigned`                      | Listado paginado de depósitos pendientes de asignación.        |
-| GET    | `/accounts/unassigned`                      | Saldo total en escrow + depósitos próximos a expirar.          |
-| GET    | `/payments/{id}/customer`                   | Customer persistente ligado al originante del depósito.        |
+| Método | Ruta                            | Descripción                                                   |
+| ------ | ------------------------------- | ------------------------------------------------------------- |
+| POST   | `/payments/webhook/vitawallet`  | Webhook entrante unificado de Vita (órdenes + depósitos CVU). |
+| POST   | `/payments/{id}/assign`         | Asignar depósito pendiente a una cuenta destino.              |
+| POST   | `/payments/{id}/request-review` | Forzar el pago a `REQUIRES_REVIEW`.                           |
+| POST   | `/payments/{id}/resolve-review` | Resolver review (`APPROVED` / `REJECTED`).                    |
+| POST   | `/payments/{id}/mark-unsettled` | Marcar el depósito como no reconciliable después del recibo.  |
+| GET    | `/payments/unassigned`          | Listado paginado de depósitos pendientes de asignación.       |
+| GET    | `/accounts/unassigned`          | Saldo total en escrow + depósitos próximos a expirar.         |
+| GET    | `/payments/{id}/customer`       | Customer persistente ligado al originante del depósito.       |

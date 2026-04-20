@@ -1,5 +1,7 @@
 ---
+hidden: true
 layout:
+  width: default
   title:
     visible: true
   description:
@@ -10,9 +12,13 @@ layout:
     visible: false
   pagination:
     visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
 ---
 
-# Review flow (`REQUIRES_REVIEW`)
+# Review flow (REQUIRES\_REVIEW)
 
 Some payments need documentation review before the platform can capture them. The `REQUIRES_REVIEW` state is the gate: a payment sits there until an operator decides to approve or reject it.
 
@@ -49,13 +55,13 @@ Register a document associated with the payment — either for **KYC** (identifi
 
 Supported values for `type`:
 
-| Value             | Purpose                                                                  |
-| ----------------- | ------------------------------------------------------------------------ |
-| `kyc`             | Identity document for the originante (passport, DNI, etc.).              |
-| `source_of_funds` | Proof of source of funds required by regulated verticals.                |
-| `invoice`         | Invoice or billing document backing the payment.                         |
-| `contract`        | Signed contract or agreement tied to the payment.                        |
-| `other`           | Any other supporting evidence that doesn't fit the categories above.     |
+| Value             | Purpose                                                              |
+| ----------------- | -------------------------------------------------------------------- |
+| `kyc`             | Identity document for the originante (passport, DNI, etc.).          |
+| `source_of_funds` | Proof of source of funds required by regulated verticals.            |
+| `invoice`         | Invoice or billing document backing the payment.                     |
+| `contract`        | Signed contract or agreement tied to the payment.                    |
+| `other`           | Any other supporting evidence that doesn't fit the categories above. |
 
 When you already have the document stored somewhere accessible to the platform (an internal KYC provider, a pre-existing S3 object), register it in one call:
 
@@ -76,7 +82,7 @@ The document is registered in `UPLOADED` immediately.
 
 Typical for dashboards where the operator drops a file into a drag-and-drop zone. The upload stays off your API surface entirely — the browser posts the bytes directly to the document bucket.
 
-1. **Request a descriptor**
+1.  **Request a descriptor**
 
     ```http
     POST /payments/{id}/documents/presign
@@ -95,7 +101,6 @@ Typical for dashboards where the operator drops a file into a drag-and-drop zone
       "expiresAt": "2026-04-17T15:15:00Z"
     }
     ```
-
 2. **Upload** a `multipart/form-data` request to `url`, including every entry of `fields` as a form field and the file bytes under the form field `file`.
 3. **Register** the document by calling `POST /payments/{id}/documents` with `url=canonicalUrl`.
 
@@ -109,13 +114,13 @@ This is how `REQUIRES_REVIEW` amortises over time: the first high-value payment 
 
 ## Status reference
 
-| Status               | Meaning                                                                |
-| -------------------- | ---------------------------------------------------------------------- |
-| `PENDING_UPLOAD`     | No documents attached yet. Payment is blocked.                         |
-| `UPLOADED`           | At least one document has been registered with a URL.                  |
-| `SENT`               | Documents sent to the review provider (KYC pipeline, manual review).   |
-| `APPROVED`           | Every attached document was approved. Review unblocks the payment.     |
-| `REJECTED`           | Any attached document was rejected. Review fails the payment.          |
+| Status           | Meaning                                                              |
+| ---------------- | -------------------------------------------------------------------- |
+| `PENDING_UPLOAD` | No documents attached yet. Payment is blocked.                       |
+| `UPLOADED`       | At least one document has been registered with a URL.                |
+| `SENT`           | Documents sent to the review provider (KYC pipeline, manual review). |
+| `APPROVED`       | Every attached document was approved. Review unblocks the payment.   |
+| `REJECTED`       | Any attached document was rejected. Review fails the payment.        |
 
 ## End-to-end example
 

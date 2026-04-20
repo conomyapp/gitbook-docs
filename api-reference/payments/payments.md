@@ -23,7 +23,7 @@ GET  /payments/:id
 {% code title="Refunds (child payments)" overflow="wrap" %}
 ```http
 POST /payments/:id/refund
-GET  /payments/:id/refunds
+GET  /payments/:id/refund
 ```
 {% endcode %}
 
@@ -116,7 +116,7 @@ Creates a refund child on a `SETTLED` parent. Supports partial refunds.
 
 Watch your webhooks for `payment.refund.created`, `payment.refund.captured`, `payment.refund.settled`.
 
-### `GET /payments/{id}/refunds`
+### `GET /payments/{id}/refund`
 
 Returns the list of refund children for a parent plus an aggregated summary.
 
@@ -158,7 +158,7 @@ Returns the list of refund children for a parent plus an aggregated summary.
 
 `maxRefundable` = `parentAmount` − (`totalRefunded` + `totalInProgress`). Use it to size your next refund.
 
-For a tenant-wide refund listing across all parents, see [`GET /refunds`](refunds.md).
+For a tenant-wide refund listing across all parents, see [`GET /refund`](refunds.md).
 
 ***
 

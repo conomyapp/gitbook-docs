@@ -7,22 +7,22 @@ A refund reverses a settled payment and sends the funds back to the original sen
 Because refunds are payments, their primary API surface lives under [Payments](payments.md#refunds):
 
 * `POST /payments/{id}/refund` — create a refund against a `SETTLED` parent.
-* `GET  /payments/{id}/refunds` — list the refund children of a single parent plus an aggregated summary.
+* `GET  /payments/{id}/refund` — list the refund children of a single parent plus an aggregated summary.
 
-This page documents the cross-tenant listing endpoint (`GET /refunds`), which is a convenience over `GET /payments?type=REFUND` for reporting dashboards.
+This page documents the cross-tenant listing endpoint (`GET /refund`), which is a convenience over `GET /payments?type=REFUND` for reporting dashboards.
 {% endcolumn %}
 
 {% column %}
 {% code title="Endpoints" overflow="wrap" %}
 ```http
-GET /refunds
+GET /refund
 ```
 {% endcode %}
 
 {% code title="See also" overflow="wrap" %}
 ```http
 POST /payments/:id/refund
-GET  /payments/:id/refunds
+GET  /payments/:id/refund
 ```
 {% endcode %}
 {% endcolumn %}
@@ -30,7 +30,7 @@ GET  /payments/:id/refunds
 
 ***
 
-## `GET /refunds`
+## `GET /refund`
 
 Returns a paginated list of refund child payments across the caller's tenant.
 
@@ -81,7 +81,7 @@ Failure paths land the child in `FAILED` (rejected) or `UNSETTLED` (received but
 ## Guidance
 
 * A `SETTLED` parent can have **multiple** refund children so long as the sum of their amounts does not exceed the parent's `totalAmount`.
-* Use the aggregated summary from [`GET /payments/{id}/refunds`](payments.md#refunds) to size your next refund (`maxRefundable`).
+* Use the aggregated summary from [`GET /payments/{id}/refund`](payments.md#refunds) to size your next refund (`maxRefundable`).
 * Partial refunds are honoured.
 * To create a refund, use [`POST /payments/{id}/refund`](payments.md#refunds) on the parent.
 

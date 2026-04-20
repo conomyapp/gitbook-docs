@@ -45,12 +45,12 @@ POST /payments
 GET  /payments
 GET  /payments/:id
 POST /payments/:id/refund
-GET  /payments/:id/refunds
+GET  /payments/:id/refund
 POST /payments/:id/assign
 POST /payments/:id/documents
 POST /payments/:id/documents/presign
 GET  /payments/:id/customer
-GET  /refunds
+GET  /refund
 ```
 {% endcode %}
 

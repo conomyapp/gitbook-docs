@@ -24,6 +24,8 @@ PIX is Brazil's instant payment rail operated by the Banco Central do Brasil. Wh
 
 **Country:** Brazil | **Currency:** BRL | **Direction:** Pay-in / Pay-out
 
+PIX pay-ins are processed under the generic [push-deposit flow](../../push-deposits.md): minimum-amount check, compliance gate, automatic matching against the payment-attempt when payer info is provided, underpaid/overpaid detection via child transactions, and automatic refunds when the compliance or window rules fail. Read that guide once — it applies identically to PIX, CVU, QR and any other push-style rail the platform supports.
+
 ## Required fields
 
 

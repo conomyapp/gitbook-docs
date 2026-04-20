@@ -45,7 +45,7 @@ Every webhook delivery includes an `eventType` field so consumers can subscribe 
   "timestamp": "2026-04-17T15:30:00Z",
   "transaction": {
     "id": "69e0df45b604159c5b8ba5a9",
-    "externalId": "vitawallet:abc-123",
+    "externalId": "dep_abc-123",
     "status": "SETTLED",
     "totalAmount": "2000.00",
     "currency": "ARS",
@@ -57,7 +57,7 @@ Every webhook delivery includes an `eventType` field so consumers can subscribe 
     "expiredAt": null,
     "unsettledAt": null,
     "unsettledReason": null,
-    "settlementBatchId": "settlement-VITA-1744889400",
+    "settlementBatchId": "settlement-ARS-1744889400",
     "documentationStatus": null
   },
   "identity": {
@@ -75,20 +75,21 @@ Refunds are modelled as **child transactions** — the parent stays `SETTLED`. T
 
 | Event                      | Description                                                     |
 | -------------------------- | --------------------------------------------------------------- |
-| `payment.refund.created`   | Refund child registered and delivered to the provider.          |
-| `payment.refund.settled`   | Provider confirmed the reversal; child is terminal `SETTLED`.   |
-| `payment.refund.failed`    | Provider rejected the refund request.                           |
+| `payment.refund.created`   | Refund child registered.                                         |
+| `payment.refund.captured`  | Rail accepted the reversal request.                              |
+| `payment.refund.settled`   | Sender received the money back; child is terminal `SETTLED`.    |
+| `payment.refund.failed`    | Rail could not complete the reversal.                            |
 
 **Payload shape** — identical to payments, with `transaction.parentPaymentId` populated and `transaction.type == "REFUND"`.
 {% endtab %}
 
-{% tab title="Purchases (CVU)" %}
+{% tab title="Push deposits" %}
 | Event                         | Description                                                                          |
 | ----------------------------- | ------------------------------------------------------------------------------------ |
-| `purchase.attempted`          | A new payment attempt (CVU deposit) was registered.                                  |
-| `purchase.pendingAssignment`  | The deposit could not be auto-matched and is awaiting operator assignment.           |
-| `purchase.underpaid`          | On `POST /payments/{id}/assign`, the received amount was below the expected amount. |
-| `purchase.overpaid`           | On `POST /payments/{id}/assign`, the received amount was above the expected amount. |
+| `purchase.attempted`          | A new payment attempt on a push rail was registered.                                 |
+| `purchase.pendingAssignment`  | The deposit is awaiting operator assignment on a dedicated identifier.               |
+| `purchase.underpaid`          | The received amount was below the expected amount; a child payment holds the delta.  |
+| `purchase.overpaid`           | The received amount was above the expected amount; a child payment holds the delta.  |
 
 `purchase.underpaid` and `purchase.overpaid` fire **alongside** `payment.settled`, not instead of it. The payload includes `transaction.relatedPaymentId` pointing at the companion child that captures the difference.
 {% endtab %}

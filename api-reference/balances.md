@@ -2,18 +2,18 @@
 
 {% columns fullWidth="true" %}
 {% column %}
-When a CVU deposit arrives without a destination account (for example, a transfer to one of the merchant's collecting CVUs), the money is parked in the client's **unassigned balance** until an operator assigns the deposit to a specific account.
+When a push deposit (dedicated CVU, for example) arrives without a destination account, the money is parked in the client's **unassigned balance** until an operator assigns the deposit to a specific account.
 
 These endpoints expose the unassigned balance widget + the paginated list of pending deposits so your dashboard can render both views without scraping `/payments`.
 
-Assignment happens via [`POST /payments/{id}/assign`](payments/payments.md#assignment-cvu-deposits).
+Assignment happens via [`POST /payments/{id}/assign`](payments/payments.md#assignment-cvu-deposits). The full flow is documented in [Push deposits](../payments/push-deposits.md).
 {% endcolumn %}
 
 {% column %}
 {% code title="Endpoints" overflow="wrap" %}
 ```http
-GET /balances/unassigned
-GET /deposits/pending
+GET /accounts/unassigned
+GET /payments/unassigned
 ```
 {% endcode %}
 {% endcolumn %}
@@ -21,7 +21,7 @@ GET /deposits/pending
 
 ***
 
-## `GET /balances/unassigned`
+## `GET /accounts/unassigned`
 
 Compact widget-shaped response: current unassigned balance and a small list of urgent pending deposits (those approaching their expiry).
 
@@ -51,11 +51,11 @@ Compact widget-shaped response: current unassigned balance and a small list of u
 }
 ```
 
-`urgent` only contains deposits whose `expiresAt` is within the configured warning window (typically 6 hours). The full list lives in `/deposits/pending`.
+`urgent` only contains deposits whose `expiresAt` is within the configured warning window (typically 6 hours). The full list lives in `/payments/unassigned`.
 
 ***
 
-## `GET /deposits/pending`
+## `GET /payments/unassigned`
 
 Paginated list of pending-assignment deposits.
 
@@ -67,7 +67,7 @@ Paginated list of pending-assignment deposits.
 | `expiresWithin` | string |          | `6h` \| `24h` \| `48h` \| `""` (all). Filters by time-to-expiry.                     |
 | `amountMin`     | string |          | Inclusive lower bound on `totalAmount`.                                              |
 | `amountMax`     | string |          | Inclusive upper bound on `totalAmount`.                                              |
-| `search`        | string |          | Free-text match against originante (first/last name, documentNumber).                 |
+| `search`        | string |          | Free-text match against originator (first/last name, documentNumber).                 |
 | `limit`         | int    |          | Page size. Default 50, max 500.                                                      |
 | `offset`        | int    |          | Pagination offset.                                                                   |
 
@@ -81,12 +81,12 @@ Paginated list of pending-assignment deposits.
   "deposits": [
     {
       "paymentId": "69e25246baa9fd9b463d6baf",
-      "providerReference": "vitawallet:abc-123",
+      "providerReference": "dep_abc-123",
       "amount": "7500.00",
       "currency": "ARS",
       "depositedAt": "2026-04-17T15:31:16Z",
       "expiresAt": "2026-04-18T15:31:16Z",
-      "originante": {
+      "originator": {
         "firstName": "Carlos",
         "lastName": "Nuevo",
         "documentNumber": "23111222331",
@@ -100,10 +100,12 @@ Paginated list of pending-assignment deposits.
 
 ### Deposit lifecycle
 
-1. Vita (or the configured CVU provider) reports a new deposit → the platform creates a `CREATED` payment with no `accountNumber`, `type=LOCAL_DEPOSIT`, and an `expiresAt` 24 hours in the future.
+1. The platform receives notice of a new deposit (CVU, PIX, …) and creates a `CREATED` payment with no `accountNumber`, `type=LOCAL_DEPOSIT`, and an `expiresAt` set to the configured window.
 2. The deposit shows up here until one of:
    * An operator calls `POST /payments/{id}/assign` — payment transitions to `SETTLED` on the chosen account.
-   * The expiry window elapses — the payment transitions to `EXPIRED` and the escrow is released to the provider.
+   * The expiry window elapses — the payment transitions to `EXPIRED` and an automatic refund is issued to the sender.
+
+Full flow: [Push deposits](../payments/push-deposits.md).
 
 ### Webhook events
 

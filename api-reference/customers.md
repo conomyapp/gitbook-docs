@@ -7,7 +7,7 @@ A **Customer** is the persistent record representing the end-user whose money is
 Customers are created in two ways:
 
 * **Manually**, via `POST /customers` — typical when your operations team onboards a customer ahead of their first payment.
-* **Automatically**, when a CVU deposit arrives from a new originante (CUIT). The platform creates a `BASIC`, `autoCreated=true` record so the deposit can be processed without human involvement. Your operations team can later promote the customer via `PATCH /customers/{id}` and attach verified documents.
+* **Automatically**, when a push deposit (CVU, PIX, …) arrives from a new originator. The platform creates a `BASIC`, `autoCreated=true` record so the deposit can be processed without human involvement. Your operations team can later promote the customer via `PATCH /customers/{id}` and attach verified documents.
 
 Customers are tenant-scoped: every endpoint below requires a `clientId` so the API can enforce that callers never see or mutate another tenant's data.
 {% endcolumn %}

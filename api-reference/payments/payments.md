@@ -32,24 +32,16 @@ GET  /payments/:id/refunds
 ```
 {% endcode %}
 
-{% code title="Assignment (CVU deposits)" overflow="wrap" %}
+{% code title="Assignment (push deposits)" overflow="wrap" %}
 ```http
 POST /payments/:id/assign
 ```
 {% endcode %}
 
-{% code title="Review (REQUIRES_REVIEW)" overflow="wrap" %}
+{% code title="Review documents" overflow="wrap" %}
 ```http
-POST /payments/:id/requestReview
 POST /payments/:id/documents
 POST /payments/:id/documents/presign
-POST /payments/:id/resolveReview
-```
-{% endcode %}
-
-{% code title="Terminal operators" overflow="wrap" %}
-```http
-POST /payments/:id/markUnsettled
 ```
 {% endcode %}
 
@@ -185,9 +177,9 @@ Returns the list of refund children plus an aggregated summary.
 
 ***
 
-## Assignment (CVU deposits)
+## Assignment (push deposits)
 
-CVU deposits arrive as pending-assignment payments: they're in `CREATED` with no destination `accountNumber` until an operator picks the destination account.
+Push deposits (CVU, PIX, …) arrive as pending-assignment payments: they're in `CREATED` with no destination `accountNumber` until an operator picks the destination account. See [Push deposits](../../payments/push-deposits.md) for the full lifecycle.
 
 ### `POST /payments/{id}/assign`
 
@@ -225,43 +217,9 @@ When `reconciliationStatus` is `UNDERPAID` or `OVERPAID`, `childPaymentId` point
 
 ***
 
-## Review (REQUIRES_REVIEW)
+## Review documents
 
-Some payments land in `REQUIRES_REVIEW` when the amount exceeds a configured threshold for a non-documented customer. See [Review flow](../../payments/review-flow.md) for the full guide.
-
-### `POST /payments/{id}/requestReview`
-
-Flags a pre-settlement payment into `REQUIRES_REVIEW`.
-
-**Body**
-
-```json
-{
-  "reason": "Manual operator flag",
-  "force": true
-}
-```
-
-| Field    | Type    | Required | Description                                                                                                                               |
-| -------- | ------- | :------: | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `reason` | string  |          | Free-text, audit-only.                                                                                                                    |
-| `force`  | boolean |          | When `true`, skips the rules-engine policy check and flags the payment unconditionally. When absent/false, the rules engine must fire for the flag to land. |
-
-**Response** `202 Accepted` (new flag) / `200 OK` (already flagged)
-
-```json
-{
-  "paymentId": "69e25244baa9fd9b463d6bad",
-  "status": "REQUIRES_REVIEW",
-  "documentationStatus": "PENDING_UPLOAD",
-  "reason": "amount_threshold",
-  "detail": "amount=1500000 >= threshold=1000000 ARS",
-  "alreadyFlagged": false,
-  "bypassed": false
-}
-```
-
-`bypassed=true` means the customer already has an approved document on record and the flag was skipped — the payment stays in its pre-flag status. Only `CREATED`, `AUTHORIZED` and `CAPTURED` can be flagged; terminal states return `422`.
+Some payments land in `REQUIRES_REVIEW` when the amount exceeds a configured threshold for a non-documented customer. See [Review flow](../../payments/review-flow.md) for the full guide. The endpoints below let your frontend attach the required documents while the payment is in review.
 
 ### `POST /payments/{id}/documents`
 
@@ -330,73 +288,7 @@ Requests a presigned upload descriptor so your client can upload the file direct
 2. `POST` multipart-form-data to `url` with the `fields` as form fields and the file bytes under `file`.
 3. On `204`, call `POST /payments/{id}/documents` with `url=canonicalUrl` to register the document.
 
-### `POST /payments/{id}/resolveReview`
-
-Operator decision on a `REQUIRES_REVIEW` payment.
-
-**Body**
-
-```json
-{
-  "decision": "APPROVED",
-  "rejectionReason": "optional — only for REJECTED"
-}
-```
-
-| Field             | Type   | Required | Description                                       |
-| ----------------- | ------ | :------: | ------------------------------------------------- |
-| `decision`        | string |    ✓     | `APPROVED` or `REJECTED`.                         |
-| `rejectionReason` | string |          | Free-text. Persisted on every attached document. |
-
-**Response** `200 OK`
-
-```json
-{
-  "paymentId": "69e25244baa9fd9b463d6bad",
-  "status": "CAPTURED",
-  "documentationStatus": "APPROVED",
-  "reviewDecision": "APPROVED",
-  "reviewedAt": "2026-04-17T15:34:24Z"
-}
-```
-
-* `APPROVED` → payment transitions back to `CAPTURED` and continues through its lifecycle. Your endpoint receives `payment.reviewApproved`.
-* `REJECTED` → payment transitions to `FAILED`; balance reservation is reversed. Your endpoint receives `payment.reviewRejected`.
-
-***
-
-## Terminal operators
-
-### `POST /payments/{id}/markUnsettled`
-
-Operator flag to move a `RECEIVED` payment to `UNSETTLED` when it cannot be reconciled (for example, post-receipt rejection or provider reversal).
-
-**Body**
-
-```json
-{ "reason": "Provider reported chargeback" }
-```
-
-| Field    | Type   | Required | Description                                          |
-| -------- | ------ | :------: | ---------------------------------------------------- |
-| `reason` | string |    ✓     | Free-text. Persisted as `unsettledReason` on the tx. |
-
-**Response** `202 Accepted`
-
-```json
-{
-  "paymentId": "69e25383b604159c5b8ba5bb",
-  "status": "UNSETTLED",
-  "unsettledAt": "2026-04-17T15:36:38Z",
-  "unsettledReason": "Provider reported chargeback",
-  "reversedEscrowBalance": true,
-  "alreadyFlagged": false
-}
-```
-
-Only `RECEIVED` payments can be flagged. For unassigned CVU deposits, the escrow balance is automatically reversed (`reversedEscrowBalance=true`); for already-assigned deposits, the account balance is NOT reversed — you must issue a manual accounting entry.
-
-Your endpoint receives `payment.unsettled`.
+Once the documents are attached, the review outcome is notified to your webhook endpoint — `payment.reviewApproved` moves the payment back to `CAPTURED` and resumes the lifecycle, `payment.reviewRejected` drops it to `FAILED` (and, for push deposits, automatically spawns a refund child so the funds flow back to the sender).
 
 ***
 

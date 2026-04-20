@@ -62,7 +62,7 @@
 * [Peer to peer payment - P2P](payments/peer-to-peer-payment-p2p.md)
 * [Collect](payments/collect.md)
 * [Add & remove fees](payments/add-and-remove-fees.md)
-* [CVU deposits](payments/cvu-deposits.md)
+* [Push deposits](payments/push-deposits.md)
 * [Review flow (REQUIRES\_REVIEW)](payments/review-flow.md)
 
 ## API REFERENCE

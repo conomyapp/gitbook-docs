@@ -1911,6 +1911,59 @@ paths:
                             $ref: '#/components/schemas/currency'
                           status:
                             type: string
+                          originator:
+                            type: object
+                            nullable: true
+                            description: >-
+                              Information about the payer as received from the
+                              banking rail.
+
+                              Populated for inbound CVU deposits; the block is
+                              emitted for every event with a stable shape so
+                              consumers do not need to branch on its presence.
+                              Individual fields are `null` when the banking
+                              rail did not supply that piece of data.
+                            properties:
+                              firstName:
+                                type: string
+                                nullable: true
+                                description: Payer's first name as reported by the bank.
+                              lastName:
+                                type: string
+                                nullable: true
+                                description: Payer's last name as reported by the bank.
+                              documentType:
+                                type: string
+                                nullable: true
+                                description: >-
+                                  Type of the payer's identity document (for
+                                  example `CUIT`, `CUIL`, `DNI`).
+                              documentNumber:
+                                type: string
+                                nullable: true
+                                description: Payer's identity document number.
+                              email:
+                                type: string
+                                nullable: true
+                                description: >-
+                                  Payer's email when provided by the banking
+                                  rail.
+                              bankAccount:
+                                type: string
+                                nullable: true
+                                description: >-
+                                  Payer's bank account identifier (for example
+                                  the originating CBU) when supplied by the
+                                  banking rail.
+                              cvu:
+                                type: string
+                                nullable: true
+                                description: >-
+                                  Reserved for the payer's originating CVU.
+                                  Currently always returned as `null`; the
+                                  field is kept so that once the CVU becomes
+                                  available it flows through without requiring
+                                  changes on the consumer side.
                         required:
                           - id
                           - purchaseAmount
@@ -1944,6 +1997,14 @@ paths:
                     externalId: '{{CLIENT_TRANSACTION_ID}}'
                     currency: COP
                     status: CAPTURED
+                    originator:
+                      firstName: María
+                      lastName: Gómez
+                      documentType: CUIT
+                      documentNumber: '27334455669'
+                      email: maria@example.com
+                      bankAccount: '0000003100020334530007'
+                      cvu: null
                 signature: >-
                   f8a23d5e0c7c2b6e4a8f9d0c5b3d7e1a7f6c4e2d9b0a5f8c3e1d6b9a7c4e2d1f
           headers: {}

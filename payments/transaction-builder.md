@@ -135,21 +135,11 @@ Use the response to drive the builder UI:
 
 ---
 
-## Generate and try
-
-Use the interactive builder to pick values and copy the generated payload, or the `POST /payments` playground to fill the body by hand.
-
-### Interactive builder
-
-```conomy-transaction-builder variant="generate-only"
-generate-only
-```
-
-### API playground
+## Generate the payload
 
 1. Click **Try it** in the block below.
 2. Complete `type`, currencies, `product`, `origins`, and `destinations`.
-3. Copy the generated request from the code preview.
+3. Copy the generated request from the code preview as JSON or cURL.
 4. Do not send the request if you only want to generate the payload.
 
 {% openapi-operation spec="conomyhq-api" path="/payments" method="post" %}

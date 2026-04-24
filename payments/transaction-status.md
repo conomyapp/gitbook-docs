@@ -62,7 +62,7 @@ Reaching `SETTLED` triggers a `payment.settled` webhook. The payload carries `se
 
 #### `UNSETTLED`
 
-The payment reached `RECEIVED` but could not be reconciled (for example, the provider couldn't match the incoming amount, or the deposit was later rejected post-receipt). This is a terminal state distinct from `FAILED`: the money did arrive, it just can't be applied to the intended destination.
+The payment reached `RECEIVED` but could not be reconciled (for example, the provider couldn't match the incoming amount, or the topup was later rejected post-receipt). This is a terminal state distinct from `FAILED`: the money did arrive, it just can't be applied to the intended destination.
 
 * **Endpoint:** [`/payments/{id}/markUnsettled`](../api-reference/payments/payments.md) — operator action.
 * The payload includes `unsettledAt` and `unsettledReason` so your backend can follow up with the counterparty.
@@ -70,7 +70,7 @@ The payment reached `RECEIVED` but could not be reconciled (for example, the pro
 
 #### `EXPIRED`
 
-The payment was not completed before its time-to-live elapsed (typical for quote-based payments that require capture within a window, or for CVU deposits that remained unassigned beyond the assignment window).
+The payment was not completed before its time-to-live elapsed (typical for quote-based payments that require capture within a window, or for CVU topups that remained unassigned beyond the assignment window).
 
 * Distinct from `FAILED`: the payment didn't fail, it timed out.
 * Any reserved balance is returned automatically.
@@ -105,7 +105,7 @@ When a refund is initiated, your endpoint receives:
 
 ### Amount reconciliation
 
-When a payment's received amount differs from what was expected (for example an operator assigns a CVU deposit to an invoice with an expected total), the reconciliation engine classifies the outcome:
+When a payment's received amount differs from what was expected (for example an operator assigns a CVU topup to an invoice with an expected total), the reconciliation engine classifies the outcome:
 
 | Classification    | Meaning                                                                     |
 | ----------------- | --------------------------------------------------------------------------- |

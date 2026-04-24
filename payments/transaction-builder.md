@@ -171,5 +171,5 @@ Use the `POST /payments` block below to fill the request body and copy the gener
 
 - [Available products](available-products.md)
 - [Origins and Destinations](origins-and-destinations/README.md)
-- [Nodes reference](origins-and-destinations/nodes/README.md)
+- [Nodes reference](origins-and-destinations/README.md)
 - [Creating payments](creating-payments.md)

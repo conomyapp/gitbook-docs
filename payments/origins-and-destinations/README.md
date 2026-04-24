@@ -27,7 +27,7 @@ Below are the key fields used in `origins` and `destinations`:
 
 ### Payment-node types
 
-Each node `type` maps to a sub-object with the same name in camelCase. The table below shows the core types. For the full list of payment rails (PIX, SPEI, ETPAY, ACH, etc.), see the [Nodes page](nodes/README.md).
+Each node `type` maps to a sub-object with the same name in camelCase.
 
 | Type           | Description                                               | Sub-object     |
 | -------------- | --------------------------------------------------------- | -------------- |

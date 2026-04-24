@@ -29,7 +29,7 @@ Every webhook delivery includes an `eventType` field so consumers can subscribe 
 | Event                        | Description                                                                                     |
 | ---------------------------- | ----------------------------------------------------------------------------------------------- |
 | `transaction.status_changed` | Default, legacy event fired on any status change. Retained for backwards compatibility.         |
-| `payment.expired`            | Payment reached terminal `EXPIRED` (quote TTL elapsed or CVU deposit unassigned within window). |
+| `payment.expired`            | Payment reached terminal `EXPIRED` (quote TTL elapsed or CVU topup unassigned within window). |
 | `payment.settled`            | Payment reached terminal `SETTLED` and has been reconciled.                                     |
 | `payment.unsettled`          | Payment reached `RECEIVED` but could not be reconciled. Terminal.                               |
 | `payment.requiresReview`     | Payment flipped into `REQUIRES_REVIEW` — operator / customer must act.                          |
@@ -45,7 +45,7 @@ Every webhook delivery includes an `eventType` field so consumers can subscribe 
   "timestamp": "2026-04-17T15:30:00Z",
   "transaction": {
     "id": "69e0df45b604159c5b8ba5a9",
-    "externalId": "vitawallet:abc-123",
+    "externalId": "bm_abc-123",
     "status": "SETTLED",
     "totalAmount": "2000.00",
     "currency": "ARS",
@@ -57,7 +57,7 @@ Every webhook delivery includes an `eventType` field so consumers can subscribe 
     "expiredAt": null,
     "unsettledAt": null,
     "unsettledReason": null,
-    "settlementBatchId": "settlement-VITA-1744889400",
+    "settlementBatchId": "settlement-ARS-1744889400",
     "documentationStatus": null
   },
   "identity": {
@@ -85,8 +85,8 @@ Refunds are modelled as **child transactions** — the parent stays `SETTLED`. T
 {% tab title="Purchases (CVU)" %}
 | Event                         | Description                                                                          |
 | ----------------------------- | ------------------------------------------------------------------------------------ |
-| `purchase.attempted`          | A new payment attempt (CVU deposit) was registered.                                  |
-| `purchase.pendingAssignment`  | The deposit could not be auto-matched and is awaiting operator assignment.           |
+| `purchase.attempted`          | A new payment attempt (CVU topup) was registered.                                  |
+| `purchase.pendingAssignment`  | The topup could not be auto-matched and is awaiting operator assignment.           |
 | `purchase.underpaid`          | On `POST /payments/{id}/assign`, the received amount was below the expected amount. |
 | `purchase.overpaid`           | On `POST /payments/{id}/assign`, the received amount was above the expected amount. |
 

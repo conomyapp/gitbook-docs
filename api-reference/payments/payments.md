@@ -32,7 +32,7 @@ GET  /payments/:id/refunds
 ```
 {% endcode %}
 
-{% code title="Assignment (CVU deposits)" overflow="wrap" %}
+{% code title="Assignment (CVU topups)" overflow="wrap" %}
 ```http
 POST /payments/:id/assign
 ```
@@ -185,13 +185,13 @@ Returns the list of refund children plus an aggregated summary.
 
 ***
 
-## Assignment (CVU deposits)
+## Assignment (CVU topups)
 
-CVU deposits arrive as pending-assignment payments: they're in `CREATED` with no destination `accountNumber` until an operator picks the destination account.
+CVU topups arrive as pending-assignment payments: they're in `CREATED` with no destination `accountNumber` until an operator picks the destination account.
 
 ### `POST /payments/{id}/assign`
 
-Assigns the pending deposit to one of the client's accounts and reconciles by amount.
+Assigns the pending topup to one of the client's accounts and reconciles by amount.
 
 **Body**
 
@@ -205,7 +205,7 @@ Assigns the pending deposit to one of the client's accounts and reconciles by am
 | Field            | Type   | Required | Description                                                                                                                                 |
 | ---------------- | ------ | :------: | ------------------------------------------------------------------------------------------------------------------------------------------- |
 | `accountId`      | string |    ✓     | Destination account id (must belong to the same client).                                                                                    |
-| `expectedAmount` | string |          | If supplied, drives amount classification (`UNDERPAID` / `OVERPAID`) and spawns a companion child transaction for the difference. If omitted, the deposit is treated as `PAID`. |
+| `expectedAmount` | string |          | If supplied, drives amount classification (`UNDERPAID` / `OVERPAID`) and spawns a companion child transaction for the difference. If omitted, the topup is treated as `PAID`. |
 
 **Response** `200 OK`
 
@@ -227,7 +227,7 @@ When `reconciliationStatus` is `UNDERPAID` or `OVERPAID`, `childPaymentId` point
 
 ## Review (REQUIRES_REVIEW)
 
-Some payments land in `REQUIRES_REVIEW` when the amount exceeds a configured threshold for a non-documented customer. See [Review flow](../../payments/review-flow.md) for the full guide.
+Some payments land in `REQUIRES_REVIEW` when the amount exceeds a configured threshold for a non-documented customer. See [Review flow](../../compliance/review-flow.md) for the full guide.
 
 ### `POST /payments/{id}/requestReview`
 
@@ -394,7 +394,7 @@ Operator flag to move a `RECEIVED` payment to `UNSETTLED` when it cannot be reco
 }
 ```
 
-Only `RECEIVED` payments can be flagged. For unassigned CVU deposits, the escrow balance is automatically reversed (`reversedEscrowBalance=true`); for already-assigned deposits, the account balance is NOT reversed — you must issue a manual accounting entry.
+Only `RECEIVED` payments can be flagged. For unassigned CVU topups, the escrow balance is automatically reversed (`reversedEscrowBalance=true`); for already-assigned topups, the account balance is NOT reversed — you must issue a manual accounting entry.
 
 Your endpoint receives `payment.unsettled`.
 

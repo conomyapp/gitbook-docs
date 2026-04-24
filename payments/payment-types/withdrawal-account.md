@@ -24,7 +24,7 @@ The transaction is initiated by the account owner when they decide to move money
 | `origins`      | One internal `ACCOUNT` node                                                                                       |
 | `destinations` | One or more payout rail nodes (for example: `BANK_ACCOUNT`, `SPEI`, `PIX`, `ACH`, `WIRE`, `SEPA`, `SWIFT`) |
 
-The destination must be a payout rail specific to the recipient's country and currency. See [Nodes](../origins-and-destinations/nodes/README.md) for all available payout rails.
+The destination must be a payout rail specific to the recipient's country and currency. See [Nodes](../origins-and-destinations/README.md) for all available payout rails.
 
 ### Example
 

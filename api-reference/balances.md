@@ -1,29 +1,41 @@
-# Balances & pending deposits
+---
+layout:
+  width: default
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+description: Endpoints for reading the unassigned balance and listing topups awaiting assignment.
+---
 
-{% columns fullWidth="true" %}
-{% column %}
-When a CVU deposit arrives without a destination account (for example, a transfer to one of the merchant's collecting CVUs), the money is parked in the client's **unassigned balance** until an operator assigns the deposit to a specific account.
+# Unassigned balances
 
-These endpoints expose the unassigned balance widget + the paginated list of pending deposits so your dashboard can render both views without scraping `/payments`.
+When a topup arrives without a destination account — for example, a transfer that hits one of the merchant's collecting rails without an identifier — the funds are parked in the client's **unassigned balance** until the payment is reconciled against an account.
 
-Assignment happens via [`POST /payments/{id}/assign`](payments/payments.md#assignment-cvu-deposits).
-{% endcolumn %}
+These endpoints expose the unassigned balance widget and the paginated list of topups awaiting reconciliation.
 
-{% column %}
 {% code title="Endpoints" overflow="wrap" %}
 ```http
-GET /balances/unassigned
-GET /deposits/pending
+GET /accounts/unassigned
+GET /payments/unassigned
 ```
 {% endcode %}
-{% endcolumn %}
-{% endcolumns %}
 
 ***
 
-## `GET /balances/unassigned`
+## `GET /accounts/unassigned`
 
-Compact widget-shaped response: current unassigned balance and a small list of urgent pending deposits (those approaching their expiry).
+Returns a compact widget with the current unassigned balance and a short list of topups approaching expiry.
 
 **Query parameters**
 
@@ -42,34 +54,34 @@ Compact widget-shaped response: current unassigned balance and a small list of u
   "urgent": [
     {
       "paymentId": "69e25246baa9fd9b463d6baf",
+      "originanteName": "Juan Perez",
       "amount": "7500.00",
       "currency": "ARS",
-      "expiresAt": "2026-04-18T15:31:16Z",
-      "hoursRemaining": 2
+      "expiresAt": "2026-04-18T15:31:16Z"
     }
   ]
 }
 ```
 
-`urgent` only contains deposits whose `expiresAt` is within the configured warning window (typically 6 hours). The full list lives in `/deposits/pending`.
+`urgent` contains only topups whose `expiresAt` falls within the configured warning window (typically 6 hours). The full list lives in `GET /payments/unassigned`.
 
 ***
 
-## `GET /deposits/pending`
+## `GET /payments/unassigned`
 
-Paginated list of pending-assignment deposits.
+Returns a paginated list of topups awaiting reconciliation.
 
 **Query parameters**
 
-| Name            | Type   | Required | Description                                                                          |
-| --------------- | ------ | :------: | ------------------------------------------------------------------------------------ |
-| `clientId`      | string |    ✓     | Tenant scope.                                                                        |
-| `expiresWithin` | string |          | `6h` \| `24h` \| `48h` \| `""` (all). Filters by time-to-expiry.                     |
-| `amountMin`     | string |          | Inclusive lower bound on `totalAmount`.                                              |
-| `amountMax`     | string |          | Inclusive upper bound on `totalAmount`.                                              |
-| `search`        | string |          | Free-text match against originante (first/last name, documentNumber).                 |
-| `limit`         | int    |          | Page size. Default 50, max 500.                                                      |
-| `offset`        | int    |          | Pagination offset.                                                                   |
+| Name            | Type   | Required | Description                                                              |
+| --------------- | ------ | :------: | ------------------------------------------------------------------------ |
+| `clientId`      | string |    ✓     | Tenant scope.                                                            |
+| `expiresWithin` | string |          | `6h` \| `24h` \| `48h` \| `""` (all). Filters by time-to-expiry.         |
+| `amountMin`     | string |          | Inclusive lower bound on `totalAmount`.                                  |
+| `amountMax`     | string |          | Inclusive upper bound on `totalAmount`.                                  |
+| `search`        | string |          | Free-text match against the originante (first/last name, documentNumber). |
+| `limit`         | int    |          | Page size. Default 50, max 500.                                          |
+| `offset`        | int    |          | Pagination offset.                                                       |
 
 **Response** `200 OK`
 
@@ -78,19 +90,18 @@ Paginated list of pending-assignment deposits.
   "total": 12,
   "totalAmount": "52300.50",
   "currency": "ARS",
-  "deposits": [
+  "payments": [
     {
       "paymentId": "69e25246baa9fd9b463d6baf",
-      "providerReference": "vitawallet:abc-123",
+      "providerReference": "bm_abc-123",
       "amount": "7500.00",
       "currency": "ARS",
-      "depositedAt": "2026-04-17T15:31:16Z",
+      "receivedAt": "2026-04-17T15:31:16Z",
       "expiresAt": "2026-04-18T15:31:16Z",
       "originante": {
         "firstName": "Carlos",
         "lastName": "Nuevo",
-        "documentNumber": "23111222331",
-        "bankAccount": ""
+        "documentNumber": "23111222331"
       },
       "customerId": "69e25243baa9fd9b463d6bac"
     }
@@ -98,20 +109,25 @@ Paginated list of pending-assignment deposits.
 }
 ```
 
-### Deposit lifecycle
+***
 
-1. Vita (or the configured CVU provider) reports a new deposit → the platform creates a `CREATED` payment with no `accountNumber`, `type=LOCAL_DEPOSIT`, and an `expiresAt` 24 hours in the future.
-2. The deposit shows up here until one of:
-   * An operator calls `POST /payments/{id}/assign` — payment transitions to `SETTLED` on the chosen account.
-   * The expiry window elapses — the payment transitions to `EXPIRED` and the escrow is released to the provider.
+## Lifecycle
 
-### Webhook events
+1. A topup arrives on a rail without a pre-assigned destination account. The platform creates a `CREATED` payment with no `accountNumber` and an `expiresAt` 48 hours in the future.
+2. The payment surfaces in `GET /payments/unassigned` until one of the following happens:
+   * The payment is reconciled against an account on our side — it transitions to `SETTLED` and `payment.settled` fires.
+   * The expiry window elapses — the payment transitions to `EXPIRED`, a child `REFUND` is issued to the originante, and `payment.expired` fires.
 
-| Event                         | Fires when…                                               |
-| ----------------------------- | --------------------------------------------------------- |
-| `purchase.attempted`          | A new pending deposit was registered.                     |
-| `purchase.pendingAssignment`  | A deposit could not be auto-matched and awaits assignment. |
-| `purchase.underpaid`          | On assign, the received amount was below expected.        |
-| `purchase.overpaid`           | On assign, the received amount was above expected.        |
-| `payment.settled`             | Deposit assigned and reconciled.                          |
-| `payment.expired`             | Deposit window elapsed without assignment.                |
+See [Compliance](../compliance/README.md) for how review gates apply to unassigned topups.
+
+***
+
+## Webhook events
+
+| Event | Fires when |
+| --- | --- |
+| `purchase.pendingAssignment` | A topup was received and is awaiting reconciliation. |
+| `purchase.underpaid` | On reconciliation, the received amount was below expected. |
+| `purchase.overpaid` | On reconciliation, the received amount was above expected. |
+| `payment.settled` | Topup reconciled against an account. |
+| `payment.expired` | Expiry window elapsed without reconciliation. |

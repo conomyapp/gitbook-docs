@@ -30,7 +30,7 @@ A **WITHDRAWAL\_ACCOUNT** transaction moves funds from an internal conomy\_hq ac
 
 Creates a withdrawal from an internal account to an external bank account.
 
-The example below uses **BANK\_ACCOUNT** as the destination (Argentina). For other rails — such as `SPEI` (Mexico), `PIX` (Brazil), or `ACH` (USA) — replace the `destinations` node accordingly. See the [Nodes page](../payments/origins-and-destinations/nodes/README.md) for all available rails.
+The example below uses **BANK\_ACCOUNT** as the destination (Argentina). For other rails — such as `SPEI` (Mexico), `PIX` (Brazil), or `ACH` (USA) — replace the `destinations` node accordingly. See the [Nodes page](../payments/origins-and-destinations/README.md) for all available rails.
 
 {% code overflow="wrap" %}
 ```sh

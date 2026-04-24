@@ -28,16 +28,6 @@ The builder is dynamic: it resolves available rails and required fields at runti
 
 ---
 
-## Use the interactive builder
-
-If the `conomy_hq Transaction Builder` integration is installed in your GitBook space, the block below lets you pick values and copy the generated payload directly.
-
-```conomy-transaction-builder variant="generate-only"
-generate-only
-```
-
----
-
 ## How it works
 
 The builder takes four inputs:
@@ -145,11 +135,19 @@ Use the response to drive the builder UI:
 
 ---
 
-## Try it in the playground
+## Generate and try
 
-Use the `POST /payments` block below to fill the payload and copy `cURL` or `JSON`.
+Use the interactive builder to pick values and copy the generated payload, or the `POST /payments` playground to fill the body by hand.
 
-1. Click **Try it** in the block.
+### Interactive builder
+
+```conomy-transaction-builder variant="generate-only"
+generate-only
+```
+
+### API playground
+
+1. Click **Try it** in the block below.
 2. Complete `type`, currencies, `product`, `origins`, and `destinations`.
 3. Copy the generated request from the code preview.
 4. Do not send the request if you only want to generate the payload.

@@ -33,6 +33,9 @@ Use the Payments API to create payments, list or retrieve them, issue refunds, a
 GET  /payments
 GET  /payments/:id
 POST /payments
+POST /payments/:id/authorized
+POST /payments/:id/captured
+POST /payments/received
 ```
 {% endcode %}
 
@@ -76,6 +79,18 @@ GET  /payments/:id/customer
 {% endopenapi-operation %}
 
 {% openapi-operation spec="conomyhq-api" path="/payments" method="post" %}
+[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="conomyhq-api" path="/payments/{id}/authorized" method="post" %}
+[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="conomyhq-api" path="/payments/{id}/captured" method="post" %}
+[OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
+{% endopenapi-operation %}
+
+{% openapi-operation spec="conomyhq-api" path="/payments/received" method="post" %}
 [OpenAPI conomyhq-api](https://raw.githubusercontent.com/conomyapp/gitbook-docs/main/.gitbook/assets/Payment%20API.yaml)
 {% endopenapi-operation %}
 

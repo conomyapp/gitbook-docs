@@ -47,6 +47,9 @@ GET  /payment-attempts/:id
 POST /payments
 GET  /payments
 GET  /payments/:id
+POST /payments/:id/authorized
+POST /payments/:id/captured
+POST /payments/received
 ```
 {% endcode %}
 

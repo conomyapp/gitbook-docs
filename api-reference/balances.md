@@ -115,8 +115,8 @@ Returns a paginated list of topups awaiting reconciliation.
 
 1. A topup arrives on a rail without a pre-assigned destination account. The platform creates a `CREATED` payment with no `accountNumber` and an `expiresAt` 48 hours in the future.
 2. The payment surfaces in `GET /payments/unassigned` until one of the following happens:
-   * The payment is reconciled against an account on our side — it transitions to `SETTLED` and `payment.settled` fires.
-   * The expiry window elapses — the payment transitions to `EXPIRED`, a child `REFUND` is issued to the originante, and `payment.expired` fires.
+   * An operator or your integration calls [`POST /payments/{id}/assign`](payments/payments.md#assign-an-unassigned-balance) to reconcile the topup against one of the client's accounts. The payment transitions to `SETTLED` and `payment.settled` fires.
+   * The expiry window elapses. The payment transitions to `EXPIRED`, a child `REFUND` is issued to the originante, and `payment.expired` fires.
 
 See [Compliance](../compliance/README.md) for how review gates apply to unassigned topups.
 

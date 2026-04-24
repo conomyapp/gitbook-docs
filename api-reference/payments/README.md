@@ -16,38 +16,47 @@ layout:
 
 {% columns fullWidth="true" %}
 {% column %}
-The Payments API enables you to simulate, initiate, and manage the lifecycle of a payment—from defining the flow to receiving real-time updates.
+The Payments API lets you initiate, track, and manage the lifecycle of a payment — from defining the flow to receiving real-time updates.
 
-It provides a structured way to move funds from one or more origins to one or more destinations using a chosen method. The flow begins with defining the source (payment-origins) and destination (payment-destinations), optionally proceeds with a payment-attempt for simulation or validation, and then transitions to a payment for actual execution.
-
-Payments can follow multi-step flows including authorization, capture, and receipt confirmation depending on the provider and method. Each stage is explicitly controlled via the API. Once the payment is confirmed by the provider, final reconciliation is handled separately in a settlement layer.
-
-To support real-time processing, the client-url webhook endpoint allows your system to receive updates when a payment transitions between states, such as being authorized, captured, received, or failed.
+It provides a structured way to move funds from one or more origins to one or more destinations. Begin by defining the source and destination, optionally validate with a payment-attempt, and then create the payment. The platform drives the authorize → capture → receive → settle transitions automatically based on the provider; your integration reacts to webhooks at each step.
 
 Use this section to:
 
-* Define where money is coming from and going to.
-* Simulate and validate a payment attempt before execution.
-* Create, authorize, capture, and track payments.
+* Define origins and destinations.
+* Validate a payment via a payment-attempt before execution.
+* Create payments and track their lifecycle.
+* Issue refunds, assign unassigned balances, and attach compliance documents.
 * Handle asynchronous provider notifications through webhooks.
 {% endcolumn %}
 
 {% column %}
-{% code title="Endpoints" overflow="wrap" %}
+{% code title="Discovery" overflow="wrap" %}
 ```http
-GET /payments/banks/{country}
-GET /payments/available-products
-GET /payment-origins
-GET /payment-destinations
+GET  /payments/banks/{country}
+GET  /payments/available-products
+GET  /payment-origins
+GET  /payment-destinations
+```
+{% endcode %}
+
+{% code title="Lifecycle" overflow="wrap" %}
+```http
 POST /payment-attempts
-GET /payment-attempts
-GET /payment-attempts/:id
-GET /payments
-GET /payments/:id
+GET  /payment-attempts
+GET  /payment-attempts/:id
 POST /payments
-POST /payments/:id/authorized
-POST /payments/:id/captured
-POST /payments/:id/received
+GET  /payments
+GET  /payments/:id
+```
+{% endcode %}
+
+{% code title="Operations" overflow="wrap" %}
+```http
+POST /payments/:id/refund
+GET  /payments/:id/refund
+POST /payments/:id/assign
+POST /payments/:id/documents
+GET  /payments/:id/customer
 ```
 {% endcode %}
 
@@ -60,7 +69,7 @@ POST client-url
 {% endcolumns %}
 
 {% hint style="info" %}
-Recommended execution flow: `payment-origins/payment-destinations` → `payment-attempt` (optional) → `payment` lifecycle (`authorized`, `captured`, `received`) + webhook reconciliation.
+Recommended flow: discovery (`available-products`) → `payment-attempt` (optional) → `POST /payments` → webhook-driven lifecycle updates.
 {% endhint %}
 
 ## Explore Endpoints

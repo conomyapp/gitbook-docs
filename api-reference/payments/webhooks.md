@@ -29,7 +29,7 @@ Every webhook delivery includes an `eventType` field so consumers can subscribe 
 | Event                        | Description                                                                                     |
 | ---------------------------- | ----------------------------------------------------------------------------------------------- |
 | `transaction.status_changed` | Default, legacy event fired on any status change. Retained for backwards compatibility.         |
-| `payment.expired`            | Payment reached terminal `EXPIRED` (quote TTL elapsed or CVU topup unassigned within window). |
+| `payment.expired`            | Payment reached terminal `EXPIRED` (quote TTL elapsed or unassigned pay-in expired without reconciliation). |
 | `payment.settled`            | Payment reached terminal `SETTLED` and has been reconciled.                                     |
 | `payment.unsettled`          | Payment reached `RECEIVED` but could not be reconciled. Terminal.                               |
 | `payment.requiresReview`     | Payment flipped into `REQUIRES_REVIEW` — operator / customer must act.                          |
@@ -82,13 +82,15 @@ Refunds are modelled as **child transactions** — the parent stays `SETTLED`. T
 **Payload shape** — identical to payments, with `transaction.parentPaymentId` populated and `transaction.type == "REFUND"`.
 {% endtab %}
 
-{% tab title="Purchases (CVU)" %}
-| Event                         | Description                                                                          |
-| ----------------------------- | ------------------------------------------------------------------------------------ |
-| `purchase.attempted`          | A new payment attempt (CVU topup) was registered.                                  |
-| `purchase.pendingAssignment`  | The topup could not be auto-matched and is awaiting operator assignment.           |
-| `purchase.underpaid`          | On `POST /payments/{id}/assign`, the received amount was below the expected amount. |
-| `purchase.overpaid`           | On `POST /payments/{id}/assign`, the received amount was above the expected amount. |
+{% tab title="Pay-in matching" %}
+Fires on rails where the payer completes the transfer asynchronously and the platform reconciles the funds against an account.
+
+| Event | Description |
+| --- | --- |
+| `purchase.attempted` | A new payment attempt was registered. |
+| `purchase.pendingAssignment` | A pay-in could not be auto-matched and is awaiting reconciliation against an account. |
+| `purchase.underpaid` | On `POST /payments/{id}/assign`, the received amount was below the expected amount. |
+| `purchase.overpaid` | On `POST /payments/{id}/assign`, the received amount was above the expected amount. |
 
 `purchase.underpaid` and `purchase.overpaid` fire **alongside** `payment.settled`, not instead of it. The payload includes `transaction.relatedPaymentId` pointing at the companion child that captures the difference.
 {% endtab %}

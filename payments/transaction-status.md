@@ -70,7 +70,7 @@ The payment reached `RECEIVED` but could not be reconciled (for example, the pro
 
 #### `EXPIRED`
 
-The payment was not completed before its time-to-live elapsed (typical for quote-based payments that require capture within a window, or for CVU topups that remained unassigned beyond the assignment window).
+The payment was not completed before its time-to-live elapsed (typical for quote-based payments that require capture within a window, or for unassigned pay-ins that remained unreconciled beyond the assignment window).
 
 * Distinct from `FAILED`: the payment didn't fail, it timed out.
 * Any reserved balance is returned automatically.
@@ -105,7 +105,7 @@ When a refund is initiated, your endpoint receives:
 
 ### Amount reconciliation
 
-When a payment's received amount differs from what was expected (for example an operator assigns a CVU topup to an invoice with an expected total), the reconciliation engine classifies the outcome:
+When a payment's received amount differs from what was expected (for example an operator assigns an unassigned pay-in to an invoice with an expected total), the reconciliation engine classifies the outcome:
 
 | Classification    | Meaning                                                                     |
 | ----------------- | --------------------------------------------------------------------------- |

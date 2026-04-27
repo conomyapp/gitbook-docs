@@ -126,8 +126,8 @@ See [Compliance](../compliance/README.md) for how review gates apply to unassign
 
 | Event | Fires when |
 | --- | --- |
-| `purchase.pendingAssignment` | A topup was received and is awaiting reconciliation. |
+| `purchase.pendingAssignment` | A pay-in was received and is awaiting reconciliation against an account. |
 | `purchase.underpaid` | On reconciliation, the received amount was below expected. |
 | `purchase.overpaid` | On reconciliation, the received amount was above expected. |
-| `payment.settled` | Topup reconciled against an account. |
+| `payment.settled` | Pay-in reconciled against an account. |
 | `payment.expired` | Expiry window elapsed without reconciliation. |

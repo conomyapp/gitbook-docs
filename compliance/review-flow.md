@@ -20,6 +20,10 @@ description: End-to-end walkthrough of the REQUIRES_REVIEW compliance gate on co
 
 # Review flow
 
+{% hint style="info" %}
+**TL;DR.** When `payment.requiresReview` fires, attach the requested document with `POST /payments/{id}/documents`. The platform resolves the review and resumes the payment automatically.
+{% endhint %}
+
 Some payments need documentation review before the platform can settle them. The `REQUIRES_REVIEW` state is that gate: a payment sits there until the required documents are attached and the review is resolved.
 
 ---

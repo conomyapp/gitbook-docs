@@ -49,7 +49,7 @@ Every webhook delivery includes an `eventType` field so consumers can subscribe 
     "status": "SETTLED",
     "totalAmount": "2000.00",
     "currency": "ARS",
-    "type": "LOCAL_DEPOSIT",
+    "type": "TOPUP_ACCOUNT",
     "parentPaymentId": null,
     "relatedPaymentId": null,
     "customerId": "69e25243baa9fd9b463d6bac",

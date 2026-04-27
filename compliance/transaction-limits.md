@@ -20,7 +20,11 @@ description: Amount-based controls applied to topups, withdrawals, and settlemen
 
 # Transaction limits
 
-The platform applies three configurable amount controls, all tuned per client and currency. Every limit is set by your integration manager and can be changed without a code deploy.
+The platform applies three configurable amount controls, all tuned per client and currency. Every limit is set by `conomy_hq` and can be changed without a code deploy.
+
+{% hint style="info" %}
+**Configuring limits.** All limits described on this page are configured by `conomy_hq` per client. Reach out to [hola@conomyhq.com](mailto:hola@conomyhq.com) to request the current values or propose a change.
+{% endhint %}
 
 ---
 
@@ -30,8 +34,6 @@ Every pay-in and pay-out rail has a minimum amount floor configured per currency
 
 * **Topups** — Incoming transfers below the floor are rejected at the rail level: no transaction is created and no webhook is fired. The originante's funds remain at the rail.
 * **Withdrawals** — Outgoing requests below the floor are rejected at submit time with `21 failedPrecondition`.
-
-Contact your integration manager to check or update the floors for your account.
 
 ---
 
@@ -62,7 +64,7 @@ Beyond the review gate, every `operationLevel` tier enforces its own maximum sin
 | `STANDARD` | Raised limits — applied after basic KYC documentation is approved. |
 | `FULL` | Highest limits — applied after full KYC documentation is approved. |
 
-Contact your integration manager for the exact per-tier and per-currency limits configured on your account.
+The exact per-tier and per-currency limits are returned with each `Customer` response and can also be requested from `conomy_hq` directly.
 
 ---
 

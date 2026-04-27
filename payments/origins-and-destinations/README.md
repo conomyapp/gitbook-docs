@@ -1,70 +1,145 @@
-# Origins and Destinations
+---
+layout:
+  width: default
+  title:
+    visible: true
+  description:
+    visible: false
+  tableOfContents:
+    visible: true
+  outline:
+    visible: true
+  pagination:
+    visible: true
+  metadata:
+    visible: true
+  tags:
+    visible: true
+description: Reference for the payment-node entity, the rails available per country, and the valid origin and destination combinations per payment type.
+---
 
-In every payment, the flow of funds is defined by `origins` (where the money comes from) and `destinations` (where the money goes). Each item is represented as an object within the `origins[]` or `destinations[]` array.
+# Origins and destinations
 
-Both `origins` and `destinations` are defined using the `payment-node` entity, which encapsulates the configuration needed for the payment source or target.
+Every payment defines its flow of funds through `origins` (where the money comes from) and `destinations` (where the money goes). Each entry is a **payment-node**: a `type` plus a sub-object that carries the configuration for that rail.
 
-The payment-node includes a `type` field. Based on the selected `type`, a corresponding `node` must be provided, containing the specific structure required to process the payment.
+Only one node sub-object should be present per payment-node, matching the selected `type`.
 
-Only one `node` should be included per `payment-node`, matching the selected `type`.
+---
 
-***
+## Core fields
 
-### Core Fields
+| Field | Description |
+| --- | --- |
+| `name` | Provider executing or receiving the payment. Defaults to `conomy_hq`. |
+| `type` | Defines the rail. Drives which sub-object is required. |
+| `amount` | Per-node amount. Required only when splitting funds across multiple nodes. |
+| `currency` | ISO currency code. See [Currencies](../../home/currencies.md). |
+| `identity` | Identity associated with the node — typically the account owner. |
+| `{node}` | Rail-specific sub-object. Its key matches the `type` in camelCase (e.g. `"type": "PIX"` → `"pix": {...}`). |
 
-Below are the key fields used in `origins` and `destinations`:
+---
 
-| Field      | Description                                                                                                                                                                                                                     |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `name`     | The provider executing or receiving the payment. If not specified, the default value is `conomy_hq`. This is used to identify the payment processor or custody service involved in the transaction.                             |
-| `type`     | This field determines the nature of the payment `origin` or `destination`. It defines what kind of financial entity is initiating or receiving the payment. This determines the kind of `{node}` required for the transaction.  |
-| `amount`   | The amount associated with this origin/destination. Required if splitting funds across nodes.                                                                                                                                   |
-| `currency` | Currency code, e.g. `COP`, `USD`. Check the [currency page](../../home/currencies.md) for more info.                                                                                                                            |
-| `identity` | Object representing the `identity` involved.                                                                                                                                                                                    |
-| `{node}`   | The node field contains the detailed configuration required for the payment. Its structure depends entirely on the value of the `type` field. Only **one node** object should be included, and it must match the selected type. |
+## Available rails
 
-***
+Rails are grouped by country. Each rail page documents required fields, optional fields, an example, and valid destinations.
 
-### Payment-node types
+### Internal
 
-Each node `type` maps to a sub-object with the same name in camelCase.
+| Type | Description |
+| --- | --- |
+| [`ACCOUNT`](account.md) | Internal `conomy_hq` account. Used as origin or destination on internal flows. |
+| [`BANK_ACCOUNT`](bank-account.md) | External bank account. Used as a destination when no country-specific rail applies. |
 
-| Type           | Description                                               | Sub-object     |
-| -------------- | --------------------------------------------------------- | -------------- |
-| `ACCOUNT`      | Internal conomy\_hq account (origin or destination)       | `account`      |
-| `BANK_ACCOUNT` | External bank account (for payouts)                       | `bank`         |
-| `CRYPTO`       | Crypto wallet (global pay-in / pay-out)                  | `wallet`       |
-| `PIX`          | Brazil instant payment (pay-in / payout)                  | `pix`          |
-| `PCT`          | Argentina QR transfer (pay-in)                            | `pct`          |
-| `CVU`          | Argentina CVU/CBU bank transfer (pay-in)                  | `cvu`          |
-| `SPEI`         | Mexico CLABE transfer (payout)                            | `spei`         |
-| `ETPAY`        | Chile open banking (pay-in)                               | `etpay`        |
-| `FINTOC`       | Chile open banking via Fintoc (pay-in)                    | `fintoc`       |
-| `WEBPAY`       | Chile card payments via Transbank (pay-in)                | `webpay`       |
-| `PSE`          | Colombia bank transfer (pay-in)                           | `pse`          |
-| `BANCOLOMBIA`  | Colombia Bancolombia direct (pay-in)                      | `bancolombia`  |
-| `DAVIPLATA`    | Colombia Daviplata wallet (pay-in)                        | `daviplata`    |
-| `NEQUI`        | Colombia Nequi wallet (pay-in)                            | `nequi`        |
-| `ACH`          | USA bank transfer (payout)                                | `ach`          |
-| `SWIFT`        | International wire transfer (global payout)               | `swift`        |
-| `SEPA`         | Europe IBAN transfer (payout)                             | `sepa`         |
-| `FPE`          | UK Faster Payments (payout)                               | `fpe`          |
+### Argentina
 
-### Valid Origin and Destination Combinations
+| Type | Description | Direction |
+| --- | --- | :---: |
+| [`CVU`](cvu.md) | Bank transfer via the CVU rail | Pay-in |
+| [`PCT`](pct.md) | QR transfer | Pay-in |
 
-| Payment Type         | Valid Origins                                               | Valid Destinations              |
-| -------------------- | ----------------------------------------------------------- | ------------------------------- |
-| `P2P`                | `ACCOUNT`                                                   | `ACCOUNT`                       |
-| `TOPUP_ACCOUNT`      | Any pay-in rail (`ETPAY`, `PIX`, `PCT`, `PSE`, etc.)        | `ACCOUNT`                       |
-| `WITHDRAWAL_ACCOUNT` | `ACCOUNT`                                                   | Any payout rail (`BANK_ACCOUNT`, `SPEI`, `PIX`, `ACH`, etc.) |
-| `REMITTANCE`         | `ACCOUNT` or any pay-in rail                                | Any payout rail                 |
-| `PURCHASE`           | Any pay-in rail                                             | `ACCOUNT`                       |
-| `COLLECT`            | `ACCOUNT`                                                   | `ACCOUNT`                       |
+### Brazil
 
-***
+| Type | Description | Direction |
+| --- | --- | :---: |
+| [`PIX`](pix.md) | Instant payment | Pay-in / Pay-out |
 
-### Notes
+### Chile
 
-* If only one origin/destination is used, you can omit `amount` and it will default to the full transaction amount.
-* If multiple origins or destinations are used, the sum of all `amount` fields must match the `purchaseAmount`.
-* Only the field required for the selected `type` should be present — others must be omitted.
+| Type | Description | Direction |
+| --- | --- | :---: |
+| [`ETPAY`](etpay.md) | Open banking | Pay-in |
+| [`FINTOC`](fintoc.md) | Open banking via Fintoc | Pay-in |
+| [`WEBPAY`](webpay.md) | Card payments via Transbank | Pay-in |
+
+### Colombia
+
+| Type | Description | Direction |
+| --- | --- | :---: |
+| [`BANCOLOMBIA`](bancolombia.md) | Direct bank transfer | Pay-in |
+| [`BREB`](breb.md) | Bank payout | Pay-out |
+| [`DAVIPLATA`](daviplata.md) | Wallet | Pay-in |
+| [`DAVIVIENDA`](davivienda.md) | Direct bank transfer | Pay-in |
+| [`NEQUI`](nequi.md) | Wallet | Pay-in |
+| [`PSE`](pse.md) | Bank transfer | Pay-in |
+| [`WOMPI`](wompi.md) | Gateway | Pay-in |
+
+### Mexico
+
+| Type | Description | Direction |
+| --- | --- | :---: |
+| [`SPEI`](spei.md) | CLABE transfer | Pay-out |
+
+### USA
+
+| Type | Description | Direction |
+| --- | --- | :---: |
+| [`ACH`](ach.md) | Bank transfer | Pay-in / Pay-out |
+| [`FEDNOW`](fednow.md) | Instant bank | Pay-in / Pay-out |
+| [`RTP`](rtp.md) | Real-time payments | Pay-in / Pay-out |
+| [`WIRE`](wire.md) | Wire transfer | Pay-out |
+
+### Venezuela
+
+| Type | Description | Direction |
+| --- | --- | :---: |
+| [`PAGO_MOVIL`](pago-movil.md) | Mobile bank transfer | Pay-in |
+
+### Europe & UK
+
+| Type | Description | Direction |
+| --- | --- | :---: |
+| [`SEPA`](sepa.md) | IBAN transfer | Pay-out |
+| [`FPE`](fpe.md) | UK Faster Payments | Pay-out |
+
+### International
+
+| Type | Description | Direction |
+| --- | --- | :---: |
+| [`SWIFT`](swift.md) | International wire transfer | Pay-out |
+
+### Crypto
+
+| Type | Description | Direction |
+| --- | --- | :---: |
+| [`CRYPTO`](crypto.md) | Crypto wallet | Pay-in / Pay-out |
+
+---
+
+## Valid combinations per payment type
+
+| Payment type | Valid origins | Valid destinations |
+| --- | --- | --- |
+| `TOPUP_ACCOUNT` | Any pay-in rail | `ACCOUNT` |
+| `WITHDRAWAL_ACCOUNT` | `ACCOUNT` | Any pay-out rail |
+| `PURCHASE` | Any pay-in rail | `ACCOUNT` |
+| `REMITTANCE` | `ACCOUNT` or any pay-in rail | Any pay-out rail |
+| `P2P` | `ACCOUNT` | `ACCOUNT` |
+| `COLLECT` | `ACCOUNT` | `ACCOUNT` |
+
+---
+
+## Rules
+
+* If a payment has a single origin and a single destination, `amount` per node is optional — it defaults to the payment's `purchaseAmount`.
+* If a payment has multiple origins or destinations, every node must carry an `amount` and the sums must equal `purchaseAmount`.
+* Only the sub-object matching `type` is allowed on a node. Send `"type": "PIX"` together with `"pix": {...}` and nothing else.

@@ -49,7 +49,6 @@ Shared vocabulary used across the `conomy_hq` platform.
 | `COLLECT` | Internal | Aggregate funds across multiple internal accounts into one. |
 | `FEE` | Internal | Fee line item attached to a parent transaction. |
 | `REFUND` | Reversal | Reverses a previously settled payment. Child transaction linked to a parent via `parentPaymentId`. |
-| `LOCAL_DEPOSIT` | Pay-in | Internal type for a topup that has not yet been reconciled against a destination account. |
 
 ---
 
@@ -103,4 +102,4 @@ Shared vocabulary used across the `conomy_hq` platform.
 | **Product** | A currency pair in the form `purchaseCurrency:currency` (for example `ARS:USD`). Identifies the FX leg of a payment. |
 | **Tenant** | A client on the platform. Every API call is scoped to a tenant via `clientId`. |
 | **Webhook** | HTTP callback the platform sends to your endpoint when a transaction changes state. See [Webhooks](../api-reference/payments/webhooks.md). |
-| **Idempotency** | The platform deduplicates inbound rail notifications internally by `(provider, providerReference)`. Client-side idempotency keys are not supported on payment creation. |
+| **Idempotency** | Inbound rail notifications are deduplicated internally by `(provider, providerReference)` so the same external event never produces two payments. No client-side idempotency header is required or supported on payment creation. |

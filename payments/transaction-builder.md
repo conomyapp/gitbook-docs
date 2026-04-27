@@ -20,6 +20,10 @@ description: Assemble a valid POST /payments payload from user intent, currency 
 
 # Transaction builder
 
+{% hint style="info" %}
+**TL;DR.** Call `GET /payments/available-products` to discover rails, pick an origin and destination from the response, fill in the matching node sub-object, and `POST /payments`.
+{% endhint %}
+
 The transaction builder helps you assemble a valid `POST /payments` payload from four inputs — intent, currencies, identity, and amount — without executing the transaction. Use it to generate the JSON or cURL you will ship into your own client.
 
 {% hint style="info" %}

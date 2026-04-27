@@ -69,10 +69,18 @@ Branch on `code` or `type` in your integration — both are stable. Do not parse
 
 ## Handling errors
 
-* **4xx errors** are caused by the request. Fix the request before retrying.
-* **5xx errors** are server-side. Retry with exponential backoff. If the error persists, open a support ticket with the `traceId`.
-* **`21 failedPrecondition`** is the most common business error. It means the request is valid but the resource is in the wrong state. Check the current status of the resource before retrying.
+* **4xx errors** are caused by the request. Fix the request before retrying — retrying without changes will fail again with the same code.
+* **5xx errors** are server-side. Retry with exponential backoff: start at 1 second, double on each attempt, cap at 32 seconds, give up after 5 attempts. If the error persists, open a support ticket with the `traceId`.
+* **`21 failedPrecondition`** is the most common business error. It means the request is well-formed but the resource is in the wrong state (e.g. assigning a payment that is already `SETTLED`). Read the current state of the resource before retrying.
 * **`13 alreadyExist`** usually indicates a previous attempt succeeded. Query the resource before creating a duplicate.
+
+## Forward compatibility
+
+Build your integration to be tolerant of additive change:
+
+* **Unknown fields in responses** — ignore them. New fields may be added at any time without a major version bump.
+* **New `eventType` values on webhooks** — handle defensively. Treat unknown event types as no-ops or log them; do not error.
+* **New error codes** — branch on `code` ranges (`1x`, `2x`, `3x`, `4x`) when possible so a new code in an existing family inherits the right handling by default.
 
 ---
 

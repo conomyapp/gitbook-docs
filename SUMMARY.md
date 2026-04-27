@@ -3,6 +3,7 @@
 ## Home
 
 * [Welcome to conomy\_hq](README.md)
+* [Concepts](home/concepts.md)
 * [Countries](home/countries.md)
 * [Currencies](home/currencies.md)
 * [Supported identity document types](home/supported-identity-document-types.md)
@@ -18,6 +19,7 @@
 * [4. Create accounts](quickstart/create-accounts.md)
 * [5. Create your first top-up](quickstart/create-your-first-top-up.md)
 * [6. Create your first withdrawal](quickstart/create-your-first-withdrawal.md)
+* [Going live](quickstart/going-live.md)
 
 ## Payments
 
@@ -63,6 +65,7 @@
 * [Peer to peer payment - P2P](payments/peer-to-peer-payment-p2p.md)
 * [Collect](payments/collect.md)
 * [Add & remove fees](payments/add-and-remove-fees.md)
+* [Handling webhooks](payments/handling-webhooks.md)
 
 ## Compliance
 
@@ -71,6 +74,7 @@
 * [Transaction limits](compliance/transaction-limits.md)
 * [Supported documents](compliance/supported-documents.md)
 * [Review flow](compliance/review-flow.md)
+* [Integration checklist](compliance/integration-checklist.md)
 
 ## API Reference
 

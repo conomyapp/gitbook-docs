@@ -5437,6 +5437,8 @@ components:
         White-label brand configuration for an ORGANIZATION identity. Stored
         as a nested document inside the identity record. All color fields must
         be valid CSS hex colors in `#RRGGBB` format (case-insensitive).
+        Brand Editor v2 adds typography, border, and extended-color fields —
+        all optional with client-side defaults when absent.
       type: object
       properties:
         displayName:
@@ -5488,6 +5490,68 @@ components:
           description: >-
             ISO 8601 timestamp of the last brand update. Always set by the
             server on PATCH; clients must not supply this field.
+        fontFamily:
+          type: string
+          nullable: true
+          description: >-
+            Curated font key (e.g. "geist-sans", "system-ui", "georgia").
+            Maps to CSS variable `--font-sans`. Absent = platform default (Geist Sans).
+        headingFontFamily:
+          type: string
+          nullable: true
+          description: >-
+            Optional separate font key for h1-h3 headings.
+            Maps to CSS variable `--font-heading`. Absent = inherits fontFamily.
+        baseFontSize:
+          type: string
+          nullable: true
+          enum:
+            - compact
+            - default
+            - relaxed
+          description: >-
+            Base UI text scale. `compact` = 14 px, `default` = 16 px, `relaxed` = 18 px.
+            Maps to CSS variable `--font-size-base`. Absent = "default".
+        accentColor:
+          type: string
+          nullable: true
+          description: >-
+            Secondary/accent color hex string (#RRGGBB). Maps to CSS variable `--accent`.
+            Absent = falls back to `--primary-1`.
+        borderColor:
+          type: string
+          nullable: true
+          description: >-
+            Border/stroke color hex string (#RRGGBB). Maps to CSS variable `--border`.
+            Absent = falls back to `--stroke-light`.
+        mutedColor:
+          type: string
+          nullable: true
+          description: >-
+            Secondary/muted text color hex string (#RRGGBB). Maps to CSS variable `--text-muted`.
+            Absent = falls back to `--grey-font`.
+        borderRadius:
+          type: string
+          nullable: true
+          enum:
+            - none
+            - sm
+            - md
+            - lg
+            - pill
+          description: >-
+            Corner rounding preset. Maps to CSS variable `--radius`.
+            `none` = 0 px, `sm` = 4 px, `md` = 6 px (default), `lg` = 12 px, `pill` = 9999 px.
+        borderWidth:
+          type: string
+          nullable: true
+          enum:
+            - thin
+            - default
+            - thick
+          description: >-
+            Border thickness preset. Maps to CSS variable `--border-width`.
+            `thin` = 1 px, `default` = 1.5 px, `thick` = 2 px.
       required:
         - displayName
         - clientName
@@ -5498,8 +5562,10 @@ components:
         Partial update payload for PATCH /organizations/{orgId}/brand. All
         fields are optional; only supplied fields are written. Color fields
         must be valid CSS hex strings in `#RRGGBB` format (case-insensitive)
-        or the request returns 422. `logoUrl` is managed by the separate
-        logo-upload flow and cannot be set via this endpoint.
+        or the request returns 422. Enum-like fields (baseFontSize, borderRadius,
+        borderWidth) must be one of their allowed values or the request returns 422.
+        `logoUrl` is managed by the separate logo-upload flow and cannot be set
+        via this endpoint.
       type: object
       properties:
         displayName:
@@ -5527,6 +5593,60 @@ components:
         textColor:
           type: string
           description: Optional primary text color hex string.
+        fontFamily:
+          type: string
+          nullable: true
+          description: >-
+            Curated font key. Absent = no change. Pass `null` to clear.
+        headingFontFamily:
+          type: string
+          nullable: true
+          description: >-
+            Optional separate heading font key. Absent = no change.
+        baseFontSize:
+          type: string
+          nullable: true
+          enum:
+            - compact
+            - default
+            - relaxed
+          description: >-
+            Base UI text scale. Absent = no change. Returns 422 for unknown values.
+        accentColor:
+          type: string
+          nullable: true
+          description: >-
+            Secondary/accent color hex string (#RRGGBB). Returns 422 for invalid hex.
+        borderColor:
+          type: string
+          nullable: true
+          description: >-
+            Border/stroke color hex string (#RRGGBB). Returns 422 for invalid hex.
+        mutedColor:
+          type: string
+          nullable: true
+          description: >-
+            Secondary/muted text color hex string (#RRGGBB). Returns 422 for invalid hex.
+        borderRadius:
+          type: string
+          nullable: true
+          enum:
+            - none
+            - sm
+            - md
+            - lg
+            - pill
+          description: >-
+            Corner rounding preset. Absent = no change. Returns 422 for unknown values.
+        borderWidth:
+          type: string
+          nullable: true
+          enum:
+            - thin
+            - default
+            - thick
+          description: >-
+            Border thickness preset. Absent = no change. Returns 422 for unknown values.
     card:
       description: Card payment node payload for card-based pay-ins.
       type: object

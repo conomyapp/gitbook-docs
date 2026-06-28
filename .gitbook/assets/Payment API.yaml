@@ -6,6 +6,7 @@ info:
 tags:
   - name: Auth
   - name: Identities
+  - name: Organizations
   - name: Payments
   - name: Settlement
   - name: Accounts
@@ -5241,8 +5242,291 @@ paths:
           description: Unexpected internal server error.
       security:
         - BearerToken: []
+  /organizations/{orgId}/brand:
+    get:
+      summary: Get organization brand
+      deprecated: false
+      description: >-
+        Returns the persisted white-label brand configuration for the given
+        ORGANIZATION identity. Returns `{"brand": null}` when no brand has been
+        configured yet. This endpoint is disabled (returns 404) unless the
+        `BRAND_PERSISTENCE_ENABLED` feature flag is ON.
+      operationId: get-org-brand
+      tags:
+        - Organizations
+      parameters:
+        - name: orgId
+          in: path
+          description: The ID of the ORGANIZATION identity.
+          required: true
+          schema:
+            type: string
+        - name: x-api-key
+          in: header
+          description: >-
+            The API key used for authentication when making requests to the API
+            Gateway.
+          required: true
+          example: ''
+          schema:
+            type: string
+        - name: User-Agent
+          in: header
+          description: Identifies the application making the request.
+          required: false
+          example: ''
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Brand retrieved successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  brand:
+                    oneOf:
+                      - $ref: '#/components/schemas/organization-brand'
+                      - type: 'null'
+                    description: >-
+                      The organization brand configuration, or null if not yet
+                      configured.
+                required:
+                  - brand
+          headers: {}
+        '400':
+          $ref: '#/components/responses/Bad request'
+          description: Invalid request parameters.
+        '404':
+          $ref: '#/components/responses/Not Found'
+          description: >-
+            Organization not found, or brand persistence feature flag is OFF.
+        '500':
+          $ref: '#/components/responses/Internal server error'
+          description: Unexpected internal server error.
+      security:
+        - BearerToken: []
+    patch:
+      summary: Update organization brand
+      deprecated: false
+      description: >-
+        Partially updates the white-label brand configuration for the given
+        ORGANIZATION identity. Only supplied fields are written; omitted fields
+        retain their current values. The server always sets `updatedAt` to the
+        current UTC timestamp. All `*Color` fields must be valid CSS hex colors
+        in `#RRGGBB` format (case-insensitive); returns 422 on validation failure.
+        This endpoint is disabled (returns 404) unless the
+        `BRAND_PERSISTENCE_ENABLED` feature flag is ON.
+      operationId: patch-org-brand
+      tags:
+        - Organizations
+      parameters:
+        - name: orgId
+          in: path
+          description: The ID of the ORGANIZATION identity.
+          required: true
+          schema:
+            type: string
+        - name: x-api-key
+          in: header
+          description: >-
+            The API key used for authentication when making requests to the API
+            Gateway.
+          required: true
+          example: ''
+          schema:
+            type: string
+        - name: User-Agent
+          in: header
+          description: Identifies the application making the request.
+          required: false
+          example: ''
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/organization-brand-patch'
+            examples: {}
+      responses:
+        '200':
+          description: Brand updated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  brand:
+                    $ref: '#/components/schemas/organization-brand'
+                required:
+                  - brand
+          headers: {}
+        '400':
+          $ref: '#/components/responses/Bad request'
+          description: Invalid request body (malformed JSON).
+        '404':
+          $ref: '#/components/responses/Not Found'
+          description: >-
+            Organization not found, or brand persistence feature flag is OFF.
+        '422':
+          description: >-
+            One or more color fields failed hex validation. The error message
+            identifies the offending field.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/error'
+        '500':
+          $ref: '#/components/responses/Internal server error'
+          description: Unexpected internal server error.
+      security:
+        - BearerToken: []
+    delete:
+      summary: Delete organization brand
+      deprecated: false
+      description: >-
+        Removes the persisted brand configuration from the ORGANIZATION identity
+        document. After deletion the organization reverts to the platform default
+        branding. Returns 204 No Content on success. This endpoint is disabled
+        (returns 404) unless the `BRAND_PERSISTENCE_ENABLED` feature flag is ON.
+      operationId: delete-org-brand
+      tags:
+        - Organizations
+      parameters:
+        - name: orgId
+          in: path
+          description: The ID of the ORGANIZATION identity.
+          required: true
+          schema:
+            type: string
+        - name: x-api-key
+          in: header
+          description: >-
+            The API key used for authentication when making requests to the API
+            Gateway.
+          required: true
+          example: ''
+          schema:
+            type: string
+        - name: User-Agent
+          in: header
+          description: Identifies the application making the request.
+          required: false
+          example: ''
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Brand deleted successfully. No content returned.
+          headers: {}
+        '404':
+          $ref: '#/components/responses/Not Found'
+          description: >-
+            Organization not found, or brand persistence feature flag is OFF.
+        '500':
+          $ref: '#/components/responses/Internal server error'
+          description: Unexpected internal server error.
+      security:
+        - BearerToken: []
 components:
   schemas:
+    organization-brand:
+      description: >-
+        White-label brand configuration for an ORGANIZATION identity. Stored
+        as a nested document inside the identity record. All color fields must
+        be valid CSS hex colors in `#RRGGBB` format (case-insensitive).
+      type: object
+      properties:
+        displayName:
+          type: string
+          description: Human-readable brand name shown in the UI (e.g. "Acme Payments").
+        clientName:
+          type: string
+          description: >-
+            URL-safe machine identifier for the brand (e.g. "acme"). Used as a
+            slug in white-label deployments.
+        productName:
+          type: string
+          description: >-
+            Optional product name to surface in hosted payment pages (e.g.
+            "Acme Pay"). Falls back to displayName when absent.
+        partnerName:
+          type: string
+          nullable: true
+          description: Optional co-brand partner name shown alongside the primary brand.
+        logoUrl:
+          type: string
+          nullable: true
+          description: >-
+            Absolute HTTPS URL of the organization logo. Managed separately via
+            the logo-upload flow; read-only via this endpoint.
+        primaryColor:
+          type: string
+          description: >-
+            Primary brand color as a CSS hex string (e.g. `#0055FF`). Used for
+            buttons, links, and key accent elements.
+        backgroundColor:
+          type: string
+          description: >-
+            Optional page background color hex string. Defaults to the platform
+            background when absent.
+        surfaceColor:
+          type: string
+          description: >-
+            Optional card/surface color hex string. Defaults to the platform
+            surface token when absent.
+        textColor:
+          type: string
+          description: >-
+            Optional primary text color hex string. Defaults to the platform
+            text token when absent.
+        updatedAt:
+          type: string
+          format: date-time
+          description: >-
+            ISO 8601 timestamp of the last brand update. Always set by the
+            server on PATCH; clients must not supply this field.
+      required:
+        - displayName
+        - clientName
+        - primaryColor
+        - updatedAt
+    organization-brand-patch:
+      description: >-
+        Partial update payload for PATCH /organizations/{orgId}/brand. All
+        fields are optional; only supplied fields are written. Color fields
+        must be valid CSS hex strings in `#RRGGBB` format (case-insensitive)
+        or the request returns 422. `logoUrl` is managed by the separate
+        logo-upload flow and cannot be set via this endpoint.
+      type: object
+      properties:
+        displayName:
+          type: string
+          description: Human-readable brand name shown in the UI.
+        clientName:
+          type: string
+          description: URL-safe machine identifier for the brand.
+        productName:
+          type: string
+          description: Optional product name for hosted payment pages.
+        partnerName:
+          type: string
+          nullable: true
+          description: Optional co-brand partner name.
+        primaryColor:
+          type: string
+          description: Primary brand color as a CSS hex string (e.g. `#0055FF`).
+        backgroundColor:
+          type: string
+          description: Optional page background color hex string.
+        surfaceColor:
+          type: string
+          description: Optional card/surface color hex string.
+        textColor:
+          type: string
+          description: Optional primary text color hex string.
     card:
       description: Card payment node payload for card-based pay-ins.
       type: object
